@@ -8,9 +8,8 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; overflow-x: hidden; }
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; }
         .loading { color: #00e676; display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 14px; letter-spacing: 2px; }
-        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body>
@@ -18,17 +17,16 @@
 
     <script type="text/babel">
         const { useState, useMemo, useEffect } = React;
-        const TOTAL_NET_ASSETS = 114987493;
+        const TOTAL_NET_ASSETS = 114987493; // 提示された元コードの数値に準拠
 
         function App() {
             const [stocks, setStocks] = useState([]);
             const [loading, setLoading] = useState(true);
+            const [actualResult, setActualResult] = useState("");
             const [activeTab, setActiveTab] = useState("calc");
             const [sectorFilter, setSectorFilter] = useState("全て");
             const [search, setSearch] = useState("");
-            
-            // ソート状態管理
-            const [sortKey, setSortKey] = useState("ratio"); // ratio, change, contrib
+            const [sortKey, setSortKey] = useState("ratio");
             const [sortOrder, setSortOrder] = useState("desc");
 
             useEffect(() => {
@@ -47,7 +45,7 @@
 
                         const mapped = unique.map(s => ({
                             ...s,
-                            daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code].toString() : ""
+                            daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code] : ""
                         }));
 
                         setStocks(mapped);
@@ -60,54 +58,70 @@
             }, []);
 
             const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
+            const stocksWithRatio = useMemo(() => stocks.map(s => ({ ...s, ratio: (s.evaluation / TOTAL_NET_ASSETS) * 100 })), [stocks]);
 
-            // 基本計算データ作成
-            const processedStocks = useMemo(() => {
-                return stocks.map(s => {
-                    const ratio = (s.evaluation / TOTAL_NET_ASSETS) * 100;
+            const sigmaRaw = useMemo(() => {
+                return stocksWithRatio.reduce((sum, s) => {
                     const change = parseFloat(s.daily_change);
-                    const contrib = isNaN(change) ? 0 : (ratio * change) / 100;
-                    return { ...s, ratio, contrib, changeNum: isNaN(change) ? -999 : change };
-                });
-            }, [stocks]);
+                    if (isNaN(change)) return sum;
+                    return sum + (s.ratio * change) / 100;
+                }, 0);
+            }, [stocksWithRatio]);
 
-            const sigmaRaw = useMemo(() => processedStocks.reduce((sum, s) => sum + s.contrib, 0), [processedStocks]);
             const sigmaAdjusted = sigmaRaw * 0.9 - 0.05;
-            const coverageRatio = processedStocks.filter(s => s.daily_change !== "").reduce((sum, s) => sum + s.ratio, 0);
+            const filledCount = stocks.filter(s => s.daily_change !== "").length;
+            const coverageRatio = stocksWithRatio.filter(s => s.daily_change !== "").reduce((sum, s) => sum + s.ratio, 0);
 
-            // ソート・フィルタリング
+            // 業種別寄与度ロジック
+            const sectorContribs = useMemo(() => {
+                const counts = {};
+                stocksWithRatio.forEach(s => {
+                    const change = parseFloat(s.daily_change);
+                    if (isNaN(change)) return;
+                    const contrib = (s.ratio / 100) * (change / 100) * 100;
+                    counts[s.sector] = (counts[s.sector] || 0) + contrib;
+                });
+                return Object.entries(counts)
+                    .map(([name, val]) => ({ name, val }))
+                    .sort((a, b) => Math.abs(b.val) - Math.abs(a.val));
+            }, [stocksWithRatio]);
+
+            // 個別銘柄寄与度TOP10
+            const topContribs = useMemo(() => {
+                return stocksWithRatio
+                    .map(s => {
+                        const change = parseFloat(s.daily_change);
+                        return { ...s, contribution: isNaN(change) ? null : (s.ratio * change) / 100 };
+                    })
+                    .filter(s => s.contribution !== null)
+                    .sort((a, b) => Math.abs(b.contribution) - Math.abs(a.contribution))
+                    .slice(0, 10);
+            }, [stocksWithRatio]);
+
             const filteredStocks = useMemo(() => {
-                let base = processedStocks.filter(s => {
+                const base = stocksWithRatio.filter(s => {
                     const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
                     const matchSearch = !search || s.name.includes(search) || s.code.includes(search);
                     return matchSector && matchSearch;
                 });
-
-                return base.sort((a, b) => {
+                return [...base].sort((a, b) => {
                     let valA, valB;
                     if (sortKey === "ratio") { [valA, valB] = [a.ratio, b.ratio]; }
-                    else if (sortKey === "change") { [valA, valB] = [a.changeNum, b.changeNum]; }
-                    else { [valA, valB] = [a.contrib, b.contrib]; }
+                    else if (sortKey === "change") { [valA, valB] = [parseFloat(a.daily_change) || 0, parseFloat(b.daily_change) || 0]; }
+                    else {
+                        valA = (a.ratio * (parseFloat(a.daily_change) || 0)) / 100;
+                        valB = (b.ratio * (parseFloat(b.daily_change) || 0)) / 100;
+                    }
                     return sortOrder === "asc" ? valA - valB : valB - valA;
                 });
-            }, [processedStocks, sectorFilter, search, sortKey, sortOrder]);
-
-            const toggleSort = (key) => {
-                if (sortKey === key) {
-                    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
-                } else {
-                    setSortKey(key);
-                    setSortOrder("desc");
-                }
-            };
+            }, [stocksWithRatio, sectorFilter, search, sortKey, sortOrder]);
 
             const getColor = val => {
                 const n = parseFloat(val);
                 if (isNaN(n) || n === 0) return "#556";
                 return n > 0 ? "#00e676" : "#ff5252";
             };
-
-            const fmt = (val, d = 3) => `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
+            const fmt = (val, d = 3) => isNaN(val) ? "—" : `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
 
             if (loading) return <div className="loading">SYSTEM INITIALIZING...</div>;
 
@@ -120,7 +134,7 @@
                                 <span style={{ fontSize: 22 }}>📊</span>
                                 <div>
                                     <div style={S.logoTitle}>SBI変動率計算ツール</div>
-                                    <div style={S.logoSub}>全{stocks.length}銘柄対応 / 精度向上版</div>
+                                    <div style={S.logoSub}>全{stocks.length}銘柄対応</div>
                                 </div>
                             </div>
                             <div style={{ display: "flex", gap: 8 }}>
@@ -131,7 +145,7 @@
                     </header>
 
                     <div style={S.tabBar}>
-                        {[{ key: "calc", label: "📋 銘柄入力" }, { key: "result", label: "📈 分析結果" }].map(t => (
+                        {[{ key: "calc", label: "📋 銘柄入力" }, { key: "result", label: "📈 結果・検証" }].map(t => (
                             <button key={t.key} onClick={() => setActiveTab(t.key)}
                                 style={{ ...S.tab, ...(activeTab === t.key ? S.tabActive : {}) }}>
                                 {t.label}
@@ -143,55 +157,32 @@
                         {activeTab === "calc" && (
                             <>
                                 <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>改良式によるSBI予測変動率</div>
-                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(sigmaAdjusted), textAlign: "center", letterSpacing: -1 }}>
-                                        {fmt(sigmaAdjusted)}
-                                    </div>
-                                    <div style={{ fontSize: 10, color: "#445", textAlign: "center", marginTop: 8 }}>
-                                        内部計算: Σ({sigmaRaw.toFixed(4)}%) × 0.9 - 0.05
+                                    <div style={{ textAlign: "center" }}>
+                                        <div style={S.previewLabel}>改良式（予測）</div>
+                                        <div style={{ fontSize: 32, fontWeight: 700, color: getColor(sigmaAdjusted) }}>{fmt(sigmaAdjusted)}</div>
+                                        <div style={{ fontSize: 10, color: "#445", marginTop: 4 }}>Σ({fmt(sigmaRaw)}) × 0.9 - 0.05</div>
                                     </div>
                                 </div>
 
-                                <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+                                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
                                     <input value={search} onChange={e => setSearch(e.target.value)}
-                                        placeholder="銘柄名・コードで検索..." style={S.searchInput} />
+                                        placeholder="検索..." style={S.searchInput} />
                                     <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
                                         {sectors.map(s => <option key={s} value={s}>{s}</option>)}
                                     </select>
-                                </div>
-
-                                {/* テーブルヘッダー */}
-                                <div style={S.tableHeader}>
-                                    <div style={{ flex: 1, color: "#445", fontSize: 10 }}>銘柄情報</div>
-                                    <div onClick={() => toggleSort("ratio")} style={{...S.sortBtn, color: sortKey === "ratio" ? "#00e676" : "#445"}}>
-                                        比率 {sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
-                                    <div onClick={() => toggleSort("change")} style={{...S.sortBtn, color: sortKey === "change" ? "#00e676" : "#445"}}>
-                                        前日比 {sortKey === "change" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
-                                    <div onClick={() => toggleSort("contrib")} style={{...S.sortBtn, color: sortKey === "contrib" ? "#00e676" : "#445", width: 60}}>
-                                        寄与 {sortKey === "contrib" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
                                 </div>
 
                                 <div style={S.tableWrap}>
                                     {filteredStocks.map(s => (
                                         <div key={s.id} style={S.tableRow}>
                                             <div style={{ flex: 1, minWidth: 0 }}>
-                                                <div style={{ fontSize: 9, color: "#445", fontWeight: 600 }}>{s.code}</div>
-                                                <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
+                                                <div style={{ fontSize: 9, color: "#445" }}>{s.code}</div>
+                                                <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden" }}>{s.name}</div>
                                             </div>
-                                            <div style={{ width: 45, textAlign: "right", fontSize: 11, color: "#667" }}>
-                                                {s.ratio.toFixed(1)}%
-                                            </div>
-                                            <div style={{ width: 75, display: "flex", justifyContent: "flex-end" }}>
-                                                <input type="number" step="0.01" value={s.daily_change} 
-                                                    onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
-                                                    style={{ ...S.input, color: getColor(s.daily_change) }} />
-                                            </div>
-                                            <div style={{ width: 60, textAlign: "right", fontSize: 11, fontWeight: 700, color: getColor(s.contrib) }}>
-                                                {s.contrib === 0 ? "0.00" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
-                                            </div>
+                                            <span style={{ width: 40, textAlign: "right", fontSize: 10, color: "#445" }}>{s.ratio.toFixed(1)}%</span>
+                                            <input type="number" step="0.01" value={s.daily_change} 
+                                                onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
+                                                style={{ ...S.input, width: 65, color: getColor(s.daily_change) }} />
                                         </div>
                                     ))}
                                 </div>
@@ -199,28 +190,41 @@
                         )}
 
                         {activeTab === "result" && (
-                            <div style={{ animation: "fadeIn 0.3s" }}>
+                            <>
+                                {/* ここが復活したセクション：個別寄与度 */}
                                 <div style={S.card}>
-                                    <div style={S.cardTitle}>寄与度ワースト/トップ (銘柄別)</div>
-                                    {[...processedStocks]
-                                        .filter(s => s.contrib !== 0)
-                                        .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
-                                        .slice(0, 15)
-                                        .map((s, i) => (
-                                            <div key={s.id} style={S.rankRow}>
-                                                <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i+1}</span>
-                                                <span style={{ fontSize: 11, color: "#889", flex: 1 }}>{s.name}</span>
-                                                <div style={S.barContainer}>
-                                                    <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contrib) * 800, 100)}%`, background: s.contrib > 0 ? "#00e676" : "#ff5252" }} />
-                                                </div>
-                                                <span style={{ fontSize: 12, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
-                                                    {s.contrib.toFixed(4)}%
-                                                </span>
+                                    <div style={S.cardTitle}>寄与度 TOP10 (銘柄別)</div>
+                                    {topContribs.map((s, i) => (
+                                        <div key={s.id} style={S.rankRow}>
+                                            <span style={{ fontSize: 11, color: "#889", width: 110, overflow: "hidden", whiteSpace: "nowrap" }}>{s.name}</span>
+                                            <div style={S.barContainer}>
+                                                <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contribution) * 600, 100)}%`, background: s.contribution > 0 ? "#00e676" : "#ff5252" }} />
                                             </div>
-                                        ))
-                                    }
+                                            <span style={{ fontSize: 12, color: getColor(s.contribution), width: 70, textAlign: "right" }}>{fmt(s.contribution, 4)}</span>
+                                        </div>
+                                    ))}
                                 </div>
-                            </div>
+
+                                {/* ここが復活したセクション：業種別セクター寄与 */}
+                                <div style={S.card}>
+                                    <div style={S.cardTitle}>業種別セクター寄与</div>
+                                    {sectorContribs.map((sector, i) => (
+                                        <div key={i} style={S.rankRow}>
+                                            <span style={{ fontSize: 11, color: "#889", width: 90 }}>{sector.name}</span>
+                                            <div style={S.barContainerCenter}>
+                                                <div style={S.barCenterLine} />
+                                                <div style={{
+                                                    ...S.barCenter,
+                                                    left: sector.val > 0 ? "50%" : `calc(50% - ${Math.min(Math.abs(sector.val) * 400, 50)}%)`,
+                                                    width: `${Math.min(Math.abs(sector.val) * 400, 50)}%`,
+                                                    background: sector.val > 0 ? "linear-gradient(90deg,#00e676,#00b248)" : "linear-gradient(90deg,#c50000,#ff5252)"
+                                                }} />
+                                            </div>
+                                            <span style={{ fontSize: 12, color: getColor(sector.val), width: 72, textAlign: "right" }}>{fmt(sector.val, 4)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
@@ -228,37 +232,38 @@
         }
 
         const S = {
-            root: { minHeight: "100vh", background: "#0a0e1a", color: "#e0e6f0", paddingBottom: 40 },
+            root: { minHeight: "100vh", background: "#0a0e1a", color: "#e0e6f0" },
             bgGrid: { position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" },
             header: { position: "sticky", top: 0, zIndex: 100, background: "rgba(10,14,26,0.95)", borderBottom: "1px solid #1e3a2e", backdropFilter: "blur(8px)" },
             headerInner: { maxWidth: 720, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
             logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
             logoSub: { fontSize: 9, color: "#445" },
-            tabBar: { maxWidth: 720, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
-            tab: { flex: 1, padding: "12px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12, transition: "0.2s" },
-            tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#00e676", fontWeight: 700 },
-            content: { maxWidth: 720, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 12px 12px", minHeight: "60vh" },
-            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "24px", marginBottom: 20, boxShadow: "0 10px 30px rgba(0,0,0,0.5)" },
-            previewLabel: { fontSize: 10, color: "#00e676", textAlign: "center", marginBottom: 4, letterSpacing: 1, fontWeight: 600 },
-            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "10px 12px", fontSize: 13, outline: "none" },
-            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#889", padding: "10px", fontSize: 12 },
-            tableHeader: { display: "flex", alignItems: "center", padding: "0 12px 10px", gap: 8, borderBottom: "1px solid #1a2a1a" },
-            sortBtn: { fontSize: 10, cursor: "pointer", userSelect: "none", textAlign: "right", width: 50, fontWeight: 600 },
-            tableWrap: { borderRadius: 8, overflow: "hidden" },
-            tableRow: { display: "flex", alignItems: "center", padding: "10px 12px", borderBottom: "1px solid #0d1a0d", gap: 8, transition: "background 0.2s" },
-            input: { background: "#060d18", border: "1px solid #222", borderRadius: 6, padding: "6px", textAlign: "right", outline: "none", width: "100%", fontSize: 13, fontWeight: 700 },
-            card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 10, padding: "20px" },
-            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 16, fontWeight: 700 },
-            rankRow: { display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid #0d1a0d" },
+            tabBar: { maxWidth: 720, margin: "0 auto", display: "flex", padding: "8px 16px 0", gap: 4 },
+            tab: { flex: 1, padding: "12px", background: "transparent", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "6px 6px 0 0", cursor: "pointer", fontSize: 12 },
+            tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#00e676" },
+            content: { maxWidth: 720, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 8px 8px" },
+            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 10, padding: "20px", marginBottom: 16 },
+            previewLabel: { fontSize: 9, color: "#445", textAlign: "center", marginBottom: 4 },
+            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 6, color: "#fff", padding: "8px", fontSize: 12 },
+            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 6, color: "#889", padding: "8px", fontSize: 11 },
+            tableWrap: { border: "1px solid #1a2a1a", borderRadius: 8, overflow: "hidden" },
+            tableRow: { display: "flex", alignItems: "center", padding: "8px 12px", borderBottom: "1px solid #0d1a0d", gap: 8 },
+            input: { background: "#0a1520", border: "1px solid #222", borderRadius: 4, padding: "4px", textAlign: "right", outline: "none" },
+            card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 8, padding: "16px", marginBottom: 12 },
+            cardTitle: { fontSize: 10, color: "#00e676", marginBottom: 12, letterSpacing: 1 },
+            rankRow: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: "1px solid #0d1a0d" },
             barContainer: { flex: 1, height: 4, background: "#111", borderRadius: 2, overflow: "hidden" },
-            bar: { height: "100%", borderRadius: 2, transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }
+            bar: { height: "100%", borderRadius: 2, transition: "width 0.4s" },
+            barContainerCenter: { flex: 1, height: 4, background: "#111", borderRadius: 2, overflow: "hidden", position: "relative" },
+            barCenterLine: { position: "absolute", left: "50%", top: 0, width: 1, height: "100%", background: "#334" },
+            barCenter: { position: "absolute", height: "100%", transition: "all 0.4s" }
         };
 
         function Chip({ label, val, color = "#00e676" }) {
             return (
-                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 8, padding: "6px 12px", textAlign: "center", minWidth: 70 }}>
-                    <div style={{ fontSize: 8, color: "#445", marginBottom: 2, fontWeight: 600 }}>{label}</div>
-                    <div style={{ fontSize: 12, color, fontWeight: 800 }}>{val}</div>
+                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 6, padding: "4px 8px", textAlign: "center", minWidth: 60 }}>
+                    <div style={{ fontSize: 8, color: "#445" }}>{label}</div>
+                    <div style={{ fontSize: 11, color, fontWeight: 700 }}>{val}</div>
                 </div>
             );
         }
