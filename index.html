@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBI変動率計算ツール - Sector Plus</title>
+    <title>SBI変動率計算ツール - Pro Analysis</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; overflow-x: hidden; }
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; color: #e0e6f0; overflow-x: hidden; }
         .loading { color: #00e676; display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 14px; letter-spacing: 2px; }
         input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -70,20 +70,18 @@
                 });
             }, [stocks]);
 
-            // 業種別の集計計算
             const sectorStats = useMemo(() => {
                 const map = {};
                 processedStocks.forEach(s => {
-                    if (!map[s.sector]) map[s.sector] = { name: s.sector, contrib: 0, count: 0 };
+                    if (!map[s.sector]) map[s.sector] = { name: s.sector, contrib: 0 };
                     map[s.sector].contrib += s.contrib;
-                    map[s.sector].count += 1;
                 });
                 return Object.values(map).sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
             }, [processedStocks]);
 
             const sigmaRaw = useMemo(() => processedStocks.reduce((sum, s) => sum + s.contrib, 0), [processedStocks]);
             const sigmaAdjusted = sigmaRaw * 0.9 - 0.05;
-            const coverageRatio = processedStocks.filter(s => s.daily_change !== "").reduce((sum, s) => sum + s.ratio, 0);
+            const coverageCount = stocks.filter(s => s.daily_change !== "").length;
 
             const filteredStocks = useMemo(() => {
                 let base = processedStocks.filter(s => {
@@ -126,20 +124,21 @@
                     <header style={S.header}>
                         <div style={S.headerInner}>
                             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                <span style={{ fontSize: 22 }}>📊</span>
+                                <span style={{ fontSize: 22 }}>📈</span>
                                 <div>
                                     <div style={S.logoTitle}>SBI変動率計算ツール</div>
-                                    <div style={S.logoSub}>Sector Contribution Analysis</div>
+                                    <div style={S.logoSub}>純資産 1,150億円ベース</div>
                                 </div>
                             </div>
                             <div style={{ display: "flex", gap: 8 }}>
+                                <Chip label="入力済" val={`${coverageCount}/${stocks.length}`} />
                                 <Chip label="予測" val={fmt(sigmaAdjusted)} color={getColor(sigmaAdjusted)} />
                             </div>
                         </div>
                     </header>
 
                     <div style={S.tabBar}>
-                        {[{ key: "calc", label: "📋 入力" }, { key: "result", label: "📈 分析" }].map(t => (
+                        {[{ key: "calc", label: "入力" }, { key: "result", label: "分析・結果" }].map(t => (
                             <button key={t.key} onClick={() => setActiveTab(t.key)}
                                 style={{ ...S.tab, ...(activeTab === t.key ? S.tabActive : {}) }}>
                                 {t.label}
@@ -151,7 +150,7 @@
                         {activeTab === "calc" && (
                             <>
                                 <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>予測変動率</div>
+                                    <div style={S.previewLabel}>改良式によるSBI予測</div>
                                     <div style={{ fontSize: 42, fontWeight: 800, color: getColor(sigmaAdjusted), textAlign: "center" }}>
                                         {fmt(sigmaAdjusted)}
                                     </div>
@@ -159,7 +158,7 @@
 
                                 <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                                     <input value={search} onChange={e => setSearch(e.target.value)}
-                                        placeholder="検索..." style={S.searchInput} />
+                                        placeholder="銘柄名/コード..." style={S.searchInput} />
                                     <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
                                         {sectors.map(s => <option key={s} value={s}>{s}</option>)}
                                     </select>
@@ -185,14 +184,14 @@
                                                 <div style={{ fontSize: 9, color: "#445" }}>{s.code}</div>
                                                 <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
                                             </div>
-                                            <div style={{ width: 45, textAlign: "right", fontSize: 11, color: "#667" }}>{s.ratio.toFixed(1)}%</div>
-                                            <div style={{ width: 75, display: "flex", justifyContent: "flex-end" }}>
+                                            <div style={{ width: 45, textAlign: "right", fontSize: 10, color: "#556" }}>{s.ratio.toFixed(1)}%</div>
+                                            <div style={{ width: 75 }}>
                                                 <input type="number" step="0.01" value={s.daily_change} 
                                                     onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
                                                     style={{ ...S.input, color: getColor(s.daily_change) }} />
                                             </div>
                                             <div style={{ width: 60, textAlign: "right", fontSize: 11, fontWeight: 700, color: getColor(s.contrib) }}>
-                                                {s.contrib === 0 ? "0.00" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
+                                                {s.contrib === 0 ? "0.000" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
                                             </div>
                                         </div>
                                     ))}
@@ -202,31 +201,35 @@
 
                         {activeTab === "result" && (
                             <div style={{ animation: "fadeIn 0.3s" }}>
-                                {/* 業種別セクター寄与 */}
+                                {/* 業種別セクター寄与グラフ */}
                                 <div style={{...S.card, marginBottom: 20}}>
                                     <div style={S.cardTitle}>業種別セクター寄与 (合計)</div>
                                     {sectorStats.map((sec) => (
                                         <div key={sec.name} style={S.rankRow}>
-                                            <span style={{ fontSize: 11, color: "#aabbc0", width: 90, whiteSpace: "nowrap" }}>{sec.name}</span>
-                                            <div style={S.barContainer}>
-                                                <div style={{ 
-                                                    ...S.bar, 
-                                                    width: `${Math.min(Math.abs(sec.contrib) * 500, 100)}%`, 
-                                                    background: sec.contrib > 0 ? "#00e676" : "#ff5252",
-                                                    marginLeft: sec.contrib < 0 ? 'auto' : '0',
-                                                    marginRight: sec.contrib > 0 ? 'auto' : '0'
-                                                }} />
+                                            <span style={{ fontSize: 11, color: "#aabbc0", width: 85, whiteSpace: "nowrap" }}>{sec.name}</span>
+                                            <div style={S.chartContainer}>
+                                                <div style={S.chartHalfLeft}>
+                                                    {sec.contrib < 0 && (
+                                                        <div style={{ ...S.bar, width: `${Math.min(Math.abs(sec.contrib) * 500, 100)}%`, background: "#ff5252", borderRadius: "2px 0 0 2px" }} />
+                                                    )}
+                                                </div>
+                                                <div style={S.zeroLine} />
+                                                <div style={S.chartHalfRight}>
+                                                    {sec.contrib > 0 && (
+                                                        <div style={{ ...S.bar, width: `${Math.min(sec.contrib * 500, 100)}%`, background: "#00e676", borderRadius: "0 2px 2px 0" }} />
+                                                    )}
+                                                </div>
                                             </div>
-                                            <span style={{ fontSize: 12, color: getColor(sec.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
-                                                {sec.contrib.toFixed(4)}%
+                                            <span style={{ fontSize: 11, color: getColor(sec.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
+                                                {fmt(sec.contrib, 4)}
                                             </span>
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* 個別銘柄寄与トップ15 */}
+                                {/* 個別銘柄寄与度ランキング */}
                                 <div style={S.card}>
-                                    <div style={S.cardTitle}>個別銘柄 寄与度ランキング</div>
+                                    <div style={S.cardTitle}>個別銘柄 寄与度ランキング (TOP 15)</div>
                                     {[...processedStocks]
                                         .filter(s => s.contrib !== 0)
                                         .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
@@ -234,9 +237,22 @@
                                         .map((s, i) => (
                                             <div key={s.id} style={S.rankRow}>
                                                 <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i+1}</span>
-                                                <span style={{ fontSize: 11, color: "#889", flex: 1, overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</span>
-                                                <span style={{ fontSize: 12, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
-                                                    {s.contrib.toFixed(4)}%
+                                                <span style={{ fontSize: 11, color: "#aabbc0", width: 90, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
+                                                <div style={S.chartContainer}>
+                                                    <div style={S.chartHalfLeft}>
+                                                        {s.contrib < 0 && (
+                                                            <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contrib) * 800, 100)}%`, background: "#ff5252", borderRadius: "2px 0 0 2px" }} />
+                                                        )}
+                                                    </div>
+                                                    <div style={S.zeroLine} />
+                                                    <div style={S.chartHalfRight}>
+                                                        {s.contrib > 0 && (
+                                                            <div style={{ ...S.bar, width: `${Math.min(s.contrib * 800, 100)}%`, background: "#00e676", borderRadius: "0 2px 2px 0" }} />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <span style={{ fontSize: 11, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
+                                                    {fmt(s.contrib, 4)}
                                                 </span>
                                             </div>
                                         ))
@@ -250,37 +266,40 @@
         }
 
         const S = {
-            root: { minHeight: "100vh", background: "#0a0e1a", color: "#e0e6f0", paddingBottom: 40 },
+            root: { minHeight: "100vh", background: "#0a0e1a", paddingBottom: 40 },
             bgGrid: { position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" },
             header: { position: "sticky", top: 0, zIndex: 100, background: "rgba(10,14,26,0.95)", borderBottom: "1px solid #1e3a2e", backdropFilter: "blur(8px)" },
-            headerInner: { maxWidth: 720, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
+            headerInner: { maxWidth: 600, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
             logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
             logoSub: { fontSize: 9, color: "#445" },
-            tabBar: { maxWidth: 720, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
-            tab: { flex: 1, padding: "12px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12 },
+            tabBar: { maxWidth: 600, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
+            tab: { flex: 1, padding: "10px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12 },
             tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#00e676", fontWeight: 700 },
-            content: { maxWidth: 720, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 12px 12px", minHeight: "60vh" },
-            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "20px", marginBottom: 20 },
+            content: { maxWidth: 600, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 12px 12px", minHeight: "70vh" },
+            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "16px", marginBottom: 16 },
             previewLabel: { fontSize: 10, color: "#00e676", textAlign: "center", marginBottom: 4, fontWeight: 600 },
-            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "10px 12px", fontSize: 13 },
-            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#889", padding: "10px", fontSize: 12 },
-            tableHeader: { display: "flex", alignItems: "center", padding: "0 12px 10px", gap: 8, borderBottom: "1px solid #1a2a1a" },
+            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "8px 12px", fontSize: 13 },
+            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#889", padding: "8px", fontSize: 12 },
+            tableHeader: { display: "flex", alignItems: "center", padding: "0 10px 8px", gap: 8, borderBottom: "1px solid #1a2a1a" },
             sortBtn: { fontSize: 10, cursor: "pointer", textAlign: "right", width: 50 },
-            tableWrap: { borderRadius: 8, overflow: "hidden" },
-            tableRow: { display: "flex", alignItems: "center", padding: "10px 12px", borderBottom: "1px solid #0d1a0d", gap: 8 },
-            input: { background: "#060d18", border: "1px solid #222", borderRadius: 6, padding: "6px", textAlign: "right", outline: "none", width: "100%", fontSize: 13, fontWeight: 700 },
+            tableWrap: { borderRadius: 8 },
+            tableRow: { display: "flex", alignItems: "center", padding: "8px 10px", borderBottom: "1px solid #0d1a0d", gap: 8 },
+            input: { background: "#060d18", border: "1px solid #222", borderRadius: 6, padding: "6px", textAlign: "right", outline: "none", width: "100%", fontSize: 12, fontWeight: 700 },
             card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 10, padding: "16px" },
-            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 12, fontWeight: 700 },
-            rankRow: { display: "flex", alignItems: "center", gap: 10, padding: "6px 0", borderBottom: "1px solid #0d1a0d" },
-            barContainer: { flex: 1, height: 4, background: "#111", borderRadius: 2, display: "flex" },
-            bar: { height: "100%", borderRadius: 2, transition: "width 0.4s" }
+            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 12, fontWeight: 700, borderLeft: "3px solid #00e676", paddingLeft: 8 },
+            rankRow: { display: "flex", alignItems: "center", gap: 4, padding: "6px 0", borderBottom: "1px solid #0d1a0d" },
+            chartContainer: { flex: 1, height: 14, display: "flex", alignItems: "center", position: "relative", margin: "0 8px" },
+            chartHalfLeft: { flex: 1, display: "flex", justifyContent: "flex-end", height: "6px" },
+            chartHalfRight: { flex: 1, display: "flex", justifyContent: "flex-start", height: "6px" },
+            zeroLine: { width: "1px", height: "14px", background: "#1e3a2e", zIndex: 1 },
+            bar: { height: "100%", transition: "width 0.4s ease-out" }
         };
 
         function Chip({ label, val, color = "#00e676" }) {
             return (
-                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 8, padding: "4px 10px", textAlign: "center" }}>
+                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 6, padding: "4px 8px", textAlign: "center" }}>
                     <div style={{ fontSize: 8, color: "#445" }}>{label}</div>
-                    <div style={{ fontSize: 11, color, fontWeight: 800 }}>{val}</div>
+                    <div style={{ fontSize: 10, color, fontWeight: 800 }}>{val}</div>
                 </div>
             );
         }
