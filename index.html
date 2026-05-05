@@ -1,163 +1,296 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>SBI変動率計算ツール</title>
-  <style>
-    body {
-      background:#0a0e1a; color:#e0e6f0;
-      font-family: sans-serif; margin:0;
-    }
-    .container { max-width:800px; margin:auto; padding:16px; }
-    .card { background:#060d18; border:1px solid #1e3a2e; padding:12px; margin-bottom:12px; }
-    input, select {
-      background:#0a1520; color:#e0e6f0; border:1px solid #222;
-      padding:4px; margin:2px;
-    }
-    button {
-      background:#1e3a2e; color:#00e676;
-      border:1px solid #00e676; padding:8px; cursor:pointer;
-    }
-    .pos { color:#00e676; }
-    .neg { color:#ff5252; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI変動率計算ツール - Pro</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; }
+        .loading { color: #00e676; display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 14px; letter-spacing: 2px; }
+    </style>
 </head>
-
 <body>
-<div class="container">
-  <h2>📊 SBI変動率計算ツール</h2>
+    <div id="root"></div>
 
-  <div class="card">
-    <div>予測: <span id="pred">--</span></div>
-    <div>カバー率: <span id="coverage">--</span></div>
-  </div>
+    <script type="text/babel">
+        const { useState, useMemo, useEffect } = React;
+        
+        // 画像の「1,231億円」に基づき数値を調整（あるいはデータから合計を算出する形に）
+        const DEFAULT_TOTAL_ASSETS = 123100000000; 
 
-  <div class="card">
-    <input id="search" placeholder="検索">
-    <select id="sector"></select>
-  </div>
+        function App() {
+            const [stocks, setStocks] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [activeTab, setActiveTab] = useState("calc");
+            const [sectorFilter, setSectorFilter] = useState("全て");
+            const [search, setSearch] = useState("");
+            const [sortKey, setSortKey] = useState("ratio"); // 比率で初期ソート
+            const [sortOrder, setSortOrder] = useState("desc");
 
-  <div id="table"></div>
+            useEffect(() => {
+                async function init() {
+                    try {
+                        const [resS, resC] = await Promise.all([
+                            fetch('./stocks.json'),
+                            fetch(`./daily_changes.json?t=${Date.now()}`)
+                        ]);
+                        const allStocksRaw = await resS.json();
+                        const latestChanges = await resC.json() || {};
 
-  <div class="card">
-    実績: <input id="actual" type="number" step="0.01">
-    <button onclick="saveLog()">ログ保存</button>
-  </div>
-</div>
+                        const unique = allStocksRaw.filter((s, i, arr) =>
+                            s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
+                        );
 
-<script>
-const TOTAL_NET_ASSETS = 114987493;
+                        const mapped = unique.map(s => ({
+                            ...s,
+                            daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code] : ""
+                        }));
 
-let stocks = [];
-let filtered = [];
+                        setStocks(mapped);
+                        setLoading(false);
+                    } catch (e) {
+                        console.error("Data Load Error:", e);
+                        setLoading(false);
+                    }
+                }
+                init();
+            }, []);
 
-async function init() {
-  const stocksData = await fetch("./stocks.json").then(r => r.json());
-  const changes = await fetch("./daily_changes.json?t=" + Date.now()).then(r => r.json());
+            // 比率を計算（全銘柄の評価額合計を分母にする方が確実）
+            const stocksWithRatio = useMemo(() => {
+                const total = stocks.reduce((sum, s) => sum + (s.evaluation || 0), 0) || DEFAULT_TOTAL_ASSETS;
+                return stocks.map(s => ({ 
+                    ...s, 
+                    ratio: (s.evaluation / total) * 100,
+                    contribution: (parseFloat(s.daily_change) || 0) * ((s.evaluation / total))
+                }));
+            }, [stocks]);
 
-  stocks = stocksData
-    .filter((s,i,arr)=>s.evaluation>0 && arr.findIndex(x=>x.id===s.id)===i)
-    .map(s => ({
-      ...s,
-      daily_change: changes[s.code] ?? ""
-    }));
+            const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
 
-  setupUI();
-  render();
-}
+            // ソート制御
+            const handleSort = (key) => {
+                if (sortKey === key) {
+                    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                } else {
+                    setSortKey(key);
+                    setSortOrder("desc");
+                }
+            };
 
-function setupUI(){
-  const sectors = ["全て", ...new Set(stocks.map(s=>s.sector))];
-  const sel = document.getElementById("sector");
-  sectors.forEach(s=>{
-    const opt=document.createElement("option");
-    opt.value=s; opt.textContent=s;
-    sel.appendChild(opt);
-  });
+            const filteredStocks = useMemo(() => {
+                const base = stocksWithRatio.filter(s => {
+                    const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
+                    const matchSearch = !search || s.name.includes(search) || s.code.includes(search);
+                    return matchSector && matchSearch;
+                });
+                return [...base].sort((a, b) => {
+                    let valA, valB;
+                    if (sortKey === "ratio") { [valA, valB] = [a.ratio, b.ratio]; }
+                    else if (sortKey === "change") { [valA, valB] = [parseFloat(a.daily_change) || 0, parseFloat(b.daily_change) || 0]; }
+                    else if (sortKey === "contrib") { [valA, valB] = [a.contribution, b.contribution]; }
+                    
+                    return sortOrder === "asc" ? valA - valB : valB - valA;
+                });
+            }, [stocksWithRatio, sectorFilter, search, sortKey, sortOrder]);
 
-  document.getElementById("search").oninput = render;
-  sel.onchange = render;
-}
+            const sigmaRaw = useMemo(() => stocksWithRatio.reduce((sum, s) => sum + s.contribution, 0), [stocksWithRatio]);
+            const sigmaAdjusted = sigmaRaw * 0.9 - 0.05;
+            const coverageRatio = stocksWithRatio.filter(s => s.daily_change !== "").reduce((sum, s) => sum + s.ratio, 0);
 
-function calc(){
-  let sum=0, cover=0;
+            const getColor = val => {
+                const n = parseFloat(val);
+                if (isNaN(n) || n === 0) return "#556";
+                return n > 0 ? "#00e676" : "#ff5252";
+            };
+            const fmt = (val, d = 3) => isNaN(val) ? "—" : `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
 
-  stocks.forEach(s=>{
-    const ratio = s.evaluation / TOTAL_NET_ASSETS * 100;
-    const c = parseFloat(s.daily_change);
-    if(!isNaN(c)){
-      sum += ratio*c/100;
-      cover += ratio;
-    }
-  });
+            if (loading) return <div className="loading">SYSTEM INITIALIZING...</div>;
 
-  return {
-    raw: sum,
-    adjusted: sum*0.9 - 0.05,
-    coverage: cover
-  };
-}
+            return (
+                <div style={S.root}>
+                    <div style={S.bgGrid} />
+                    <header style={S.header}>
+                        <div style={S.headerInner}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <span style={{ fontSize: 22 }}>📊</span>
+                                <div>
+                                    <div style={S.logoTitle}>SBI変動率計算ツール</div>
+                                    <div style={S.logoSub}>全{stocks.length}銘柄 / 純資産算出モード</div>
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", gap: 8 }}>
+                                <Chip label="カバー" val={`${coverageRatio.toFixed(1)}%`} />
+                                <Chip label="予測" val={fmt(sigmaAdjusted)} color={getColor(sigmaAdjusted)} />
+                            </div>
+                        </div>
+                    </header>
 
-function render(){
-  const search = document.getElementById("search").value;
-  const sector = document.getElementById("sector").value;
+                    <div style={S.tabBar}>
+                        <button onClick={() => setActiveTab("calc")} style={{ ...S.tab, ...(activeTab === "calc" ? S.tabActive : {}) }}>📋 銘柄入力</button>
+                        <button onClick={() => setActiveTab("result")} style={{ ...S.tab, ...(activeTab === "result" ? S.tabActive : {}) }}>📈 分析</button>
+                    </div>
 
-  filtered = stocks.filter(s=>{
-    return (sector==="全て"||s.sector===sector) &&
-           (!search || s.name.includes(search) || s.code.includes(search));
-  });
+                    <div style={S.content}>
+                        {activeTab === "calc" && (
+                            <>
+                                <div style={S.previewCard}>
+                                    <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+                                        <div style={{ textAlign: "center" }}>
+                                            <div style={S.previewLabel}>生のΣ</div>
+                                            <div style={{ fontSize: 24, color: getColor(sigmaRaw) }}>{fmt(sigmaRaw)}</div>
+                                        </div>
+                                        <div style={{ color: "#445", fontSize: 18 }}>× 0.9 - 0.05</div>
+                                        <div style={{ textAlign: "center" }}>
+                                            <div style={S.previewLabel}>改良式（予測）</div>
+                                            <div style={{ fontSize: 32, fontWeight: 700, color: getColor(sigmaAdjusted) }}>{fmt(sigmaAdjusted)}</div>
+                                        </div>
+                                    </div>
+                                </div>
 
-  const table = document.getElementById("table");
-  table.innerHTML="";
+                                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                                    <input value={search} onChange={e => setSearch(e.target.value)} placeholder="銘柄名・コード検索..." style={S.searchInput} />
+                                    <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
+                                        {sectors.map(s => <option key={s} value={s}>{s}</option>)}
+                                    </select>
+                                </div>
 
-  filtered.forEach(s=>{
-    const ratio = s.evaluation / TOTAL_NET_ASSETS * 100;
-    const c = parseFloat(s.daily_change)||0;
-    const contrib = ratio*c/100;
+                                <div style={S.tableWrap}>
+                                    <div style={S.tableHeader}>
+                                        <div style={{ flex: 1 }}>コード / 銘柄</div>
+                                        <div style={S.sortHeader} onClick={() => handleSort("ratio")}>比率 {sortKey === "ratio" ? (sortOrder === "desc" ? "▼" : "▲") : ""}</div>
+                                        <div style={S.sortHeader} onClick={() => handleSort("change")}>前日比 {sortKey === "change" ? (sortOrder === "desc" ? "▼" : "▲") : ""}</div>
+                                        <div style={S.sortHeader} onClick={() => handleSort("contrib")}>寄与 {sortKey === "contrib" ? (sortOrder === "desc" ? "▼" : "▲") : ""}</div>
+                                    </div>
+                                    {filteredStocks.map(s => (
+                                        <div key={s.id} style={S.tableRow}>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div style={{ fontSize: 9, color: "#445" }}>{s.code}</div>
+                                                <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
+                                            </div>
+                                            <div style={{ width: 50, textAlign: "right", fontSize: 11, color: "#889" }}>{s.ratio.toFixed(2)}%</div>
+                                            <input type="number" step="0.01" value={s.daily_change} 
+                                                onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
+                                                style={{ ...S.input, width: 60, color: getColor(s.daily_change) }} />
+                                            <div style={{ width: 60, textAlign: "right", fontSize: 11, color: getColor(s.contribution) }}>{fmt(s.contribution, 3)}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                        
+                        {activeTab === "result" && (
+                          <div style={{ animation: "fadeIn 0.3s ease-in-out" }}>
+                            {/* メイン予測スコア */}
+                            <div style={{ ...S.card, textAlign: "center", margin: "16px 0", padding: "32px 16px", border: "1px solid #00e67644" }}>
+                              <div style={S.previewLabel}>予測SBI変動率</div>
+                              <div style={{ fontSize: 52, fontWeight: 800, color: getColor(sigmaAdjusted), letterSpacing: -1 }}>
+                                {fmt(sigmaAdjusted)}
+                              </div>
+                              <div style={{ fontSize: 11, color: "#556", marginTop: 12, lineHeight: 1.6 }}>
+                                計算式: Σ({fmt(sigmaRaw)}) × 0.9 − 0.05% <br />
+                                入力状況: {filledCount} / {stocks.length} 銘柄 (カバー率: {coverageRatio.toFixed(1)}%)
+                              </div>
+                            </div>
 
-    const div=document.createElement("div");
-    div.innerHTML = `
-      ${s.code} ${s.name}
-      [${ratio.toFixed(1)}%]
-      <input value="${s.daily_change}" 
-        onchange="update('${s.id}', this.value)">
-      <span class="${contrib>=0?'pos':'neg'}">
-        ${contrib.toFixed(3)}%
-      </span>
-    `;
-    table.appendChild(div);
-  });
+                            {/* 寄与度 TOP10 */}
+                            {topContribs.length > 0 && (
+                              <div style={S.card}>
+                                <div style={S.cardTitle}>銘柄別寄与度 TOP10</div>
+                                {topContribs.map((s, i) => (
+                                  <div key={s.id} style={S.rankRow}>
+                                    <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i + 1}</span>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                      <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                        {s.name}
+                                      </div>
+                                      <div style={{ height: 3, background: "#111", borderRadius: 2, marginTop: 4, position: "relative" }}>
+                                        <div style={{
+                                          height: "100%", 
+                                          borderRadius: 2,
+                                          width: `${Math.min(Math.abs(s.contribution) * 500, 100)}%`,
+                                          background: s.contribution > 0 ? "#00e676" : "#ff5252",
+                                        }} />
+                                      </div>
+                                    </div>
+                                    <span style={{ fontSize: 12, color: getColor(s.contribution), width: 75, textAlign: "right", fontWeight: 700, marginLeft: 8 }}>
+                                      {fmt(s.contribution, 4)}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
 
-  const res = calc();
-  document.getElementById("pred").textContent =
-    (res.adjusted>0?"+":"")+res.adjusted.toFixed(3)+"%";
-  document.getElementById("coverage").textContent =
-    res.coverage.toFixed(1)+"%";
-}
+                            {/* 実績入力・比較 */}
+                            <div style={S.card}>
+                              <div style={S.cardTitle}>実績との比較・ログ保存</div>
+                              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                                <span style={{ fontSize: 12, color: "#889" }}>実際の変動率</span>
+                                <input type="number" step="0.01" value={actualResult}
+                                  onChange={e => setActualResult(e.target.value)}
+                                  placeholder="0.00"
+                                  style={{ ...S.input, width: 100, fontSize: 16, padding: "8px" }} />
+                                <span style={{ fontSize: 14, color: "#e0e6f0" }}>%</span>
+                              </div>
 
-function update(id,val){
-  stocks = stocks.map(s=>s.id===id?{...s,daily_change:val}:s);
-  render();
-}
+                              {actualResult !== "" && !isNaN(error) && (
+                                <div style={{ padding: "12px", background: "#0a1520", borderRadius: 6, border: "1px solid #1e3a2e" }}>
+                                  <div style={S.row}>
+                                    <span style={{ fontSize: 12, color: "#889" }}>予測との誤差</span>
+                                    <span style={{ color: Math.abs(error) < 0.1 ? "#00e676" : "#ff5252", fontWeight: 700, fontSize: 18 }}>
+                                      {fmt(error)}
+                                    </span>
+                                  </div>
+                                  <button onClick={downloadDailyLog} style={S.saveLogBtn}>
+                                    💾 本日のログをJSONで出力
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        
+                    </div>
+                </div>
+            );
+        }
 
-function saveLog(){
-  const res = calc();
-  const actual = document.getElementById("actual").value;
+        const S = {
+            root: { minHeight: "100vh", background: "#0a0e1a", color: "#e0e6f0" },
+            bgGrid: { position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" },
+            header: { position: "sticky", top: 0, zIndex: 100, background: "rgba(10,14,26,0.95)", borderBottom: "1px solid #1e3a2e", backdropFilter: "blur(8px)" },
+            headerInner: { maxWidth: 720, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
+            logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
+            logoSub: { fontSize: 9, color: "#445" },
+            tabBar: { maxWidth: 720, margin: "0 auto", display: "flex", padding: "8px 16px 0", gap: 4 },
+            tab: { flex: 1, padding: "12px", background: "transparent", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "6px 6px 0 0", cursor: "pointer", fontSize: 12 },
+            tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#00e676" },
+            content: { maxWidth: 720, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 8px 8px" },
+            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 10, padding: "20px", marginBottom: 16 },
+            previewLabel: { fontSize: 10, color: "#445", marginBottom: 4 },
+            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 6, color: "#fff", padding: "8px", fontSize: 12 },
+            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 6, color: "#889", padding: "8px", fontSize: 11 },
+            tableWrap: { border: "1px solid #1a2a1a", borderRadius: 8, overflow: "hidden" },
+            tableHeader: { display: "flex", alignItems: "center", padding: "10px 12px", background: "#060d18", borderBottom: "1px solid #1e3a2e", color: "#00e676", fontSize: 11, fontWeight: 700 },
+            sortHeader: { width: 60, textAlign: "right", cursor: "pointer", userSelect: "none" },
+            tableRow: { display: "flex", alignItems: "center", padding: "8px 12px", borderBottom: "1px solid #0d1a0d", gap: 10 },
+            input: { background: "#0a1520", border: "1px solid #222", borderRadius: 4, padding: "4px", textAlign: "right", outline: "none", fontSize: 12 }
+        };
 
-  const log = {
-    date: new Date().toISOString(),
-    pred: res.adjusted,
-    actual: actual ? parseFloat(actual) : null
-  };
+        function Chip({ label, val, color = "#00e676" }) {
+            return (
+                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 6, padding: "4px 8px", textAlign: "center", minWidth: 65 }}>
+                    <div style={{ fontSize: 8, color: "#445" }}>{label}</div>
+                    <div style={{ fontSize: 11, color, fontWeight: 700 }}>{val}</div>
+                </div>
+            );
+        }
 
-  const blob = new Blob([JSON.stringify(log,null,2)], {type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="log.json";
-  a.click();
-}
-
-init();
-</script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
