@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBI変動率計算ツール - Pro</title>
+    <title>SBI変動率計算ツール - Sector Plus</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -11,6 +11,7 @@
         body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; overflow-x: hidden; }
         .loading { color: #00e676; display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 14px; letter-spacing: 2px; }
         input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -27,8 +28,7 @@
             const [sectorFilter, setSectorFilter] = useState("全て");
             const [search, setSearch] = useState("");
             
-            // ソート状態管理
-            const [sortKey, setSortKey] = useState("ratio"); // ratio, change, contrib
+            const [sortKey, setSortKey] = useState("ratio");
             const [sortOrder, setSortOrder] = useState("desc");
 
             useEffect(() => {
@@ -61,7 +61,6 @@
 
             const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
 
-            // 基本計算データ作成
             const processedStocks = useMemo(() => {
                 return stocks.map(s => {
                     const ratio = (s.evaluation / TOTAL_NET_ASSETS) * 100;
@@ -71,11 +70,21 @@
                 });
             }, [stocks]);
 
+            // 業種別の集計計算
+            const sectorStats = useMemo(() => {
+                const map = {};
+                processedStocks.forEach(s => {
+                    if (!map[s.sector]) map[s.sector] = { name: s.sector, contrib: 0, count: 0 };
+                    map[s.sector].contrib += s.contrib;
+                    map[s.sector].count += 1;
+                });
+                return Object.values(map).sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
+            }, [processedStocks]);
+
             const sigmaRaw = useMemo(() => processedStocks.reduce((sum, s) => sum + s.contrib, 0), [processedStocks]);
             const sigmaAdjusted = sigmaRaw * 0.9 - 0.05;
             const coverageRatio = processedStocks.filter(s => s.daily_change !== "").reduce((sum, s) => sum + s.ratio, 0);
 
-            // ソート・フィルタリング
             const filteredStocks = useMemo(() => {
                 let base = processedStocks.filter(s => {
                     const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
@@ -120,18 +129,17 @@
                                 <span style={{ fontSize: 22 }}>📊</span>
                                 <div>
                                     <div style={S.logoTitle}>SBI変動率計算ツール</div>
-                                    <div style={S.logoSub}>全{stocks.length}銘柄対応 / 精度向上版</div>
+                                    <div style={S.logoSub}>Sector Contribution Analysis</div>
                                 </div>
                             </div>
                             <div style={{ display: "flex", gap: 8 }}>
-                                <Chip label="カバー" val={`${coverageRatio.toFixed(1)}%`} />
                                 <Chip label="予測" val={fmt(sigmaAdjusted)} color={getColor(sigmaAdjusted)} />
                             </div>
                         </div>
                     </header>
 
                     <div style={S.tabBar}>
-                        {[{ key: "calc", label: "📋 銘柄入力" }, { key: "result", label: "📈 分析結果" }].map(t => (
+                        {[{ key: "calc", label: "📋 入力" }, { key: "result", label: "📈 分析" }].map(t => (
                             <button key={t.key} onClick={() => setActiveTab(t.key)}
                                 style={{ ...S.tab, ...(activeTab === t.key ? S.tabActive : {}) }}>
                                 {t.label}
@@ -143,34 +151,30 @@
                         {activeTab === "calc" && (
                             <>
                                 <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>改良式によるSBI予測変動率</div>
-                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(sigmaAdjusted), textAlign: "center", letterSpacing: -1 }}>
+                                    <div style={S.previewLabel}>予測変動率</div>
+                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(sigmaAdjusted), textAlign: "center" }}>
                                         {fmt(sigmaAdjusted)}
-                                    </div>
-                                    <div style={{ fontSize: 10, color: "#445", textAlign: "center", marginTop: 8 }}>
-                                        内部計算: Σ({sigmaRaw.toFixed(4)}%) × 0.9 - 0.05
                                     </div>
                                 </div>
 
                                 <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                                     <input value={search} onChange={e => setSearch(e.target.value)}
-                                        placeholder="銘柄名・コードで検索..." style={S.searchInput} />
+                                        placeholder="検索..." style={S.searchInput} />
                                     <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
                                         {sectors.map(s => <option key={s} value={s}>{s}</option>)}
                                     </select>
                                 </div>
 
-                                {/* テーブルヘッダー */}
                                 <div style={S.tableHeader}>
-                                    <div style={{ flex: 1, color: "#445", fontSize: 10 }}>銘柄情報</div>
+                                    <div style={{ flex: 1, color: "#445", fontSize: 10 }}>銘柄</div>
                                     <div onClick={() => toggleSort("ratio")} style={{...S.sortBtn, color: sortKey === "ratio" ? "#00e676" : "#445"}}>
-                                        比率 {sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
+                                        比率{sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
                                     </div>
                                     <div onClick={() => toggleSort("change")} style={{...S.sortBtn, color: sortKey === "change" ? "#00e676" : "#445"}}>
-                                        前日比 {sortKey === "change" && (sortOrder === "desc" ? "▼" : "▲")}
+                                        前日比{sortKey === "change" && (sortOrder === "desc" ? "▼" : "▲")}
                                     </div>
                                     <div onClick={() => toggleSort("contrib")} style={{...S.sortBtn, color: sortKey === "contrib" ? "#00e676" : "#445", width: 60}}>
-                                        寄与 {sortKey === "contrib" && (sortOrder === "desc" ? "▼" : "▲")}
+                                        寄与{sortKey === "contrib" && (sortOrder === "desc" ? "▼" : "▲")}
                                     </div>
                                 </div>
 
@@ -178,12 +182,10 @@
                                     {filteredStocks.map(s => (
                                         <div key={s.id} style={S.tableRow}>
                                             <div style={{ flex: 1, minWidth: 0 }}>
-                                                <div style={{ fontSize: 9, color: "#445", fontWeight: 600 }}>{s.code}</div>
+                                                <div style={{ fontSize: 9, color: "#445" }}>{s.code}</div>
                                                 <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
                                             </div>
-                                            <div style={{ width: 45, textAlign: "right", fontSize: 11, color: "#667" }}>
-                                                {s.ratio.toFixed(1)}%
-                                            </div>
+                                            <div style={{ width: 45, textAlign: "right", fontSize: 11, color: "#667" }}>{s.ratio.toFixed(1)}%</div>
                                             <div style={{ width: 75, display: "flex", justifyContent: "flex-end" }}>
                                                 <input type="number" step="0.01" value={s.daily_change} 
                                                     onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
@@ -199,41 +201,48 @@
                         )}
 
                         {activeTab === "result" && (
-                            <>
-                                {/* ここが復活したセクション：個別寄与度 */}
-                                <div style={S.card}>
-                                    <div style={S.cardTitle}>寄与度 TOP10 (銘柄別)</div>
-                                    {topContribs.map((s, i) => (
-                                        <div key={s.id} style={S.rankRow}>
-                                            <span style={{ fontSize: 11, color: "#889", width: 110, overflow: "hidden", whiteSpace: "nowrap" }}>{s.name}</span>
+                            <div style={{ animation: "fadeIn 0.3s" }}>
+                                {/* 業種別セクター寄与 */}
+                                <div style={{...S.card, marginBottom: 20}}>
+                                    <div style={S.cardTitle}>業種別セクター寄与 (合計)</div>
+                                    {sectorStats.map((sec) => (
+                                        <div key={sec.name} style={S.rankRow}>
+                                            <span style={{ fontSize: 11, color: "#aabbc0", width: 90, whiteSpace: "nowrap" }}>{sec.name}</span>
                                             <div style={S.barContainer}>
-                                                <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contribution) * 600, 100)}%`, background: s.contribution > 0 ? "#00e676" : "#ff5252" }} />
+                                                <div style={{ 
+                                                    ...S.bar, 
+                                                    width: `${Math.min(Math.abs(sec.contrib) * 500, 100)}%`, 
+                                                    background: sec.contrib > 0 ? "#00e676" : "#ff5252",
+                                                    marginLeft: sec.contrib < 0 ? 'auto' : '0',
+                                                    marginRight: sec.contrib > 0 ? 'auto' : '0'
+                                                }} />
                                             </div>
-                                            <span style={{ fontSize: 12, color: getColor(s.contribution), width: 70, textAlign: "right" }}>{fmt(s.contribution, 4)}</span>
+                                            <span style={{ fontSize: 12, color: getColor(sec.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
+                                                {sec.contrib.toFixed(4)}%
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* ここが復活したセクション：業種別セクター寄与 */}
+                                {/* 個別銘柄寄与トップ15 */}
                                 <div style={S.card}>
-                                    <div style={S.cardTitle}>業種別セクター寄与</div>
-                                    {sectorContribs.map((sector, i) => (
-                                        <div key={i} style={S.rankRow}>
-                                            <span style={{ fontSize: 11, color: "#889", width: 90 }}>{sector.name}</span>
-                                            <div style={S.barContainerCenter}>
-                                                <div style={S.barCenterLine} />
-                                                <div style={{
-                                                    ...S.barCenter,
-                                                    left: sector.val > 0 ? "50%" : `calc(50% - ${Math.min(Math.abs(sector.val) * 400, 50)}%)`,
-                                                    width: `${Math.min(Math.abs(sector.val) * 400, 50)}%`,
-                                                    background: sector.val > 0 ? "linear-gradient(90deg,#00e676,#00b248)" : "linear-gradient(90deg,#c50000,#ff5252)"
-                                                }} />
+                                    <div style={S.cardTitle}>個別銘柄 寄与度ランキング</div>
+                                    {[...processedStocks]
+                                        .filter(s => s.contrib !== 0)
+                                        .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
+                                        .slice(0, 15)
+                                        .map((s, i) => (
+                                            <div key={s.id} style={S.rankRow}>
+                                                <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i+1}</span>
+                                                <span style={{ fontSize: 11, color: "#889", flex: 1, overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</span>
+                                                <span style={{ fontSize: 12, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
+                                                    {s.contrib.toFixed(4)}%
+                                                </span>
                                             </div>
-                                            <span style={{ fontSize: 12, color: getColor(sector.val), width: 72, textAlign: "right" }}>{fmt(sector.val, 4)}</span>
-                                        </div>
-                                    ))}
+                                        ))
+                                    }
                                 </div>
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -248,30 +257,30 @@
             logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
             logoSub: { fontSize: 9, color: "#445" },
             tabBar: { maxWidth: 720, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
-            tab: { flex: 1, padding: "12px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12, transition: "0.2s" },
+            tab: { flex: 1, padding: "12px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12 },
             tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#00e676", fontWeight: 700 },
             content: { maxWidth: 720, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 12px 12px", minHeight: "60vh" },
-            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "24px", marginBottom: 20, boxShadow: "0 10px 30px rgba(0,0,0,0.5)" },
-            previewLabel: { fontSize: 10, color: "#00e676", textAlign: "center", marginBottom: 4, letterSpacing: 1, fontWeight: 600 },
-            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "10px 12px", fontSize: 13, outline: "none" },
+            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "20px", marginBottom: 20 },
+            previewLabel: { fontSize: 10, color: "#00e676", textAlign: "center", marginBottom: 4, fontWeight: 600 },
+            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "10px 12px", fontSize: 13 },
             select: { background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#889", padding: "10px", fontSize: 12 },
             tableHeader: { display: "flex", alignItems: "center", padding: "0 12px 10px", gap: 8, borderBottom: "1px solid #1a2a1a" },
-            sortBtn: { fontSize: 10, cursor: "pointer", userSelect: "none", textAlign: "right", width: 50, fontWeight: 600 },
+            sortBtn: { fontSize: 10, cursor: "pointer", textAlign: "right", width: 50 },
             tableWrap: { borderRadius: 8, overflow: "hidden" },
-            tableRow: { display: "flex", alignItems: "center", padding: "10px 12px", borderBottom: "1px solid #0d1a0d", gap: 8, transition: "background 0.2s" },
+            tableRow: { display: "flex", alignItems: "center", padding: "10px 12px", borderBottom: "1px solid #0d1a0d", gap: 8 },
             input: { background: "#060d18", border: "1px solid #222", borderRadius: 6, padding: "6px", textAlign: "right", outline: "none", width: "100%", fontSize: 13, fontWeight: 700 },
-            card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 10, padding: "20px" },
-            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 16, fontWeight: 700 },
-            rankRow: { display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid #0d1a0d" },
-            barContainer: { flex: 1, height: 4, background: "#111", borderRadius: 2, overflow: "hidden" },
-            bar: { height: "100%", borderRadius: 2, transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }
+            card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 10, padding: "16px" },
+            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 12, fontWeight: 700 },
+            rankRow: { display: "flex", alignItems: "center", gap: 10, padding: "6px 0", borderBottom: "1px solid #0d1a0d" },
+            barContainer: { flex: 1, height: 4, background: "#111", borderRadius: 2, display: "flex" },
+            bar: { height: "100%", borderRadius: 2, transition: "width 0.4s" }
         };
 
         function Chip({ label, val, color = "#00e676" }) {
             return (
-                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 8, padding: "6px 12px", textAlign: "center", minWidth: 70 }}>
-                    <div style={{ fontSize: 8, color: "#445", marginBottom: 2, fontWeight: 600 }}>{label}</div>
-                    <div style={{ fontSize: 12, color, fontWeight: 800 }}>{val}</div>
+                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 8, padding: "4px 10px", textAlign: "center" }}>
+                    <div style={{ fontSize: 8, color: "#445" }}>{label}</div>
+                    <div style={{ fontSize: 11, color, fontWeight: 800 }}>{val}</div>
                 </div>
             );
         }
