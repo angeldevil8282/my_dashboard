@@ -229,8 +229,9 @@
                             </>
                         )}
 
-                        {activeTab === "result" && (
+{activeTab === "result" && (
                             <div style={{ animation: "fadeIn 0.3s" }}>
+                                {/* 業種別ランキング */}
                                 <div style={{...S.card, marginBottom: 20}}>
                                     <div style={S.cardTitle}>業種別セクター寄与 (合計)</div>
                                     {sectorStats.map((sec) => (
@@ -254,6 +255,38 @@
                                             </span>
                                         </div>
                                     ))}
+                                </div>
+
+                                {/* 個別銘柄寄与度ランキング (TOP 15) */}
+                                <div style={S.card}>
+                                    <div style={S.cardTitle}>個別銘柄 寄与度ランキング (TOP 15)</div>
+                                    {[...processedStocks]
+                                        .filter(s => s.contrib !== 0)
+                                        .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
+                                        .slice(0, 15)
+                                        .map((s, i) => (
+                                            <div key={s.id} style={S.rankRow}>
+                                                <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i+1}</span>
+                                                <span style={{ fontSize: 11, color: "#aabbc0", width: 90, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
+                                                <div style={S.chartContainer}>
+                                                    <div style={S.chartHalfLeft}>
+                                                        {s.contrib < 0 && (
+                                                            <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contrib) * 800, 100)}%`, background: "#ff5252", borderRadius: "2px 0 0 2px" }} />
+                                                        )}
+                                                    </div>
+                                                    <div style={S.zeroLine} />
+                                                    <div style={S.chartHalfRight}>
+                                                        {s.contrib > 0 && (
+                                                            <div style={{ ...S.bar, width: `${Math.min(s.contrib * 800, 100)}%`, background: "#00e676", borderRadius: "0 2px 2px 0" }} />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <span style={{ fontSize: 11, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
+                                                    {fmt(s.contrib, 4)}
+                                                </span>
+                                            </div>
+                                        ))
+                                    }
                                 </div>
                             </div>
                         )}
