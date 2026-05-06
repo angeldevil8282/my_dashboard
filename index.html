@@ -39,11 +39,20 @@
                             fetch('./stocks.json'),
                             fetch(`./daily_changes.json?t=${Date.now()}`)
                         ]);
+                        
+                        // --- 修正ポイント：レスポンスヘッダーから更新日時を取得 ---
+                        const lastModified = resC.headers.get('Last-Modified');
+                        if (lastModified) {
+                            const date = new Date(lastModified);
+                            // 日本時間にフォーマット (YYYY/MM/DD HH:mm:ss)
+                            setTimestamp(date.toLocaleString('ja-JP'));
+                        } else {
+                            setTimestamp("取得不可");
+                        }
+                        // --------------------------------------------------
+
                         const allStocksRaw = await resS.json();
                         const latestChanges = await resC.json();
-
-                        // JSON内の timestamp または update_at キーを探す（なければ現在時刻）
-                        setTimestamp(latestChanges.timestamp || latestChanges.updated_at || "---");
 
                         const unique = allStocksRaw.filter((s, i, arr) =>
                             s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
@@ -58,6 +67,7 @@
                         setLoading(false);
                     } catch (e) {
                         console.error("Data Load Error:", e);
+                        setTimestamp("Error");
                     }
                 }
                 init();
