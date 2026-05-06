@@ -195,7 +195,7 @@
                                 </div>
 
                                 <div style={S.tableHeader}>
-                                    <div style={{ flex: 1, color: "#445", fontSize: 10 }}>銘柄</div>
+                                    <div style={{ flex: 1, color: "#445", fontSize: 12 }}>銘柄</div>
                                     <div onClick={() => toggleSort("ratio")} style={{...S.sortBtn, color: sortKey === "ratio" ? "#00e676" : "#445"}}>
                                         比率{sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
                                     </div>
@@ -211,7 +211,7 @@
                                     {filteredStocks.map(s => (
                                         <div key={s.id} style={S.tableRow}>
                                             <div style={{ flex: 1, minWidth: 0 }}>
-                                                <div style={{ fontSize: 9, color: "#445" }}>{s.code}</div>
+                                                <div style={{ fontSize: 10, color: "#445" }}>{s.code}</div>
                                                 <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
                                             </div>
                                             <div style={{ width: 45, textAlign: "right", fontSize: 10, color: "#556" }}>{s.ratio.toFixed(1)}%</div>
@@ -266,7 +266,7 @@
                                         .slice(0, 15)
                                         .map((s, i) => (
                                             <div key={s.id} style={S.rankRow}>
-                                                <span style={{ fontSize: 10, color: "#445", width: 20 }}>{i+1}</span>
+                                                <span style={{ fontSize: 11, color: "#445", width: 20 }}>{i+1}</span>
                                                 <span style={{ fontSize: 11, color: "#aabbc0", width: 90, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
                                                 <div style={S.chartContainer}>
                                                     <div style={S.chartHalfLeft}>
@@ -301,7 +301,7 @@
             header: { position: "sticky", top: 0, zIndex: 100, background: "rgba(10,14,26,0.95)", borderBottom: "1px solid #1e3a2e", backdropFilter: "blur(8px)" },
             headerInner: { maxWidth: 640, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
             logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
-            logoSub: { fontSize: 9, color: "#445" },
+            logoSub: { fontSize: 10, color: "#445" },
             tabBar: { maxWidth: 640, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
             tab: { flex: 1, padding: "10px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12, outline: "none" },
             tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#e0e6f0", fontWeight: 700 },
@@ -333,7 +333,7 @@
         function Chip({ label, val, color = "#00e676" }) {
             return (
                 <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 6, padding: "4px 8px", textAlign: "center", minWidth: 60 }}>
-                    <div style={{ fontSize: 8, color: "#445" }}>{label}</div>
+                    <div style={{ fontSize: 9, color: "#445" }}>{label}</div>
                     <div style={{ fontSize: 10, color, fontWeight: 800 }}>{val}</div>
                 </div>
             );
