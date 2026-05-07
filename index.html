@@ -23,8 +23,8 @@
 
         function App() {
             const [stocks, setStocks] = useState([]);
+            const [summary, setSummary] = useState(null); // Python側で計算されたサマリー
             const [loading, setLoading] = useState(true);
-            const [timestamp, setTimestamp] = useState(""); // タイムスタンプ用
             const [activeTab, setActiveTab] = useState("calc");
             const [sectorFilter, setSectorFilter] = useState("全て");
             const [search, setSearch] = useState("");
@@ -35,24 +35,16 @@
             useEffect(() => {
                 async function init() {
                     try {
-                        const [resS, resC] = await Promise.all([
+                        const cacheBuster = `?t=${Date.now()}`;
+                        const [resS, resC, resSum] = await Promise.all([
                             fetch('./stocks.json'),
-                            fetch(`./daily_changes.json?t=${Date.now()}`)
+                            fetch(`./daily_changes.json${cacheBuster}`),
+                            fetch(`./summary.json${cacheBuster}`) // サマリーを読み込む
                         ]);
                         
-                        // --- 修正ポイント：レスポンスヘッダーから更新日時を取得 ---
-                        const lastModified = resC.headers.get('Last-Modified');
-                        if (lastModified) {
-                            const date = new Date(lastModified);
-                            // 日本時間にフォーマット (YYYY/MM/DD HH:mm:ss)
-                            setTimestamp(date.toLocaleString('ja-JP'));
-                        } else {
-                            setTimestamp("取得不可");
-                        }
-                        // --------------------------------------------------
-
                         const allStocksRaw = await resS.json();
                         const latestChanges = await resC.json();
+                        const summaryData = await resSum.json();
 
                         const unique = allStocksRaw.filter((s, i, arr) =>
                             s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
@@ -60,14 +52,15 @@
 
                         const mapped = unique.map(s => ({
                             ...s,
+                            ratio: (s.evaluation / TOTAL_NET_ASSETS) * 100,
                             daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code].toString() : ""
                         }));
 
                         setStocks(mapped);
+                        setSummary(summaryData);
                         setLoading(false);
                     } catch (e) {
                         console.error("Data Load Error:", e);
-                        setTimestamp("Error");
                     }
                 }
                 init();
@@ -75,27 +68,14 @@
 
             const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
 
+            // 個別銘柄の計算（テーブル表示用のみ）
             const processedStocks = useMemo(() => {
                 return stocks.map(s => {
-                    const ratio = (s.evaluation / TOTAL_NET_ASSETS) * 100;
                     const change = parseFloat(s.daily_change);
-                    const contrib = isNaN(change) ? 0 : (ratio * change) / 100;
-                    return { ...s, ratio, contrib, changeNum: isNaN(change) ? -999 : change };
+                    const contrib = isNaN(change) ? 0 : (s.ratio * change) / 100;
+                    return { ...s, contrib, changeNum: isNaN(change) ? -999 : change };
                 });
             }, [stocks]);
-
-            const sectorStats = useMemo(() => {
-                const map = {};
-                processedStocks.forEach(s => {
-                    if (!map[s.sector]) map[s.sector] = { name: s.sector, contrib: 0 };
-                    map[s.sector].contrib += s.contrib;
-                });
-                return Object.values(map).sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
-            }, [processedStocks]);
-
-            const sigmaRaw = useMemo(() => processedStocks.reduce((sum, s) => sum + s.contrib, 0), [processedStocks]);
-            const sigmaAdjusted = sigmaRaw * 0.9 - 0.05;
-            const coverageCount = stocks.filter(s => s.daily_change !== "").length;
 
             const filteredStocks = useMemo(() => {
                 let base = processedStocks.filter(s => {
@@ -128,9 +108,12 @@
                 return n > 0 ? "#00e676" : "#ff5252";
             };
 
-            const fmt = (val, d = 3) => `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
+            const fmt = (val, d = 3) => {
+                if (typeof val !== 'number') return "0.000%";
+                return `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
+            };
 
-            if (loading) return <div className="loading">SYSTEM INITIALIZING...</div>;
+            if (loading || !summary) return <div className="loading">SYSTEM INITIALIZING...</div>;
 
             return (
                 <div style={S.root}>
@@ -145,8 +128,8 @@
                                 </div>
                             </div>
                             <div style={{ display: "flex", gap: 8 }}>
-                                <Chip label="入力済" val={`${coverageCount}/${stocks.length}`} />
-                                <Chip label="予測" val={fmt(sigmaAdjusted)} color={getColor(sigmaAdjusted)} />
+                                <Chip label="入力済" val={summary.coverage} />
+                                <Chip label="予測" val={fmt(summary.prediction)} color={getColor(summary.prediction)} />
                             </div>
                         </div>
                     </header>
@@ -164,18 +147,16 @@
                         {activeTab === "calc" && (
                             <>
                                 <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>改良式によるSBI予測</div>
-                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(sigmaAdjusted), textAlign: "center", lineHeight: 1 }}>
-                                        {fmt(sigmaAdjusted)}
+                                    <div style={S.previewLabel}>改良式によるSBI予測（Python計算済）</div>
+                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(summary.prediction), textAlign: "center", lineHeight: 1 }}>
+                                        {fmt(summary.prediction)}
                                     </div>
-                                    {/* タイムスタンプ表示 */}
-                                    <div style={S.timestamp}>Update: {timestamp}</div>
+                                    <div style={S.timestamp}>Last Update: {summary.timestamp}</div>
                                 </div>
 
-                                {/* 追加メモセクション */}
                                 <div style={S.memoCard}>
                                     <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加</div>
-                                    <div style={S.memoSub}>★SBIV日本高配当：月7万円（3,040円/日）※追加は月10万円基準</div>
+                                    <div style={S.memoSub}>★SBIV日本高配当：月7万円（3,040円/日）</div>
                                     <table style={S.memoTable}>
                                         <tbody>
                                             <tr><td>-0.5% 以上</td><td>1日分 (4,350円)</td></tr>
@@ -216,9 +197,8 @@
                                             </div>
                                             <div style={{ width: 45, textAlign: "right", fontSize: 10, color: "#556" }}>{s.ratio.toFixed(1)}%</div>
                                             <div style={{ width: 75 }}>
-                                                <input type="number" step="0.01" value={s.daily_change} 
-                                                    onChange={e => setStocks(prev => prev.map(item => item.id === s.id ? { ...item, daily_change: e.target.value } : item))}
-                                                    style={{ ...S.input, color: getColor(s.daily_change) }} />
+                                                <input type="number" readOnly value={s.daily_change} 
+                                                    style={{ ...S.input, color: getColor(s.daily_change), opacity: 0.8 }} />
                                             </div>
                                             <div style={{ width: 60, textAlign: "right", fontSize: 11, fontWeight: 700, color: getColor(s.contrib) }}>
                                                 {s.contrib === 0 ? "0.000" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
@@ -229,12 +209,11 @@
                             </>
                         )}
 
-{activeTab === "result" && (
+                        {activeTab === "result" && (
                             <div style={{ animation: "fadeIn 0.3s" }}>
-                                {/* 業種別ランキング */}
                                 <div style={{...S.card, marginBottom: 20}}>
-                                    <div style={S.cardTitle}>業種別セクター寄与 (合計)</div>
-                                    {sectorStats.map((sec) => (
+                                    <div style={S.cardTitle}>業種別セクター寄与 (Python計算結果)</div>
+                                    {summary.sector_stats.map((sec) => (
                                         <div key={sec.name} style={S.rankRow}>
                                             <span style={{ fontSize: 11, color: "#aabbc0", width: 85, whiteSpace: "nowrap" }}>{sec.name}</span>
                                             <div style={S.chartContainer}>
@@ -257,10 +236,9 @@
                                     ))}
                                 </div>
 
-                                {/* 個別銘柄寄与度ランキング (TOP 15) */}
                                 <div style={S.card}>
                                     <div style={S.cardTitle}>個別銘柄 寄与度ランキング (TOP 15)</div>
-                                    {[...processedStocks]
+                                    {processedStocks
                                         .filter(s => s.contrib !== 0)
                                         .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
                                         .slice(0, 15)
@@ -295,6 +273,7 @@
             );
         }
 
+        // スタイルオブジェクト S および Chip コンポーネントは元のコードを維持
         const S = {
             root: { minHeight: "100vh", background: "#0a0e1a", paddingBottom: 40 },
             bgGrid: { position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" },
