@@ -3,323 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBI変動率計算ツール - Pro Analysis</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Asset Monitor - Command Center</title>
     <style>
-        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; color: #e0e6f0; overflow-x: hidden; }
-        .loading { color: #00e676; display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 14px; letter-spacing: 2px; }
-        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; color: #e0e6f0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .bg-grid { position: fixed; inset: 0; backgroundImage: linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: -1; }
+        
+        header { width: 100%; padding: 40px 0; text-align: center; border-bottom: 1px solid #1e3a2e; background: rgba(10,14,26,0.8); backdrop-filter: blur(8px); }
+        .logo { font-size: 28px; font-weight: 800; color: #00e676; letter-spacing: 2px; margin-bottom: 8px; }
+        .sub-logo { font-size: 12px; color: #445; letter-spacing: 4px; }
+
+        .container { max-width: 900px; width: 90%; padding: 40px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        .card { background: #0d1520; border: 1px solid #1e3a2e; borderRadius: 12px; padding: 24px; text-decoration: none; color: inherit; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-5px); border-color: #00e676; box-shadow: 0 10px 30px rgba(0,230,118,0.1); }
+        .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #1e3a2e; transition: background 0.3s; }
+        .card:hover::before { background: #00e676; }
+
+        .card-tag { font-size: 10px; font-weight: 700; color: #00e676; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
+        .card-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #aabbc0; }
+        .card-desc { font-size: 13px; color: #556; line-height: 1.6; margin-bottom: 20px; flex: 1; }
+        
+        .card-status { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #00e676; font-family: monospace; }
+        .status-dot { width: 6px; height: 6px; background: #00e676; border-radius: 50%; box-shadow: 0 0 8px #00e676; animation: blink 2s infinite; }
+
+        footer { margin-top: auto; padding: 40px; font-size: 10px; color: #334; letter-spacing: 1px; }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="bg-grid"></div>
+    
+    <header>
+        <div class="logo">ASSET MONITOR</div>
+        <div class="sub-logo">SYSTEM DASHBOARD PORTAL</div>
+    </header>
 
-    <script type="text/babel">
-        const { useState, useMemo, useEffect } = React;
-        const TOTAL_NET_ASSETS = 114987493;
+    <div class="container">
+        <a href="sbi/index.html" class="card">
+            <div class="card-tag">Standard Logic v2</div>
+            <div class="card-title">SBI高配当予測</div>
+            <div class="card-desc">
+                101銘柄の株価変動からSBI日本高配当株式ファンドの基準価額を予測。業種別寄与度および個別銘柄のインパクトを分析します。
+            </div>
+            <div class="card-status">
+                <div class="status-dot"></div> ACTIVE / MONITORING
+            </div>
+        </a>
 
-        function App() {
-            const [stocks, setStocks] = useState([]);
-            const [summary, setSummary] = useState(null); // Python側で計算されたサマリー
-            const [loading, setLoading] = useState(true);
-            const [activeTab, setActiveTab] = useState("calc");
-            const [sectorFilter, setSectorFilter] = useState("全て");
-            const [search, setSearch] = useState("");
-            
-            const [sortKey, setSortKey] = useState("ratio");
-            const [sortOrder, setSortOrder] = useState("desc");
+        <a href="crash_jp/index.html" class="card">
+            <div class="card-tag">Alert System</div>
+            <div class="card-title">日本株 暴落監視</div>
+            <div class="card-desc">
+                日経平均および主要個別銘柄（任天堂等）をリアルタイム監視。設定した閾値を超える変動を検知し、スポット購入の好機を特定します。
+            </div>
+            <div class="card-status">
+                <div class="status-dot"></div> STANDBY / THRESHOLD
+            </div>
+        </a>
 
-            useEffect(() => {
-                async function init() {
-                    try {
-                        const cacheBuster = `?t=${Date.now()}`;
-                        const [resS, resC, resSum] = await Promise.all([
-                            fetch('./data/config.json'),
-                            fetch(`./data/daily_changes.json${cacheBuster}`),
-                            fetch(`./data/summary.json${cacheBuster}`) // サマリーを読み込む
-                        ]);
-                        
-                        const allStocksRaw = await resS.json();
-                        const latestChanges = await resC.json();
-                        const summaryData = await resSum.json();
+        <a href="crash_us/index.html" class="card">
+            <div class="card-tag">Global Alert</div>
+            <div class="card-title">米国株 メガテック監視</div>
+            <div class="card-desc">
+                QQQ、GAFAMに加え、NVDA/AVGO/TSMC等の半導体銘柄を監視。ボラティリティの激しいメガテック株の急落を補足します。
+            </div>
+            <div class="card-status">
+                <div class="status-dot"></div> STANDBY / THRESHOLD
+            </div>
+        </a>
+    </div>
 
-                        const unique = allStocksRaw.filter((s, i, arr) =>
-                            s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
-                        );
-
-                        const mapped = unique.map(s => ({
-                            ...s,
-                            ratio: (s.evaluation / TOTAL_NET_ASSETS) * 100,
-                            daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code].toString() : ""
-                        }));
-
-                        setStocks(mapped);
-                        setSummary(summaryData);
-                        setLoading(false);
-                    } catch (e) {
-                        console.error("Data Load Error:", e);
-                    }
-                }
-                init();
-            }, []);
-
-            const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
-
-            // 個別銘柄の計算（テーブル表示用のみ）
-            const processedStocks = useMemo(() => {
-                return stocks.map(s => {
-                    const change = parseFloat(s.daily_change);
-                    const contrib = isNaN(change) ? 0 : (s.ratio * change) / 100;
-                    return { ...s, contrib, changeNum: isNaN(change) ? -999 : change };
-                });
-            }, [stocks]);
-
-            const filteredStocks = useMemo(() => {
-                let base = processedStocks.filter(s => {
-                    const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
-                    const matchSearch = !search || s.name.includes(search) || s.code.includes(search);
-                    return matchSector && matchSearch;
-                });
-
-                return base.sort((a, b) => {
-                    let valA, valB;
-                    if (sortKey === "ratio") { [valA, valB] = [a.ratio, b.ratio]; }
-                    else if (sortKey === "change") { [valA, valB] = [a.changeNum, b.changeNum]; }
-                    else { [valA, valB] = [a.contrib, b.contrib]; }
-                    return sortOrder === "asc" ? valA - valB : valB - valA;
-                });
-            }, [processedStocks, sectorFilter, search, sortKey, sortOrder]);
-
-            const toggleSort = (key) => {
-                if (sortKey === key) {
-                    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
-                } else {
-                    setSortKey(key);
-                    setSortOrder("desc");
-                }
-            };
-
-            const getColor = val => {
-                const n = parseFloat(val);
-                if (isNaN(n) || n === 0) return "#556";
-                return n > 0 ? "#00e676" : "#ff5252";
-            };
-
-            const fmt = (val, d = 3) => {
-                if (typeof val !== 'number') return "0.000%";
-                return `${val > 0 ? "+" : ""}${val.toFixed(d)}%`;
-            };
-
-            if (loading || !summary) return <div className="loading">SYSTEM INITIALIZING...</div>;
-
-            return (
-                <div style={S.root}>
-                    <div style={S.bgGrid} />
-                    <header style={S.header}>
-                        <div style={S.headerInner}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                <span style={{ fontSize: 22 }}>📈</span>
-                                <div>
-                                    <div style={S.logoTitle}>SBI変動率計算ツール</div>
-                                    <div style={S.logoSub}>純資産 1,150億円ベース</div>
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", gap: 8 }}>
-                                <Chip label="入力済" val={summary.coverage} />
-                                <Chip label="予測" val={fmt(summary.prediction)} color={getColor(summary.prediction)} />
-                            </div>
-                        </div>
-                    </header>
-
-                    <div style={S.tabBar}>
-                        {[{ key: "calc", label: "入力" }, { key: "result", label: "分析・結果" }].map(t => (
-                            <button key={t.key} onClick={() => setActiveTab(t.key)}
-                                style={{ ...S.tab, ...(activeTab === t.key ? S.tabActive : {}) }}>
-                                {t.label}
-                            </button>
-                        ))}
-                    </div>
-
-                    <div style={S.content}>
-                        {activeTab === "calc" && (
-                            <>
-                                <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>改良式によるSBI予測（Python計算済）</div>
-                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(summary.prediction), textAlign: "center", lineHeight: 1 }}>
-                                        {fmt(summary.prediction)}
-                                    </div>
-                                    <div style={S.timestamp}>Last Update: {summary.timestamp}</div>
-                                </div>
-
-                                <div style={S.memoCard}>
-                                    <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加</div>
-                                    <div style={S.memoSub}>★SBIV日本高配当：月7万円（3,040円/日）</div>
-                                    <table style={S.memoTable}>
-                                        <tbody>
-                                            <tr><td>-0.5% 以上</td><td>1日分 (4,350円)</td></tr>
-                                            <tr><td>-1.0% 以上</td><td>3日分 (13,050円)</td></tr>
-                                            <tr><td>-1.5% 以上</td><td>6日分 (26,100円)</td></tr>
-                                            <tr><td>-2.0% 以上</td><td>12日分 (52,200円)</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-                                    <input value={search} onChange={e => setSearch(e.target.value)}
-                                        placeholder="銘柄名/コード..." style={S.searchInput} />
-                                    <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
-                                        {sectors.map(s => <option key={s} value={s}>{s}</option>)}
-                                    </select>
-                                </div>
-
-                                <div style={S.tableHeader}>
-                                    <div style={{ flex: 1, color: "#445", fontSize: 12 }}>銘柄</div>
-                                    <div onClick={() => toggleSort("ratio")} style={{...S.sortBtn, color: sortKey === "ratio" ? "#00e676" : "#445"}}>
-                                        比率{sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
-                                    <div onClick={() => toggleSort("change")} style={{...S.sortBtn, color: sortKey === "change" ? "#00e676" : "#445"}}>
-                                        前日比{sortKey === "change" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
-                                    <div onClick={() => toggleSort("contrib")} style={{...S.sortBtn, color: sortKey === "contrib" ? "#00e676" : "#445", width: 60}}>
-                                        寄与{sortKey === "contrib" && (sortOrder === "desc" ? "▼" : "▲")}
-                                    </div>
-                                </div>
-
-                                <div style={S.tableWrap}>
-                                    {filteredStocks.map(s => (
-                                        <div key={s.id} style={S.tableRow}>
-                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                                <div style={{ fontSize: 10, color: "#445" }}>{s.code}</div>
-                                                <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
-                                            </div>
-                                            <div style={{ width: 45, textAlign: "right", fontSize: 10, color: "#556" }}>{s.ratio.toFixed(1)}%</div>
-                                            <div style={{ width: 75 }}>
-                                                <input type="number" readOnly value={s.daily_change} 
-                                                    style={{ ...S.input, color: getColor(s.daily_change), opacity: 0.8 }} />
-                                            </div>
-                                            <div style={{ width: 60, textAlign: "right", fontSize: 11, fontWeight: 700, color: getColor(s.contrib) }}>
-                                                {s.contrib === 0 ? "0.000" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-
-                        {activeTab === "result" && (
-                            <div style={{ animation: "fadeIn 0.3s" }}>
-                                <div style={{...S.card, marginBottom: 20}}>
-                                    <div style={S.cardTitle}>業種別セクター寄与 (Python計算結果)</div>
-                                    {summary.sector_stats.map((sec) => (
-                                        <div key={sec.name} style={S.rankRow}>
-                                            <span style={{ fontSize: 11, color: "#aabbc0", width: 85, whiteSpace: "nowrap" }}>{sec.name}</span>
-                                            <div style={S.chartContainer}>
-                                                <div style={S.chartHalfLeft}>
-                                                    {sec.contrib < 0 && (
-                                                        <div style={{ ...S.bar, width: `${Math.min(Math.abs(sec.contrib) * 500, 100)}%`, background: "#ff5252", borderRadius: "2px 0 0 2px" }} />
-                                                    )}
-                                                </div>
-                                                <div style={S.zeroLine} />
-                                                <div style={S.chartHalfRight}>
-                                                    {sec.contrib > 0 && (
-                                                        <div style={{ ...S.bar, width: `${Math.min(sec.contrib * 500, 100)}%`, background: "#00e676", borderRadius: "0 2px 2px 0" }} />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <span style={{ fontSize: 11, color: getColor(sec.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
-                                                {fmt(sec.contrib, 4)}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div style={S.card}>
-                                    <div style={S.cardTitle}>個別銘柄 寄与度ランキング (TOP 15)</div>
-                                    {processedStocks
-                                        .filter(s => s.contrib !== 0)
-                                        .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
-                                        .slice(0, 15)
-                                        .map((s, i) => (
-                                            <div key={s.id} style={S.rankRow}>
-                                                <span style={{ fontSize: 11, color: "#445", width: 20 }}>{i+1}</span>
-                                                <span style={{ fontSize: 11, color: "#aabbc0", width: 90, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
-                                                <div style={S.chartContainer}>
-                                                    <div style={S.chartHalfLeft}>
-                                                        {s.contrib < 0 && (
-                                                            <div style={{ ...S.bar, width: `${Math.min(Math.abs(s.contrib) * 800, 100)}%`, background: "#ff5252", borderRadius: "2px 0 0 2px" }} />
-                                                        )}
-                                                    </div>
-                                                    <div style={S.zeroLine} />
-                                                    <div style={S.chartHalfRight}>
-                                                        {s.contrib > 0 && (
-                                                            <div style={{ ...S.bar, width: `${Math.min(s.contrib * 800, 100)}%`, background: "#00e676", borderRadius: "0 2px 2px 0" }} />
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <span style={{ fontSize: 11, color: getColor(s.contrib), width: 70, textAlign: "right", fontWeight: 700 }}>
-                                                    {fmt(s.contrib, 4)}
-                                                </span>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            );
-        }
-
-        // スタイルオブジェクト S および Chip コンポーネントは元のコードを維持
-        const S = {
-            root: { minHeight: "100vh", background: "#0a0e1a", paddingBottom: 40 },
-            bgGrid: { position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(0,230,118,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,0.02) 1px,transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" },
-            header: { position: "sticky", top: 0, zIndex: 100, background: "rgba(10,14,26,0.95)", borderBottom: "1px solid #1e3a2e", backdropFilter: "blur(8px)" },
-            headerInner: { maxWidth: 640, margin: "0 auto", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" },
-            logoTitle: { fontSize: 14, fontWeight: 700, color: "#00e676" },
-            logoSub: { fontSize: 10, color: "#445" },
-            tabBar: { maxWidth: 640, margin: "0 auto", display: "flex", padding: "12px 16px 0", gap: 4 },
-            tab: { flex: 1, padding: "10px", background: "rgba(255,255,255,0.02)", border: "1px solid #1a2a1a", borderBottom: "none", color: "#445", borderRadius: "8px 8px 0 0", cursor: "pointer", fontSize: 12, outline: "none" },
-            tabActive: { background: "#0d1520", border: "1px solid #1e3a2e", color: "#e0e6f0", fontWeight: 700 },
-            content: { maxWidth: 640, margin: "0 auto", padding: "16px", background: "#0d1520", border: "1px solid #1e3a2e", borderRadius: "0 0 12px 12px", minHeight: "70vh" },
-            previewCard: { background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 12, padding: "20px 16px", marginBottom: 12, textAlign: "center" },
-            previewLabel: { fontSize: 10, color: "#00e676", marginBottom: 8, fontWeight: 600, letterSpacing: 1 },
-            timestamp: { fontSize: 10, color: "#445", marginTop: 8, fontFamily: "monospace" },
-            memoCard: { background: "rgba(0,230,118,0.03)", border: "1px solid #1e3a2e", borderRadius: 8, padding: "12px", marginBottom: 16 },
-            memoTitle: { fontSize: 11, fontWeight: 700, color: "#00e676", marginBottom: 4 },
-            memoSub: { fontSize: 10, color: "#aabbc0", marginBottom: 8 },
-            memoTable: { width: "100%", fontSize: 10, color: "#889", borderCollapse: "collapse" },
-            searchInput: { flex: 1, background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#fff", padding: "8px 12px", fontSize: 13 },
-            select: { background: "#0a1520", border: "1px solid #222", borderRadius: 8, color: "#889", padding: "8px", fontSize: 12 },
-            tableHeader: { display: "flex", alignItems: "center", padding: "0 10px 8px", gap: 8, borderBottom: "1px solid #1a2a1a" },
-            sortBtn: { fontSize: 10, cursor: "pointer", textAlign: "right", width: 50 },
-            tableWrap: { borderRadius: 8 },
-            tableRow: { display: "flex", alignItems: "center", padding: "8px 10px", borderBottom: "1px solid #0d1a0d", gap: 8 },
-            input: { background: "#060d18", border: "1px solid #222", borderRadius: 6, padding: "6px", textAlign: "right", outline: "none", width: "100%", fontSize: 12, fontWeight: 700 },
-            card: { background: "#060d18", border: "1px solid #1a2a1a", borderRadius: 10, padding: "16px" },
-            cardTitle: { fontSize: 11, color: "#00e676", marginBottom: 12, fontWeight: 700, borderLeft: "3px solid #00e676", paddingLeft: 8 },
-            rankRow: { display: "flex", alignItems: "center", gap: 4, padding: "6px 0", borderBottom: "1px solid #0d1a0d" },
-            chartContainer: { flex: 1, height: 14, display: "flex", alignItems: "center", position: "relative", margin: "0 8px" },
-            chartHalfLeft: { flex: 1, display: "flex", justifyContent: "flex-end", height: "6px" },
-            chartHalfRight: { flex: 1, display: "flex", justifyContent: "flex-start", height: "6px" },
-            zeroLine: { width: "1px", height: "14px", background: "#1e3a2e", zIndex: 1 },
-            bar: { height: "100%", transition: "width 0.4s ease-out" }
-        };
-
-        function Chip({ label, val, color = "#00e676" }) {
-            return (
-                <div style={{ background: "#060d18", border: "1px solid #1e3a2e", borderRadius: 6, padding: "4px 8px", textAlign: "center", minWidth: 60 }}>
-                    <div style={{ fontSize: 9, color: "#445" }}>{label}</div>
-                    <div style={{ fontSize: 10, color, fontWeight: 800 }}>{val}</div>
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+    <footer>
+        &copy; 2026 ANGELDEVIL8282 / SYSTEM INTEGRATION DIV.
+    </footer>
 </body>
 </html>
