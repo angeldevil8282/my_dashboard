@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026/05/10 15:03:45",
+  "prediction": -0.447,
+  "coverage": "101/101",
+  "params": {
+    "coeff": 0.9,
+    "offset": -0.05
+  },
+  "sector_stats": [
+    {
+      "name": "銀行業",
+      "contrib": -0.2565
+    },
+    {
+      "name": "卸売業",
+      "contrib": -0.1216
+    },
+    {
+      "name": "機械",
+      "contrib": 0.0796
+    },
+    {
+      "name": "保険業",
+      "contrib": -0.0756
+    },
+    {
+      "name": "電気機器",
+      "contrib": 0.0731
+    },
+    {
+      "name": "食料品",
+      "contrib": -0.0707
+    },
+    {
+      "name": "建設業",
+      "contrib": 0.0584
+    },
+    {
+      "name": "化学",
+      "contrib": -0.0448
+    },
+    {
+      "name": "ガラス・土石",
+      "contrib": 0.0418
+    },
+    {
+      "name": "不動産業",
+      "contrib": -0.0369
+    },
+    {
+      "name": "証券・先物",
+      "contrib": -0.0336
+    },
+    {
+      "name": "鉄鋼",
+      "contrib": -0.0295
+    },
+    {
+      "name": "精密機器",
+      "contrib": 0.0293
+    },
+    {
+      "name": "海運業",
+      "contrib": -0.0231
+    },
+    {
+      "name": "その他製品",
+      "contrib": -0.0169
+    },
+    {
+      "name": "鉱業",
+      "contrib": -0.0124
+    },
+    {
+      "name": "石油・石炭",
+      "contrib": 0.0102
+    },
+    {
+      "name": "非鉄金属",
+      "contrib": 0.0098
+    },
+    {
+      "name": "輸送用機器",
+      "contrib": -0.0094
+    },
+    {
+      "name": "情報・通信",
+      "contrib": -0.0091
+    },
+    {
+      "name": "サービス業",
+      "contrib": -0.009
+    },
+    {
+      "name": "ゴム製品",
+      "contrib": 0.0079
+    },
+    {
+      "name": "電気・ガス",
+      "contrib": 0.0043
+    },
+    {
+      "name": "医薬品",
+      "contrib": -0.0036
+    },
+    {
+      "name": "小売業",
+      "contrib": -0.0034
+    },
+    {
+      "name": "繊維製品",
+      "contrib": 0.0006
+    }
+  ]
+}
