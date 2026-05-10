@@ -1,1 +1,23 @@
-{}
+{
+    "date": "2026-05-10 17:46:09",
+    "stocks": [
+        {
+            "name": "任天堂",
+            "symbol": "7974.T",
+            "current_price": 7667.0,
+            "change_pct": 3.55,
+            "reference_price": 5500,
+            "diff_to_target": 2167.0,
+            "target_down": -1.0
+        },
+        {
+            "name": "三井住友FG",
+            "symbol": "8316.T",
+            "current_price": 5546.0,
+            "change_pct": -2.51,
+            "reference_price": 10000,
+            "diff_to_target": -4454.0,
+            "target_down": -1.5
+        }
+    ]
+}
