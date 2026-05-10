@@ -22,7 +22,7 @@
         const TOTAL_NET_ASSETS = 114987493;
 
         function App() {
-            const [stocks, setStocks] = useState([]);
+            const [sbi, setSbi] = useState([]);
             const [summary, setSummary] = useState(null); // Python側で計算されたサマリー
             const [loading, setLoading] = useState(true);
             const [activeTab, setActiveTab] = useState("calc");
@@ -42,11 +42,11 @@
                             fetch(`./data/summary.json${cacheBuster}`) // サマリーを読み込む
                         ]);
                         
-                        const allStocksRaw = await resS.json();
+                        const allSbiRaw = await resS.json();
                         const latestChanges = await resC.json();
                         const summaryData = await resSum.json();
 
-                        const unique = allStocksRaw.filter((s, i, arr) =>
+                        const unique = allSbiRaw.filter((s, i, arr) =>
                             s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
                         );
 
@@ -56,7 +56,7 @@
                             daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code].toString() : ""
                         }));
 
-                        setStocks(mapped);
+                        setSbi(mapped);
                         setSummary(summaryData);
                         setLoading(false);
                     } catch (e) {
@@ -66,19 +66,19 @@
                 init();
             }, []);
 
-            const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
+            const sectors = useMemo(() => ["全て", ...Array.from(new Set(sbi.map(s => s.sector)))], [sbi]);
 
             // 個別銘柄の計算（テーブル表示用のみ）
-            const processedStocks = useMemo(() => {
-                return stocks.map(s => {
+            const processedSbi = useMemo(() => {
+                return sbi.map(s => {
                     const change = parseFloat(s.daily_change);
                     const contrib = isNaN(change) ? 0 : (s.ratio * change) / 100;
                     return { ...s, contrib, changeNum: isNaN(change) ? -999 : change };
                 });
-            }, [stocks]);
+            }, [sbi]);
 
-            const filteredStocks = useMemo(() => {
-                let base = processedStocks.filter(s => {
+            const filteredSbi = useMemo(() => {
+                let base = processedSbi.filter(s => {
                     const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
                     const matchSearch = !search || s.name.includes(search) || s.code.includes(search);
                     return matchSector && matchSearch;
@@ -91,7 +91,7 @@
                     else { [valA, valB] = [a.contrib, b.contrib]; }
                     return sortOrder === "asc" ? valA - valB : valB - valA;
                 });
-            }, [processedStocks, sectorFilter, search, sortKey, sortOrder]);
+            }, [processedSbi, sectorFilter, search, sortKey, sortOrder]);
 
             const toggleSort = (key) => {
                 if (sortKey === key) {
@@ -189,7 +189,7 @@
                                 </div>
 
                                 <div style={S.tableWrap}>
-                                    {filteredStocks.map(s => (
+                                    {filteredSbi.map(s => (
                                         <div key={s.id} style={S.tableRow}>
                                             <div style={{ flex: 1, minWidth: 0 }}>
                                                 <div style={{ fontSize: 10, color: "#445" }}>{s.code}</div>
@@ -238,7 +238,7 @@
 
                                 <div style={S.card}>
                                     <div style={S.cardTitle}>個別銘柄 寄与度ランキング (TOP 15)</div>
-                                    {processedStocks
+                                    {processedSbi
                                         .filter(s => s.contrib !== 0)
                                         .sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib))
                                         .slice(0, 15)
