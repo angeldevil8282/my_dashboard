@@ -1,5 +1,5 @@
 {
-    "date": "2026-05-10 18:30:10",
+    "date": "2026-05-10 18:33:07",
     "stocks": [
         {
             "name": "日経平均",
@@ -35,7 +35,7 @@
             "change_pct": 0.57,
             "reference_price": 15000,
             "diff_to_target": 14885.0,
-            "target_down": -10.0
+            "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
@@ -44,7 +44,7 @@
             "change_pct": 1.41,
             "reference_price": 30000,
             "diff_to_target": 22450.0,
-            "target_down": -10.0
+            "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
@@ -53,7 +53,7 @@
             "change_pct": -4.56,
             "reference_price": 4500,
             "diff_to_target": 1631.0,
-            "target_down": -10.0
+            "target_down": -4.0
         }
     ]
 }
