@@ -20,51 +20,196 @@
     <script type="text/babel">
         const { useState, useMemo, useEffect } = React;
         const TOTAL_NET_ASSETS = 114987493;
+        const SYSTEMS = {
+            sbi: { label: "SBI高配当予測", color: "#00e676", unit: "円", asset: "1,150億円" },
+            crash_us: { label: "米国株暴落監視", color: "#448aff", unit: "$", asset: "---" }
+        };
 
         function App() {
+            const [activeSystem, setActiveSystem] = useState("sbi");
             const [stocks, setStocks] = useState([]);
-            const [summary, setSummary] = useState(null); // Python側で計算されたサマリー
+            const [summary, setSummary] = useState(null);
             const [loading, setLoading] = useState(true);
             const [activeTab, setActiveTab] = useState("calc");
             const [sectorFilter, setSectorFilter] = useState("全て");
             const [search, setSearch] = useState("");
-            
             const [sortKey, setSortKey] = useState("ratio");
             const [sortOrder, setSortOrder] = useState("desc");
 
             useEffect(() => {
                 async function init() {
+                    setLoading(true);
                     try {
                         const cacheBuster = `?t=${Date.now()}`;
-                        const [resS, resC, resSum] = await Promise.all([
-                            fetch('./stocks.json'),
-                            fetch(`./daily_changes.json${cacheBuster}`),
-                            fetch(`./summary.json${cacheBuster}`) // サマリーを読み込む
+                        const basePath = `./${activeSystem}`;
+                        const listFile = activeSystem === "sbi" ? "stocks.json" : "targets.json";
+
+                        const responses = await Promise.all([
+                            fetch(`${basePath}/${listFile}${cacheBuster}`),
+                            fetch(`${basePath}/daily_changes.json${cacheBuster}`),
+                            fetch(`${basePath}/summary.json${cacheBuster}`)
                         ]);
-                        
-                        const allStocksRaw = await resS.json();
-                        const latestChanges = await resC.json();
-                        const summaryData = await resSum.json();
 
-                        const unique = allStocksRaw.filter((s, i, arr) =>
-                            s.evaluation > 0 && arr.findIndex(x => x.id === s.id) === i
-                        );
+                        if (!responses.every(r => r.ok)) throw new Error("Load Failed");
+                        const [stocksData, changesData, summaryData] = await Promise.all(responses.map(r => r.json()));
 
-                        const mapped = unique.map(s => ({
+                        const mergedStocks = stocksData.map(s => ({
                             ...s,
-                            ratio: (s.evaluation / TOTAL_NET_ASSETS) * 100,
-                            daily_change: (typeof latestChanges[s.code] === 'number') ? latestChanges[s.code].toString() : ""
+                            daily_change: changesData[s.code] || "0.00" 
                         }));
 
-                        setStocks(mapped);
+                        setStocks(mergedStocks);
                         setSummary(summaryData);
-                        setLoading(false);
                     } catch (e) {
-                        console.error("Data Load Error:", e);
+                        console.error("Load Error:", e);
+                    } finally {
+                        setLoading(false);
                     }
                 }
                 init();
-            }, []);
+            }, [activeSystem]);
+
+            const currentSys = SYSTEMS[activeSystem];
+
+            // メモ化された計算データ
+            const processedStocks = useMemo(() => {
+                return stocks.map(s => {
+                    const change = parseFloat(s.daily_change);
+                    const contrib = isNaN(change) ? 0 : (s.ratio * change) / 100;
+                    return { ...s, contrib, changeNum: isNaN(change) ? -999 : change };
+                });
+            }, [stocks]);
+
+            const filteredStocks = useMemo(() => {
+                let base = processedStocks.filter(s => {
+                    const matchSector = sectorFilter === "全て" || s.sector === sectorFilter;
+                    const matchSearch = !search || s.name.includes(search) || s.code.includes(search);
+                    return matchSector && matchSearch;
+                });
+                return base.sort((a, b) => {
+                    let valA = a[sortKey === "change" ? "changeNum" : sortKey] || 0;
+                    let valB = b[sortKey === "change" ? "changeNum" : sortKey] || 0;
+                    return sortOrder === "asc" ? valA - valB : valB - valA;
+                });
+            }, [processedStocks, sectorFilter, search, sortKey, sortOrder]);
+
+            const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
+
+            if (loading || !summary) return <div className="loading">SYSTEM INITIALIZING...</div>;
+
+            return (
+                <div style={S.root}>
+                    <div style={S.bgGrid} />
+                    
+                    {/* システム選択バー */}
+                    <div style={S.headerInner}>
+                        <div style={{ display: "flex", gap: 8, padding: "10px 0", width: "100%" }}>
+                            {Object.entries(SYSTEMS).map(([key, sys]) => (
+                                <button key={key} onClick={() => setActiveSystem(key)}
+                                    style={{
+                                        ...S.systemButton,
+                                        borderColor: activeSystem === key ? sys.color : "#1a2a1a",
+                                        color: activeSystem === key ? sys.color : "#445",
+                                        background: activeSystem === key ? "rgba(255,255,255,0.05)" : "transparent",
+                                        flex: 1
+                                    }}
+                                >
+                                    {sys.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <header style={S.header}>
+                        <div style={S.headerInner}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <span style={{ fontSize: 22 }}>{activeSystem === "sbi" ? "📈" : "🇺🇸"}</span>
+                                <div>
+                                    <div style={{...S.logoTitle, color: currentSys.color}}>{currentSys.label}</div>
+                                    <div style={S.logoSub}>
+                                        {activeSystem === "sbi" ? `純資産 ${currentSys.asset} ベース` : "US Market Crash Monitor"}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", gap: 8 }}>
+                                <Chip label={activeSystem === "sbi" ? "入力済" : "監視数"} val={summary.coverage} color={currentSys.color} />
+                                <Chip label="予測/変動" val={fmt(summary.prediction)} color={getColor(summary.prediction)} />
+                            </div>
+                        </div>
+                    </header>
+
+                    <div style={S.tabBar}>
+                        {[{ key: "calc", label: "入力データ" }, { key: "result", label: "分析・結果" }].map(t => (
+                            <button key={t.key} onClick={() => setActiveTab(t.key)}
+                                style={{ ...S.tab, ...(activeTab === t.key ? S.tabActive : {}) }}>
+                                {t.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div style={S.content}>
+                        {activeTab === "calc" && (
+                            <div style={{ animation: "fadeIn 0.3s" }}>
+                                <div style={S.previewCard}>
+                                    <div style={S.previewLabel}>{currentSys.label} Analytics</div>
+                                    <div style={{ fontSize: 42, fontWeight: 800, color: getColor(summary.prediction), textAlign: "center", lineHeight: 1 }}>
+                                        {fmt(summary.prediction)}
+                                    </div>
+                                    <div style={S.timestamp}>Last Update: {summary.timestamp}</div>
+                                </div>
+
+                                {activeSystem === "sbi" && (
+                                    <div style={S.memoCard}>
+                                        <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加目安</div>
+                                        <table style={S.memoTable}>
+                                            <tbody>
+                                                <tr><td>-0.5% 以上</td><td style={{textAlign:"right"}}>1日分 (4,350円)</td></tr>
+                                                <tr><td>-1.0% 以上</td><td style={{textAlign:"right"}}>3日分 (13,050円)</td></tr>
+                                                <tr><td>-1.5% 以上</td><td style={{textAlign:"right"}}>6日分 (26,100円)</td></tr>
+                                                <tr><td>-2.0% 以上</td><td style={{textAlign:"right"}}>12日分 (52,200円)</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+
+                                <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+                                    <input value={search} onChange={e => setSearch(e.target.value)}
+                                        placeholder="銘柄名/コード..." style={S.searchInput} />
+                                    <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} style={S.select}>
+                                        {sectors.map(s => <option key={s} value={s}>{s}</option>)}
+                                    </select>
+                                </div>
+
+                                <div style={S.tableHeader}>
+                                    <div style={{ flex: 1, color: "#445", fontSize: 12 }}>銘柄</div>
+                                    <div onClick={() => toggleSort("ratio")} style={{...S.sortBtn, color: sortKey === "ratio" ? currentSys.color : "#445"}}>
+                                        比率{sortKey === "ratio" && (sortOrder === "desc" ? "▼" : "▲")}
+                                    </div>
+                                    <div onClick={() => toggleSort("change")} style={{...S.sortBtn, color: sortKey === "change" ? currentSys.color : "#445"}}>
+                                        前日比{sortKey === "change" && (sortOrder === "desc" ? "▼" : "▲")}
+                                    </div>
+                                </div>
+
+                                <div style={S.tableWrap}>
+                                    {filteredStocks.map(s => (
+                                        <div key={s.id} style={S.tableRow}>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div style={{ fontSize: 10, color: "#445" }}>{s.code}</div>
+                                                <div style={{ fontSize: 11, color: "#aabbc0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</div>
+                                            </div>
+                                            <div style={{ width: 45, textAlign: "right", fontSize: 10, color: "#556" }}>{s.ratio.toFixed(1)}%</div>
+                                            <div style={{ width: 75 }}>
+                                                <input type="number" readOnly value={s.daily_change} 
+                                                    style={{ ...S.input, color: getColor(s.daily_change), opacity: 0.8 }} />
+                                            </div>
+                                            <div style={{ width: 60, textAlign: "right", fontSize: 11, fontWeight: 700, color: getColor(s.contrib) }}>
+                                                {s.contrib === 0 ? "0.000" : (s.contrib > 0 ? "+" : "") + s.contrib.toFixed(3)}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
             const sectors = useMemo(() => ["全て", ...Array.from(new Set(stocks.map(s => s.sector)))], [stocks]);
 
@@ -123,7 +268,11 @@
                             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                 <span style={{ fontSize: 22 }}>📈</span>
                                 <div>
-                                    <div style={S.logoTitle}>SBI変動率計算ツール</div>
+                                    // <div style={S.logoTitle}>SBI変動率計算ツール</div>
+                                    // タイトルも動的に変更
+                                    <div style={{...S.logoTitle, color: currentSys.color}}>
+                                        {activeSystem === "sbi" ? "SBI変動率計算ツール" : "米国株暴落監視ボード"}
+                                    </div>
                                     <div style={S.logoSub}>純資産 1,150億円ベース</div>
                                 </div>
                             </div>
@@ -145,27 +294,49 @@
 
                     <div style={S.content}>
                         {activeTab === "calc" && (
+                        //  <>
+                        //      <div style={S.previewCard}>
+                        //          <div style={S.previewLabel}>改良式によるSBI予測（Python計算済）</div>
+                        //          <div style={{ fontSize: 42, fontWeight: 800, color: getColor(summary.prediction), textAlign: "center", lineHeight: 1 }}>
+                        //              {fmt(summary.prediction)}
+                        //          </div>
+                        //          <div style={S.timestamp}>Last Update: {summary.timestamp}</div>
+                        //      </div>
+                        //
+                        //      <div style={S.memoCard}>
+                        //          <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加</div>
+                        //          <div style={S.memoSub}>★SBIV日本高配当：月7万円（3,040円/日）</div>
+                        //          <table style={S.memoTable}>
+                        //              <tbody>
+                        //                  <tr><td>-0.5% 以上</td><td>1日分 (4,350円)</td></tr>
+                        //                  <tr><td>-1.0% 以上</td><td>3日分 (13,050円)</td></tr>
+                        //                  <tr><td>-1.5% 以上</td><td>6日分 (26,100円)</td></tr>
+                        //                  <tr><td>-2.0% 以上</td><td>12日分 (52,200円)</td></tr>
+                        //              </tbody>
+                        //          </table>
+                        //      </div>
+
                             <>
                                 <div style={S.previewCard}>
-                                    <div style={S.previewLabel}>改良式によるSBI予測（Python計算済）</div>
+                                    <div style={S.previewLabel}>{currentSys.label} Analytics</div>
                                     <div style={{ fontSize: 42, fontWeight: 800, color: getColor(summary.prediction), textAlign: "center", lineHeight: 1 }}>
                                         {fmt(summary.prediction)}
                                     </div>
                                     <div style={S.timestamp}>Last Update: {summary.timestamp}</div>
                                 </div>
 
-                                <div style={S.memoCard}>
-                                    <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加</div>
-                                    <div style={S.memoSub}>★SBIV日本高配当：月7万円（3,040円/日）</div>
-                                    <table style={S.memoTable}>
-                                        <tbody>
-                                            <tr><td>-0.5% 以上</td><td>1日分 (4,350円)</td></tr>
-                                            <tr><td>-1.0% 以上</td><td>3日分 (13,050円)</td></tr>
-                                            <tr><td>-1.5% 以上</td><td>6日分 (26,100円)</td></tr>
-                                            <tr><td>-2.0% 以上</td><td>12日分 (52,200円)</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                {/* SBIかつ日本株の時のみ表示 */}
+                                {activeSystem === "sbi" && (
+                                    <div style={S.memoCard}>
+                                        <div style={S.memoTitle}>● 東京下げ（15:15時点） スポット追加目安</div>
+                                            <tbody>
+                                                <tr><td>-0.5% 以上</td><td>1日分 (4,350円)</td></tr>
+                                                <tr><td>-1.0% 以上</td><td>3日分 (13,050円)</td></tr>
+                                                <tr><td>-1.5% 以上</td><td>6日分 (26,100円)</td></tr>
+                                                <tr><td>-2.0% 以上</td><td>12日分 (52,200円)</td></tr>
+                                            </tbody>
+                                    </div>
+                                )}
 
                                 <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                                     <input value={search} onChange={e => setSearch(e.target.value)}
@@ -306,7 +477,8 @@
             chartHalfLeft: { flex: 1, display: "flex", justifyContent: "flex-end", height: "6px" },
             chartHalfRight: { flex: 1, display: "flex", justifyContent: "flex-start", height: "6px" },
             zeroLine: { width: "1px", height: "14px", background: "#1e3a2e", zIndex: 1 },
-            bar: { height: "100%", transition: "width 0.4s ease-out" }
+            bar: { height: "100%", transition: "width 0.4s ease-out" },
+            systemButton: {padding: "6px 12px",fontSize: "11px",fontWeight: 700,borderRadius: "6px",border: "1px solid",cursor: "pointer",transition: "all 0.2s",outline: "none",letterSpacing: "0.5px"}
         };
 
         function Chip({ label, val, color = "#00e676" }) {
