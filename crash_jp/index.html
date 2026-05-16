@@ -12,13 +12,22 @@
         .status-up { color: #3fb950; }
         .target-reached { background-color: rgba(63, 185, 80, 0.15); border-color: #3fb950; }
         .spot-hint { background-color: rgba(56, 139, 253, 0.15); border: 1px dashed #388bfd; }
+        /* 戻るリンクのスタイル追加 */
+        .back-link:hover { color: #58a6ff; text-decoration: underline; }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-4xl mx-auto">
+        <nav class="mb-4">
+            <a href="https://angeldevil8282.github.io/my_dashboard/index.html" class="back-link text-sm text-gray-500 flex items-center font-sans">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                メインダッシュボードに戻る
+            </a>
+        </nav>
+
         <header class="mb-8 flex justify-between items-end">
             <div>
-                <h1 class="text-2xl font-bold text-white">日本株 暴落監視</h1>
+                <h1 class="text-2xl font-bold text-white font-sans">🇯🇵 日本株 暴落監視</h1>
                 <p id="last-update" class="text-sm text-gray-500">Loading...</p>
             </div>
             <div class="text-right">
@@ -26,10 +35,9 @@
             </div>
         </header>
 
-        <div id="stock-list" class="grid gap-4 md:grid-cols-2">
-            </div>
+        <div id="stock-list" class="grid gap-4 md:grid-cols-2"></div>
 
-        <div class="mt-12">
+        <div class="mt-12 font-sans">
             <h2 class="text-lg font-bold text-white mb-4 flex items-center">
                 <span class="mr-2">📝</span> 日経平均スポット購入ルール
             </h2>
@@ -42,7 +50,7 @@
                             <th class="pb-2">購入額 (目安)</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-300">
+                    <tbody class="text-gray-300 font-mono">
                         <tr class="border-b border-gray-800/50"><td class="py-2">-0.5% 以上</td><td class="py-2">5日分</td><td class="py-2">4,350円</td></tr>
                         <tr class="border-b border-gray-800/50"><td class="py-2">-1.0% 以上</td><td class="py-2">8日分</td><td class="py-2">6,960円</td></tr>
                         <tr class="border-b border-gray-800/50"><td class="py-2">-1.5% 以上</td><td class="py-2">15日分</td><td class="py-2">13,050円</td></tr>
@@ -55,7 +63,7 @@
             </div>
         </div>
 
-        <footer class="mt-12 text-center text-xs text-gray-600">
+        <footer class="mt-12 text-center text-xs text-gray-600 border-t border-gray-800 pt-4 font-sans">
             &copy; 2026 Asset Logic / Powered by yfinance
         </footer>
     </div>
@@ -89,7 +97,6 @@
                     const colorClass = s.change_pct < 0 ? 'status-down' : 'status-up';
                     const mark = s.change_pct < 0 ? '▼' : '▲';
                     
-                    // 日経平均の場合のみアドバイスを取得
                     const advice = (s.symbol === '^N225' || s.name.includes('日経')) ? getSpotAdvice(s.change_pct) : null;
                     
                     const card = document.createElement('div');
@@ -99,52 +106,11 @@
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <div>
-                                    <h3 class="font-bold text-lg text-white">${s.name}</h3>
-                                    <p class="text-xs text-gray-500">${s.symbol}</p>
+                                    <h3 class="font-bold text-lg text-white font-sans">${s.name}</h3>
+                                    <p class="text-xs text-gray-500 font-mono">${s.symbol}</p>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-2xl font-mono ${colorClass}">${mark}${Math.abs(s.change_pct)}%</span>
+                                    <span class="text-2xl font-mono ${colorClass}">${mark}${Math.abs(s.change_pct).toFixed(2)}%</span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 mt-4 text-sm">
-                                <div>
-                                    <p class="text-gray-500 text-xs">現在価格</p>
-                                    <p class="font-bold text-white">${s.current_price.toLocaleString()}円</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-gray-500 text-xs">目標価格</p>
-                                    <p class="text-white">${s.reference_price.toLocaleString()}円</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            ${advice ? `
-                            <div class="mt-4 p-2 rounded spot-hint text-center">
-                                <p class="text-[10px] text-blue-300 uppercase font-bold">推奨スポット追加</p>
-                                <p class="text-lg font-bold text-white">${advice.amount.toLocaleString()}円 <span class="text-xs font-normal">(${advice.days}日分)</span></p>
-                            </div>
-                            ` : ''}
-
-                            <div class="mt-3 pt-3 border-t border-gray-800 flex justify-between items-center">
-                                <span class="text-xs ${isReached ? 'text-green-400 font-bold' : 'text-gray-500'}">
-                                    ${isReached ? '🎯 目標到達' : `あと +${s.diff_to_target.toLocaleString()}円`}
-                                </span>
-                                <span class="text-[10px] px-2 py-0.5 rounded bg-gray-800 text-gray-400">
-                                    通知閾値: ${s.target_down}%
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (e) {
-                console.error("データの読み込みに失敗しました", e);
-            }
-        }
-
-        fetchMarketData();
-        setInterval(fetchMarketData, 300000);
-    </script>
-</body>
-</html>
+                            <div class="grid grid-cols-2 gap-2 mt-4 text
