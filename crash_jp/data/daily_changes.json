@@ -1,49 +1,49 @@
 {
-    "date": "2026-05-20 08:48:06",
+    "date": "2026-05-20 09:23:48",
     "stocks": [
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7519.0,
-            "change_pct": 4.69,
+            "current_price": 7533.0,
+            "change_pct": 0.19,
             "reference_price": 5500,
-            "diff_to_target": 2019.0,
+            "diff_to_target": 2033.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 5942.0,
-            "change_pct": 3.66,
+            "current_price": 6006.0,
+            "change_pct": 1.08,
             "reference_price": 5000,
-            "diff_to_target": 942.0,
+            "diff_to_target": 1006.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 25290.0,
-            "change_pct": -3.29,
+            "current_price": 25950.0,
+            "change_pct": 2.61,
             "reference_price": 15000,
-            "diff_to_target": 10290.0,
+            "diff_to_target": 10950.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 47160.0,
-            "change_pct": -4.26,
+            "current_price": 46280.0,
+            "change_pct": -1.87,
             "reference_price": 30000,
-            "diff_to_target": 17160.0,
+            "diff_to_target": 16280.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 5361.0,
-            "change_pct": -4.15,
+            "current_price": 5013.0,
+            "change_pct": -6.49,
             "reference_price": 4500,
-            "diff_to_target": 861.0,
+            "diff_to_target": 513.0,
             "target_down": -4.0
         }
     ]
