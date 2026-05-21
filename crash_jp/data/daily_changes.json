@@ -1,49 +1,49 @@
 {
-    "date": "2026-05-21 14:35:40",
+    "date": "2026-05-21 15:17:45",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 62003.6,
-            "change_pct": 3.68,
+            "current_price": 61724.3,
+            "change_pct": 3.21,
             "reference_price": 38000,
-            "diff_to_target": 24003.6,
+            "diff_to_target": 23724.3,
             "target_down": -2.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7321.0,
-            "change_pct": -2.39,
+            "current_price": 7312.0,
+            "change_pct": -2.51,
             "reference_price": 5500,
-            "diff_to_target": 1821.0,
+            "diff_to_target": 1812.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6072.0,
-            "change_pct": 3.23,
+            "current_price": 6044.0,
+            "change_pct": 2.75,
             "reference_price": 5000,
-            "diff_to_target": 1072.0,
+            "diff_to_target": 1044.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 26910.0,
-            "change_pct": 5.01,
+            "current_price": 26675.0,
+            "change_pct": 4.1,
             "reference_price": 15000,
-            "diff_to_target": 11910.0,
+            "diff_to_target": 11675.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 48670.0,
-            "change_pct": 5.57,
+            "current_price": 48490.0,
+            "change_pct": 5.18,
             "reference_price": 30000,
-            "diff_to_target": 18670.0,
+            "diff_to_target": 18490.0,
             "target_down": -9.0
         },
         {
