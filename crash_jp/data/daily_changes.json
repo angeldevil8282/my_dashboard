@@ -1,49 +1,58 @@
 {
-    "date": "2026-05-22 08:42:40",
+    "date": "2026-05-22 14:55:52",
     "stocks": [
+        {
+            "name": "日経平均",
+            "symbol": "^N225",
+            "current_price": 63385.3,
+            "change_pct": 2.76,
+            "reference_price": 38000,
+            "diff_to_target": 25385.3,
+            "target_down": -2.0
+        },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7274.0,
-            "change_pct": -3.01,
+            "current_price": 7260.0,
+            "change_pct": -0.19,
             "reference_price": 5500,
-            "diff_to_target": 1774.0,
+            "diff_to_target": 1760.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6031.0,
-            "change_pct": 2.53,
+            "current_price": 6005.0,
+            "change_pct": -0.43,
             "reference_price": 5000,
-            "diff_to_target": 1031.0,
+            "diff_to_target": 1005.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 26745.0,
-            "change_pct": 4.37,
+            "current_price": 26985.0,
+            "change_pct": 0.9,
             "reference_price": 15000,
-            "diff_to_target": 11745.0,
+            "diff_to_target": 11985.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 48800.0,
-            "change_pct": 5.86,
+            "current_price": 49810.0,
+            "change_pct": 2.07,
             "reference_price": 30000,
-            "diff_to_target": 18800.0,
+            "diff_to_target": 19810.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 6039.0,
-            "change_pct": 19.85,
+            "current_price": 6740.0,
+            "change_pct": 11.61,
             "reference_price": 4500,
-            "diff_to_target": 1539.0,
+            "diff_to_target": 2240.0,
             "target_down": -4.0
         }
     ]
