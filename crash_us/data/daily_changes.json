@@ -1,5 +1,5 @@
 {
-    "date": "2026-05-22 11:52:32",
+    "date": "2026-05-22 17:39:32",
     "stocks": [
         {
             "name": "NASDAQ100",
@@ -14,7 +14,7 @@
             "name": "Microsoft",
             "symbol": "MSFT",
             "current_price": 419.09,
-            "change_pct": -0.47,
+            "change_pct": -0.25,
             "reference_price": 350.0,
             "diff_to_target": 69.09,
             "target_down": -4.5
