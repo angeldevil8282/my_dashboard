@@ -1,6 +1,15 @@
 {
-    "date": "2026-05-23 09:15:53",
+    "date": "2026-05-23 16:18:56",
     "stocks": [
+        {
+            "name": "日経平均",
+            "symbol": "^N225",
+            "current_price": 63339.1,
+            "change_pct": 2.68,
+            "reference_price": 38000,
+            "diff_to_target": 25339.1,
+            "target_down": -2.0
+        },
         {
             "name": "任天堂",
             "symbol": "7974.T",
