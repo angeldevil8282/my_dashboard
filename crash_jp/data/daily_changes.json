@@ -1,58 +1,58 @@
 {
-    "date": "2026-06-02 11:35:12",
+    "date": "2026-06-02 13:49:54",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 65846.7,
-            "change_pct": -1.62,
+            "current_price": 66012.6,
+            "change_pct": -1.38,
             "reference_price": 38000,
-            "diff_to_target": 27846.7,
+            "diff_to_target": 28012.6,
             "target_down": -2.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7337.0,
-            "change_pct": 2.43,
+            "current_price": 7374.0,
+            "change_pct": 2.95,
             "reference_price": 5500,
-            "diff_to_target": 1837.0,
+            "diff_to_target": 1874.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 5882.0,
-            "change_pct": 0.36,
+            "current_price": 5915.0,
+            "change_pct": 0.92,
             "reference_price": 5000,
-            "diff_to_target": 882.0,
+            "diff_to_target": 915.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 26155.0,
-            "change_pct": 1.87,
+            "current_price": 25785.0,
+            "change_pct": 0.43,
             "reference_price": 15000,
-            "diff_to_target": 11155.0,
+            "diff_to_target": 10785.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 52680.0,
-            "change_pct": -0.72,
+            "current_price": 52630.0,
+            "change_pct": -0.81,
             "reference_price": 30000,
-            "diff_to_target": 22680.0,
+            "diff_to_target": 22630.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 8344.0,
-            "change_pct": -2.31,
+            "current_price": 8456.0,
+            "change_pct": -1.0,
             "reference_price": 4500,
-            "diff_to_target": 3844.0,
+            "diff_to_target": 3956.0,
             "target_down": -4.0
         }
     ]
