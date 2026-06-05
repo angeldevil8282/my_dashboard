@@ -10,7 +10,8 @@
         .card { background-color: #161b22; border: 1px solid #30363d; }
         .status-down { color: #ff7b72; }
         .status-up { color: #3fb950; }
-        .target-reached { background-color: rgba(63, 185, 80, 0.15); border-color: #3fb950; }
+        /* 米国株に合わせた地味な赤枠・赤背景に修正 */
+        .target-reached { background-color: rgba(248, 81, 73, 0.1); border-color: #f85149; }
         .spot-hint { background-color: rgba(56, 139, 253, 0.15); border: 1px dashed #388bfd; }
         /* 戻るリンクのスタイル追加 */
         .back-link:hover { color: #58a6ff; text-decoration: underline; }
@@ -119,7 +120,7 @@
                                     <p class="font-bold text-white">${s.current_price.toLocaleString()}円</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-gray-500 text-[10px] uppercase font-bold font-sans">Target</p>
+                                    <span class="text-gray-500 text-[10px] uppercase font-bold font-sans">Target</span>
                                     <p class="text-white">${s.reference_price.toLocaleString()}円</p>
                                 </div>
                             </div>
@@ -134,8 +135,8 @@
                             ` : ''}
 
                             <div class="mt-3 pt-3 border-t border-gray-800 flex justify-between items-center font-sans">
-                                <span class="text-xs font-mono ${isReached ? 'text-green-400 font-bold' : 'text-gray-500'}">
-                                    ${isReached ? '🎯 目標到達' : `あと +${s.diff_to_target.toLocaleString()}円`}
+                                <span class="text-xs font-mono ${isReached ? 'text-red-400 font-bold' : 'text-gray-500'}">
+                                    ${isReached ? '🚨 目標到達' : `あと +${s.diff_to_target.toLocaleString()}円`}
                                 </span>
                                 <span class="text-[10px] px-2 py-0.5 rounded bg-gray-800 text-gray-400">
                                     通知閾値: ${s.target_down}%
