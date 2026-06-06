@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 スポット投入</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #121214; color: #e4e4e7; }
+        .card { background-color: #1a1a1e; border: 1px solid #2d2d34; }
+    </style>
+</head>
+<body class="p-4 sm:p-8 max-w-md mx-auto">
+
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">📝 スポット投入</h1>
+
+    <div class="card p-5 rounded-xl shadow-lg mb-6 flex flex-col gap-4">
+        <div>
+            <label class="block text-xs text-gray-400 mb-1">対象</label>
+            <div id="display-asset" class="text-lg font-bold text-white bg-zinc-800/50 px-3 py-2 rounded border border-zinc-700/50">--</div>
+        </div>
+
+        <div>
+            <label class="block text-xs text-gray-400 mb-1">下落</label>
+            <div id="display-trigger" class="text-lg font-bold text-amber-500 bg-zinc-800/50 px-3 py-2 rounded border border-zinc-700/50">--</div>
+        </div>
+
+        <div>
+            <label for="amount" class="block text-xs text-gray-400 mb-1">金額 (円)</label>
+            <input type="number" id="amount" value="100000" placeholder="金額を入力" 
+                   class="w-full text-lg font-bold text-white bg-zinc-800 px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+            <label for="memo" class="block text-xs text-gray-400 mb-1">メモ</label>
+            <input type="text" id="memo" value="トランプSNS" placeholder="理由や背景など" 
+                   class="w-full text-white bg-zinc-800 px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <button id="btn-save" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg mt-2 transition-colors active:scale-[0.98]">
+            [記録]
+        </button>
+    </div>
+
+    <div class="text-xs text-gray-400 uppercase tracking-wider mb-2">リアルタイム プレビュー</div>
+    <div class="card p-4 rounded-xl border-dashed border-zinc-600 bg-zinc-900/30">
+        <div id="preview-date" class="text-gray-500 mb-2 font-mono">2026-06-05</div>
+        <div class="flex justify-between items-baseline mb-1">
+            <span id="preview-asset" class="text-base font-bold text-white">--</span>
+            <span id="preview-trigger" class="text-sm font-bold text-amber-500">--</span>
+        </div>
+        <div id="preview-amount" class="text-xl font-black text-emerald-400 font-mono mb-2">0円</div>
+        <div id="preview-memo" class="text-sm text-gray-300 italic bg-zinc-800/30 p-2 rounded border border-zinc-800">--</div>
+        
+        <div class="mt-4 pt-3 border-t border-zinc-800">
+            <span class="text-[10px] text-zinc-500 font-mono">保存データ構造 (history.json想定)</span>
+            <pre id="preview-json" class="text-[11px] text-zinc-400 font-mono mt-1 overflow-x-auto p-2 bg-black/40 rounded">{}</pre>
+        </div>
+    </div>
+
+    <script>
+        // 1. URLパラメータおよび本日の日付の自動取得
+        const params = new URLSearchParams(window.location.search);
+        const assetParam = params.get("asset") || "手動登録";
+        const triggerParam = params.get("trigger") || "0.0%";
+        const sourceParam = params.get("source") || "manual";
+        
+        // タイムゾーンを考慮した YYYY-MM-DD の取得
+        const today = new Date().toLocaleDateString('sv-SE'); 
+
+        // DOMの取得
+        const elAmount = document.getElementById("amount");
+        const elMemo = document.getElementById("memo");
+        
+        // 初期画面表示のセット
+        document.getElementById("display-asset").innerText = assetParam;
+        document.getElementById("display-trigger").innerText = triggerParam;
+
+        // 2. プレビューの自動更新処理
+        function updatePreview() {
+            const amountVal = parseInt(elAmount.value) || 0;
+            const memoVal = elMemo.value || "（メモなし）";
+
+            // 画面上の見栄え用プレビュー
+            document.getElementById("preview-date").innerText = today;
+            document.getElementById("preview-asset").innerText = assetParam;
+            document.getElementById("preview-trigger").innerText = triggerParam;
+            document.getElementById("preview-amount").innerText = amountVal.toLocaleString() + "円";
+            document.getElementById("preview-memo").innerText = memoVal;
+
+            // 3. 将来そのまま history.json に叩き込める完全なデータ構造を作成
+            const dataObject = {
+                "date": today,
+                "asset": assetParam,
+                "amount": amountVal,
+                "trigger": triggerParam,
+                "memo": memoVal,
+                "source": sourceParam
+            };
+
+            // JSONプレビューとして可視化
+            document.getElementById("preview-json").innerText = JSON.stringify(dataObject, null, 2);
+        }
+
+        // 入力を監視してリアルタイム反映
+        elAmount.addEventListener("input", updatePreview);
+        elMemo.addEventListener("input", updatePreview);
+
+        // フェーズ1：記録ボタン押下時のスタブ処理
+        document.getElementById("btn-save").addEventListener("click", () => {
+            alert("🎉 フェーズ1 動作確認成功！\n\n画面に表示されているJSONデータが、フェーズ2・3でそのまま自動保存されるようになります。");
+        });
+
+        // 起動時に一回実行
+        updatePreview();
+    </script>
+</body>
+</html>
