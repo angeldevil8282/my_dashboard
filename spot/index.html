@@ -41,7 +41,7 @@
             font-weight: bold;
             padding: 6px 0;
         }
-        input[type="number"], textarea {
+        input[type="number"], input[type="date"], textarea {
             width: 100%;
             padding: 10px;
             font-size: 1rem;
@@ -111,6 +111,12 @@
 <div class="container">
     <h2>📝 スポット投入</h2>
     
+    <!-- 変更可能な日付フォームを追加 -->
+    <div class="form-group">
+        <label>投入日（変更可能）</label>
+        <input type="date" id="txt-date">
+    </div>
+
     <div class="form-group">
         <label>対象</label>
         <div id="lbl-asset" class="static-val">-</div>
@@ -135,7 +141,7 @@
 
     <div class="preview-card">
         <div class="preview-header">
-            <span id="pre-date">2026-06-05</span>
+            <span id="pre-date">2026-06-06</span>
             <span id="pre-source" style="color: #007aff; font-weight: bold;">manual</span>
         </div>
         <div class="preview-asset" id="pre-asset">-</div>
@@ -145,14 +151,22 @@
 </div>
 
 <script>
-    // 1. URLパラメータおよび日付の初期化
+    // 1. URLパラメータの取得とデコード
     const params = new URLSearchParams(window.location.search);
     const asset = params.get("asset") || "未指定の資産";
-    const trigger = params.get("trigger") || "0.0%";
+    
+    // バグの原因だった &source=... の混入を綺麗に掃除する
+    let trigger = params.get("trigger") || "0.0%";
+    if (trigger.includes("&")) {
+        trigger = trigger.split("&")[0];
+    }
+    
     const source = params.get("source") || "manual";
     
-    // 日付はJS側で自動保持 (inputは出さない)
+    // 当日の日付をデフォルト設定
     const today = new Date().toISOString().split("T")[0];
+    const txtDate = document.getElementById("txt-date");
+    txtDate.value = today;
 
     // 2. 画面要素の取得
     const lblAsset = document.getElementById("lbl-asset");
@@ -176,21 +190,23 @@
     preAsset.innerText = asset;
     preTrigger.innerText = trigger;
 
-    // 4. リアルタイムプレビューの連動
+    // 4. リアルタイムプレビューの連動（日付も連動）
     function updatePreview() {
         const amt = parseInt(txtAmount.value) || 0;
         preAmount.innerText = amt.toLocaleString();
         preMemo.innerText = txtMemo.value || "(メモなし)";
+        preDate.innerText = txtDate.value;
     }
 
+    txtDate.addEventListener("change", updatePreview);
     txtAmount.addEventListener("input", updatePreview);
     txtMemo.addEventListener("input", updatePreview);
     updatePreview(); // 初回実行
 
-    // 5. 記録ボタン押下時の処理 (フェーズ2：データ構造の確定)
+    // 5. 記録ボタン押下時の処理
     btnSave.addEventListener("click", () => {
         const payload = {
-            "date": today,
+            "date": txtDate.value, // ユーザーが変更した日付を送信
             "asset": asset,
             "amount": parseInt(txtAmount.value) || 0,
             "trigger": trigger,
@@ -199,20 +215,7 @@
         };
 
         console.log("保存対象データ(history.json用):", payload);
-        
-        // フェーズ3 (NAS API) 実装用の暫定アラート
         alert(`【デバッグ】以下の内容で保存処理へ回します:\n${JSON.stringify(payload, null, 2)}`);
-        
-        /* // フェーズ3でここを解放
-        fetch('/api/save_spot', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => alert('記録しました！'))
-        .catch(err => alert('エラーが発生しました'));
-        */
     });
 </script>
 
