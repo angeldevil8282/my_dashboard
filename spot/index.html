@@ -151,22 +151,20 @@
 </div>
 
 <script>
-    // 1. URLパラメータの取得とデコード
-    const params = new URLSearchParams(window.location.search);
+    // 1. URLの特殊な化け（%2526 や %26）を強制的に正規の「&」に置換してパースする
+    // これにより、後ろにくっついた source=crash_jp が正しく分離されます
+    let rawSearch = window.location.search;
+    rawSearch = rawSearch.replace(/%2526/g, '&').replace(/%26/g, '&');
+    
+    const params = new URLSearchParams(rawSearch);
     const asset = params.get("asset") || "未指定の資産";
-    
-    // バグの原因だった &source=... の混入を綺麗に掃除する
-    let trigger = params.get("trigger") || "0.0%";
-    if (trigger.includes("&")) {
-        trigger = trigger.split("&")[0];
-    }
-    
+    const trigger = params.get("trigger") || "0.0%";
     const source = params.get("source") || "manual";
     
     // 当日の日付をデフォルト設定
     const today = new Date().toISOString().split("T")[0];
     const txtDate = document.getElementById("txt-date");
-    txtDate.value = today;
+    if (txtDate) txtDate.value = today;
 
     // 2. 画面要素の取得
     const lblAsset = document.getElementById("lbl-asset");
@@ -183,40 +181,42 @@
     const preMemo = document.getElementById("pre-memo");
 
     // 3. 初期値をUIに反映
-    lblAsset.innerText = asset;
-    lblTrigger.innerText = trigger;
-    preDate.innerText = today;
-    preSource.innerText = source;
-    preAsset.innerText = asset;
-    preTrigger.innerText = trigger;
+    if (lblAsset) lblAsset.innerText = asset;
+    if (lblTrigger) lblTrigger.innerText = trigger;
+    if (preDate) preDate.innerText = today;
+    if (preSource) preSource.innerText = source;
+    if (preAsset) preAsset.innerText = asset;
+    if (preTrigger) preTrigger.innerText = trigger;
 
-    // 4. リアルタイムプレビューの連動（日付も連動）
+    // 4. リアルタイムプレビューの連動
     function updatePreview() {
         const amt = parseInt(txtAmount.value) || 0;
-        preAmount.innerText = amt.toLocaleString();
-        preMemo.innerText = txtMemo.value || "(メモなし)";
-        preDate.innerText = txtDate.value;
+        if (preAmount) preAmount.innerText = amt.toLocaleString();
+        if (preMemo) preMemo.innerText = txtMemo.value || "(メモなし)";
+        if (preDate && txtDate) preDate.innerText = txtDate.value;
     }
 
-    txtDate.addEventListener("change", updatePreview);
-    txtAmount.addEventListener("input", updatePreview);
-    txtMemo.addEventListener("input", updatePreview);
+    if (txtDate) txtDate.addEventListener("change", updatePreview);
+    if (txtAmount) txtAmount.addEventListener("input", updatePreview);
+    if (txtMemo) txtMemo.addEventListener("input", updatePreview);
     updatePreview(); // 初回実行
 
     // 5. 記録ボタン押下時の処理
-    btnSave.addEventListener("click", () => {
-        const payload = {
-            "date": txtDate.value, // ユーザーが変更した日付を送信
-            "asset": asset,
-            "amount": parseInt(txtAmount.value) || 0,
-            "trigger": trigger,
-            "memo": txtMemo.value,
-            "source": source
-        };
+    if (btnSave) {
+        btnSave.addEventListener("click", () => {
+            const payload = {
+                "date": txtDate ? txtDate.value : today,
+                "asset": asset,
+                "amount": parseInt(txtAmount.value) || 0,
+                "trigger": trigger,
+                "memo": txtMemo.value,
+                "source": source
+            };
 
-        console.log("保存対象データ(history.json用):", payload);
-        alert(`【デバッグ】以下の内容で保存処理へ回します:\n${JSON.stringify(payload, null, 2)}`);
-    });
+            console.log("保存対象データ(history.json用):", payload);
+            alert(`【デバッグ】以下の内容で保存処理へ回します:\n${JSON.stringify(payload, null, 2)}`);
+        });
+    }
 </script>
 
 </body>
