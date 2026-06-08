@@ -1,31 +1,31 @@
 {
-    "date": "2026-06-08 09:15:18",
+    "date": "2026-06-08 09:19:22",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 65986.4,
-            "change_pct": -0.9,
+            "current_price": 65416.2,
+            "change_pct": -1.76,
             "reference_price": 38000,
-            "diff_to_target": -27986.4,
+            "diff_to_target": -27416.2,
             "target_down": -1.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7524.0,
-            "change_pct": 3.47,
+            "current_price": 7762.0,
+            "change_pct": 6.74,
             "reference_price": 5500,
-            "diff_to_target": -2024.0,
+            "diff_to_target": -2262.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6123.0,
-            "change_pct": -0.1,
+            "current_price": 6152.0,
+            "change_pct": 0.38,
             "reference_price": 5000,
-            "diff_to_target": -1123.0,
+            "diff_to_target": -1152.0,
             "target_down": -3.0
         },
         {
