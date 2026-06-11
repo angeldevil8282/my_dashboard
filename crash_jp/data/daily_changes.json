@@ -1,58 +1,58 @@
 {
-    "date": "2026-06-11 15:15:29",
+    "date": "2026-06-11 15:20:29",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 64078.7,
+            "current_price": 64075.9,
             "change_pct": -0.16,
             "reference_price": 38000,
-            "diff_to_target": -26078.7,
+            "diff_to_target": -26075.9,
             "target_down": -1.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7183.0,
-            "change_pct": -0.44,
+            "current_price": 7185.0,
+            "change_pct": -0.42,
             "reference_price": 5500,
-            "diff_to_target": -1683.0,
+            "diff_to_target": -1685.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6207.0,
-            "change_pct": -0.32,
+            "current_price": 6210.0,
+            "change_pct": -0.27,
             "reference_price": 5000,
-            "diff_to_target": -1207.0,
+            "diff_to_target": -1210.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 25110.0,
-            "change_pct": -0.5,
+            "current_price": 25060.0,
+            "change_pct": -0.69,
             "reference_price": 15000,
-            "diff_to_target": -10110.0,
+            "diff_to_target": -10060.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 63360.0,
-            "change_pct": 2.47,
+            "current_price": 63340.0,
+            "change_pct": 2.44,
             "reference_price": 30000,
-            "diff_to_target": -33360.0,
+            "diff_to_target": -33340.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 6358.0,
-            "change_pct": -1.59,
+            "current_price": 6355.0,
+            "change_pct": -1.64,
             "reference_price": 4500,
-            "diff_to_target": -1858.0,
+            "diff_to_target": -1855.0,
             "target_down": -4.0
         }
     ]
