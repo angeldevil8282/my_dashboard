@@ -1,13 +1,13 @@
 {
-    "date": "2026-06-15 15:00:07",
+    "date": "2026-06-15 15:15:28",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 69158.6,
-            "change_pct": 4.75,
+            "current_price": 69325.3,
+            "change_pct": 5.01,
             "reference_price": 38000,
-            "diff_to_target": -31158.6,
+            "diff_to_target": -31325.3,
             "target_down": -1.0
         },
         {
@@ -22,37 +22,37 @@
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6536.0,
-            "change_pct": 2.03,
+            "current_price": 6529.0,
+            "change_pct": 1.92,
             "reference_price": 5000,
-            "diff_to_target": -1536.0,
+            "diff_to_target": -1529.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 29040.0,
-            "change_pct": 6.28,
+            "current_price": 29260.0,
+            "change_pct": 7.08,
             "reference_price": 15000,
-            "diff_to_target": -14040.0,
+            "diff_to_target": -14260.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 72970.0,
-            "change_pct": 7.31,
+            "current_price": 73590.0,
+            "change_pct": 8.22,
             "reference_price": 30000,
-            "diff_to_target": -42970.0,
+            "diff_to_target": -43590.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 7132.0,
-            "change_pct": 10.2,
+            "current_price": 7128.0,
+            "change_pct": 10.14,
             "reference_price": 4500,
-            "diff_to_target": -2632.0,
+            "diff_to_target": -2628.0,
             "target_down": -4.0
         }
     ]
