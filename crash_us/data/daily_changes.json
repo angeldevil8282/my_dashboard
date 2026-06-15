@@ -1,103 +1,103 @@
 {
-    "date": "2026-06-16 03:00:09",
+    "date": "2026-06-16 04:00:09",
     "stocks": [
         {
             "name": "NASDAQ100",
             "symbol": "QQQ",
-            "current_price": 743.52,
+            "current_price": 743.47,
             "change_pct": 3.07,
             "reference_price": 440.0,
-            "diff_to_target": 303.52,
+            "diff_to_target": 303.47,
             "target_down": -3.0
         },
         {
             "name": "Microsoft",
             "symbol": "MSFT",
-            "current_price": 399.33,
-            "change_pct": 2.2,
+            "current_price": 398.94,
+            "change_pct": 2.1,
             "reference_price": 350.0,
-            "diff_to_target": 49.33,
+            "diff_to_target": 48.94,
             "target_down": -4.5
         },
         {
             "name": "Alphabet (A)",
             "symbol": "GOOGL",
-            "current_price": 371.76,
-            "change_pct": 3.36,
+            "current_price": 371.29,
+            "change_pct": 3.23,
             "reference_price": 270.0,
-            "diff_to_target": 101.76,
+            "diff_to_target": 101.29,
             "target_down": -4.5
         },
         {
             "name": "Apple",
             "symbol": "AAPL",
-            "current_price": 295.76,
-            "change_pct": 1.59,
+            "current_price": 296.41,
+            "change_pct": 1.81,
             "reference_price": 210.0,
-            "diff_to_target": 85.76,
+            "diff_to_target": 86.41,
             "target_down": -4.5
         },
         {
             "name": "Meta",
             "symbol": "META",
-            "current_price": 595.23,
-            "change_pct": 4.98,
+            "current_price": 594.62,
+            "change_pct": 4.87,
             "reference_price": 470.0,
-            "diff_to_target": 125.23,
+            "diff_to_target": 124.62,
             "target_down": -4.5
         },
         {
             "name": "Amazon",
             "symbol": "AMZN",
-            "current_price": 246.35,
-            "change_pct": 3.27,
+            "current_price": 246.79,
+            "change_pct": 3.46,
             "reference_price": 180.0,
-            "diff_to_target": 66.35,
+            "diff_to_target": 66.79,
             "target_down": -4.5
         },
         {
             "name": "Broadcom",
             "symbol": "AVGO",
-            "current_price": 394.3,
-            "change_pct": 3.2,
+            "current_price": 393.73,
+            "change_pct": 3.05,
             "reference_price": 160.0,
-            "diff_to_target": 234.3,
+            "diff_to_target": 233.73,
             "target_down": -6.0
         },
         {
             "name": "TSMC",
             "symbol": "TSM",
-            "current_price": 440.83,
-            "change_pct": 3.99,
+            "current_price": 441.44,
+            "change_pct": 4.13,
             "reference_price": 145.0,
-            "diff_to_target": 295.83,
+            "diff_to_target": 296.44,
             "target_down": -6.0
         },
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "current_price": 211.82,
-            "change_pct": 3.23,
+            "current_price": 212.3,
+            "change_pct": 3.47,
             "reference_price": 120.0,
-            "diff_to_target": 91.82,
+            "diff_to_target": 92.3,
             "target_down": -6.0
         },
         {
             "name": "Micron",
             "symbol": "MU",
-            "current_price": 1076.0,
-            "change_pct": 9.62,
+            "current_price": 1087.55,
+            "change_pct": 10.79,
             "reference_price": 250.0,
-            "diff_to_target": 826.0,
+            "diff_to_target": 837.55,
             "target_down": -6.0
         },
         {
             "name": "Palantir",
             "symbol": "PLTR",
-            "current_price": 133.83,
-            "change_pct": 4.56,
+            "current_price": 134.24,
+            "change_pct": 4.88,
             "reference_price": 60.0,
-            "diff_to_target": 73.83,
+            "diff_to_target": 74.24,
             "target_down": -6.0
         }
     ]
