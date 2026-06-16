@@ -1,58 +1,58 @@
 {
-    "date": "2026-06-16 15:20:07",
+    "date": "2026-06-16 15:30:07",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 69392.4,
-            "change_pct": 0.11,
+            "current_price": 69487.7,
+            "change_pct": 0.25,
             "reference_price": 38000,
-            "diff_to_target": -31392.4,
+            "diff_to_target": -31487.7,
             "target_down": -1.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7194.0,
-            "change_pct": 1.18,
+            "current_price": 7195.0,
+            "change_pct": 1.2,
             "reference_price": 5500,
-            "diff_to_target": -1694.0,
+            "diff_to_target": -1695.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6418.0,
-            "change_pct": -1.55,
+            "current_price": 6424.0,
+            "change_pct": -1.46,
             "reference_price": 5000,
-            "diff_to_target": -1418.0,
+            "diff_to_target": -1424.0,
             "target_down": -3.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 30450.0,
-            "change_pct": 3.5,
+            "current_price": 30440.0,
+            "change_pct": 3.47,
             "reference_price": 15000,
-            "diff_to_target": -15450.0,
+            "diff_to_target": -15440.0,
             "target_down": -9.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 71030.0,
-            "change_pct": -2.38,
+            "current_price": 71130.0,
+            "change_pct": -2.24,
             "reference_price": 30000,
-            "diff_to_target": -41030.0,
+            "diff_to_target": -41130.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 7062.0,
-            "change_pct": -1.08,
+            "current_price": 7114.0,
+            "change_pct": -0.35,
             "reference_price": 4500,
-            "diff_to_target": -2562.0,
+            "diff_to_target": -2614.0,
             "target_down": -4.0
         }
     ]
