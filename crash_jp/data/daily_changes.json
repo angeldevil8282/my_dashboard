@@ -1,31 +1,31 @@
 {
-    "date": "2026-06-17 15:20:30",
+    "date": "2026-06-17 15:30:08",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 69958.1,
-            "change_pct": 0.8,
+            "current_price": 69980.4,
+            "change_pct": 0.83,
             "reference_price": 38000,
-            "diff_to_target": -31958.1,
+            "diff_to_target": -31980.4,
             "target_down": -1.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7284.0,
-            "change_pct": 0.91,
+            "current_price": 7276.0,
+            "change_pct": 0.8,
             "reference_price": 5500,
-            "diff_to_target": -1784.0,
+            "diff_to_target": -1776.0,
             "target_down": -5.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 6460.0,
-            "change_pct": 0.8,
+            "current_price": 6459.0,
+            "change_pct": 0.78,
             "reference_price": 5000,
-            "diff_to_target": -1460.0,
+            "diff_to_target": -1459.0,
             "target_down": -3.0
         },
         {
@@ -40,19 +40,19 @@
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 72970.0,
-            "change_pct": 2.98,
+            "current_price": 73040.0,
+            "change_pct": 3.08,
             "reference_price": 30000,
-            "diff_to_target": -42970.0,
+            "diff_to_target": -43040.0,
             "target_down": -9.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 6883.0,
-            "change_pct": -3.08,
+            "current_price": 6899.0,
+            "change_pct": -2.86,
             "reference_price": 4500,
-            "diff_to_target": -2383.0,
+            "diff_to_target": -2399.0,
             "target_down": -4.0
         }
     ]
