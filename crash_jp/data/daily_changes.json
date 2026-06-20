@@ -1,5 +1,5 @@
 {
-    "date": "2026-06-20 18:53:27",
+    "date": "2026-06-20 18:57:56",
     "stocks": [
         {
             "name": "日経平均",
@@ -222,8 +222,8 @@
             "symbol": "7203.T",
             "current_price": 2776.5,
             "change_pct": -0.61,
-            "reference_price": 50000,
-            "diff_to_target": 47223.5,
+            "reference_price": 2000,
+            "diff_to_target": -776.5,
             "target_down": -5.0
         },
         {
@@ -258,9 +258,9 @@
             "symbol": "7735.T",
             "current_price": 16745.0,
             "change_pct": 1.95,
-            "reference_price": 5500,
-            "diff_to_target": -11245.0,
-            "target_down": -5.0
+            "reference_price": 8000,
+            "diff_to_target": -8745.0,
+            "target_down": -7.0
         },
         {
             "name": "任天堂",
