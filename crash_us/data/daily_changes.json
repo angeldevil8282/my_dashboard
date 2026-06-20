@@ -1,5 +1,5 @@
 {
-    "date": "2026-06-20 21:31:07",
+    "date": "2026-06-20 21:31:51",
     "stocks": [
         {
             "name": "NASDAQ100",
@@ -92,6 +92,60 @@
             "target_down": -6.0
         },
         {
+            "name": "AMD",
+            "symbol": "AMD",
+            "current_price": 537.37,
+            "change_pct": 4.86,
+            "reference_price": 250.0,
+            "diff_to_target": 287.37,
+            "target_down": -10.0
+        },
+        {
+            "name": "SANDISK",
+            "symbol": "SNDK",
+            "current_price": 2184.75,
+            "change_pct": 11.54,
+            "reference_price": 800.0,
+            "diff_to_target": 1384.75,
+            "target_down": -10.0
+        },
+        {
+            "name": "Qualcom",
+            "symbol": "QCOM",
+            "current_price": 226.11,
+            "change_pct": 6.17,
+            "reference_price": 130.0,
+            "diff_to_target": 96.11,
+            "target_down": -8.0
+        },
+        {
+            "name": "Intel",
+            "symbol": "INTC",
+            "current_price": 133.99,
+            "change_pct": 10.64,
+            "reference_price": 50.0,
+            "diff_to_target": 83.99,
+            "target_down": -8.0
+        },
+        {
+            "name": "Seagate",
+            "symbol": "STX",
+            "current_price": 1070.23,
+            "change_pct": 0.39,
+            "reference_price": 450.0,
+            "diff_to_target": 620.23,
+            "target_down": -10.0
+        },
+        {
+            "name": "WesternDigital",
+            "symbol": "WDC",
+            "current_price": 746.23,
+            "change_pct": 4.79,
+            "reference_price": 300.0,
+            "diff_to_target": 446.23,
+            "target_down": -10.0
+        },
+        {
             "name": "Palantir",
             "symbol": "PLTR",
             "current_price": 128.47,
@@ -99,15 +153,6 @@
             "reference_price": 60.0,
             "diff_to_target": 68.47,
             "target_down": -6.0
-        },
-        {
-            "name": "SpaceX",
-            "symbol": "SPCX",
-            "current_price": 185.0,
-            "change_pct": -3.56,
-            "reference_price": 100.0,
-            "diff_to_target": 85.0,
-            "target_down": -10.0
         }
     ]
 }
