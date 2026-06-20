@@ -1,5 +1,5 @@
 {
-    "date": "2026-06-20 21:31:51",
+    "date": "2026-06-20 22:05:35",
     "stocks": [
         {
             "name": "NASDAQ100",
@@ -144,6 +144,15 @@
             "reference_price": 300.0,
             "diff_to_target": 446.23,
             "target_down": -10.0
+        },
+        {
+            "name": "SpaceX",
+            "symbol": "SPCX",
+            "current_price": 185.0,
+            "change_pct": -3.56,
+            "reference_price": 100.0,
+            "diff_to_target": 85.0,
+            "target_down": -8.0
         },
         {
             "name": "Palantir",
