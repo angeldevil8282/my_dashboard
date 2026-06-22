@@ -1,5 +1,5 @@
 {
-    "date": "2026-06-22 15:45:12",
+    "date": "2026-06-22 22:09:51",
     "stocks": [
         {
             "name": "日経平均",
@@ -7,7 +7,7 @@
             "current_price": 72354.0,
             "change_pct": 1.55,
             "reference_price": 38000,
-            "diff_to_target": -34354.0,
+            "diff_to_target": 34354.0,
             "target_down": -1.0
         },
         {
@@ -16,7 +16,7 @@
             "current_price": 32170.0,
             "change_pct": 1.35,
             "reference_price": 15000,
-            "diff_to_target": -17170.0,
+            "diff_to_target": 17170.0,
             "target_down": -9.0
         },
         {
@@ -25,7 +25,7 @@
             "current_price": 77800.0,
             "change_pct": 3.24,
             "reference_price": 30000,
-            "diff_to_target": -47800.0,
+            "diff_to_target": 47800.0,
             "target_down": -9.0
         },
         {
@@ -34,7 +34,7 @@
             "current_price": 81530.0,
             "change_pct": -1.89,
             "reference_price": 40000,
-            "diff_to_target": -41530.0,
+            "diff_to_target": 41530.0,
             "target_down": -10.0
         },
         {
@@ -43,7 +43,7 @@
             "current_price": 7244.0,
             "change_pct": 1.87,
             "reference_price": 4500,
-            "diff_to_target": -2744.0,
+            "diff_to_target": 2744.0,
             "target_down": -5.0
         },
         {
@@ -52,7 +52,7 @@
             "current_price": 108700.0,
             "change_pct": 0.09,
             "reference_price": 50000,
-            "diff_to_target": -58700.0,
+            "diff_to_target": 58700.0,
             "target_down": -10.0
         },
         {
@@ -61,7 +61,7 @@
             "current_price": 4063.0,
             "change_pct": 3.94,
             "reference_price": 2000,
-            "diff_to_target": -2063.0,
+            "diff_to_target": 2063.0,
             "target_down": -5.0
         },
         {
@@ -70,7 +70,7 @@
             "current_price": 26425.0,
             "change_pct": 7.59,
             "reference_price": 10000,
-            "diff_to_target": -16425.0,
+            "diff_to_target": 16425.0,
             "target_down": -10.0
         },
         {
@@ -79,7 +79,7 @@
             "current_price": 7960.0,
             "change_pct": 6.52,
             "reference_price": 4500,
-            "diff_to_target": -3460.0,
+            "diff_to_target": 3460.0,
             "target_down": -10.0
         },
         {
@@ -88,7 +88,7 @@
             "current_price": 7307.0,
             "change_pct": -0.04,
             "reference_price": 4000,
-            "diff_to_target": -3307.0,
+            "diff_to_target": 3307.0,
             "target_down": -5.0
         },
         {
@@ -97,7 +97,7 @@
             "current_price": 2635.5,
             "change_pct": -3.16,
             "reference_price": 1500,
-            "diff_to_target": -1135.5,
+            "diff_to_target": 1135.5,
             "target_down": -5.0
         },
         {
@@ -106,7 +106,7 @@
             "current_price": 6161.0,
             "change_pct": 19.38,
             "reference_price": 3000,
-            "diff_to_target": -3161.0,
+            "diff_to_target": 3161.0,
             "target_down": -5.0
         },
         {
@@ -115,7 +115,7 @@
             "current_price": 3672.0,
             "change_pct": -0.22,
             "reference_price": 2000,
-            "diff_to_target": -1672.0,
+            "diff_to_target": 1672.0,
             "target_down": -5.0
         },
         {
@@ -124,7 +124,7 @@
             "current_price": 12250.0,
             "change_pct": 4.26,
             "reference_price": 6000,
-            "diff_to_target": -6250.0,
+            "diff_to_target": 6250.0,
             "target_down": -10.0
         },
         {
@@ -133,7 +133,7 @@
             "current_price": 23905.0,
             "change_pct": 0.06,
             "reference_price": 15000,
-            "diff_to_target": -8905.0,
+            "diff_to_target": 8905.0,
             "target_down": -10.0
         },
         {
@@ -142,7 +142,7 @@
             "current_price": 7522.0,
             "change_pct": -0.37,
             "reference_price": 4000,
-            "diff_to_target": -3522.0,
+            "diff_to_target": 3522.0,
             "target_down": -5.0
         },
         {
@@ -151,7 +151,7 @@
             "current_price": 57490.0,
             "change_pct": 4.34,
             "reference_price": 30000,
-            "diff_to_target": -27490.0,
+            "diff_to_target": 27490.0,
             "target_down": -10.0
         },
         {
@@ -160,7 +160,7 @@
             "current_price": 17550.0,
             "change_pct": -9.14,
             "reference_price": 10000,
-            "diff_to_target": -7550.0,
+            "diff_to_target": 7550.0,
             "target_down": -10.0
         },
         {
@@ -169,7 +169,7 @@
             "current_price": 6171.0,
             "change_pct": -0.32,
             "reference_price": 3000,
-            "diff_to_target": -3171.0,
+            "diff_to_target": 3171.0,
             "target_down": -5.0
         },
         {
@@ -178,7 +178,7 @@
             "current_price": 2244.5,
             "change_pct": 0.9,
             "reference_price": 1000,
-            "diff_to_target": -1244.5,
+            "diff_to_target": 1244.5,
             "target_down": -5.0
         },
         {
@@ -187,7 +187,7 @@
             "current_price": 17705.0,
             "change_pct": 1.58,
             "reference_price": 10000,
-            "diff_to_target": -7705.0,
+            "diff_to_target": 7705.0,
             "target_down": -10.0
         },
         {
@@ -196,7 +196,7 @@
             "current_price": 88480.0,
             "change_pct": 4.22,
             "reference_price": 50000,
-            "diff_to_target": -38480.0,
+            "diff_to_target": 38480.0,
             "target_down": -10.0
         },
         {
@@ -205,7 +205,7 @@
             "current_price": 3183.0,
             "change_pct": 1.37,
             "reference_price": 1500,
-            "diff_to_target": -1683.0,
+            "diff_to_target": 1683.0,
             "target_down": -5.0
         },
         {
@@ -214,7 +214,7 @@
             "current_price": 3167.0,
             "change_pct": 1.02,
             "reference_price": 1500,
-            "diff_to_target": -1667.0,
+            "diff_to_target": 1667.0,
             "target_down": -5.0
         },
         {
@@ -223,7 +223,7 @@
             "current_price": 2741.5,
             "change_pct": -1.26,
             "reference_price": 2000,
-            "diff_to_target": -741.5,
+            "diff_to_target": 741.5,
             "target_down": -5.0
         },
         {
@@ -232,7 +232,7 @@
             "current_price": 26975.0,
             "change_pct": -0.99,
             "reference_price": 2500,
-            "diff_to_target": -24475.0,
+            "diff_to_target": 24475.0,
             "target_down": -5.0
         },
         {
@@ -241,7 +241,7 @@
             "current_price": 4609.0,
             "change_pct": 1.52,
             "reference_price": 3000,
-            "diff_to_target": -1609.0,
+            "diff_to_target": 1609.0,
             "target_down": -5.0
         },
         {
@@ -250,7 +250,7 @@
             "current_price": 13500.0,
             "change_pct": 0.11,
             "reference_price": 5500,
-            "diff_to_target": -8000.0,
+            "diff_to_target": 8000.0,
             "target_down": -5.0
         },
         {
@@ -259,7 +259,7 @@
             "current_price": 17010.0,
             "change_pct": 1.58,
             "reference_price": 8000,
-            "diff_to_target": -9010.0,
+            "diff_to_target": 9010.0,
             "target_down": -7.0
         },
         {
@@ -268,7 +268,7 @@
             "current_price": 7000.0,
             "change_pct": -1.07,
             "reference_price": 5500,
-            "diff_to_target": -1500.0,
+            "diff_to_target": 1500.0,
             "target_down": -5.0
         },
         {
@@ -277,7 +277,7 @@
             "current_price": 1307.5,
             "change_pct": -0.34,
             "reference_price": 1000,
-            "diff_to_target": -307.5,
+            "diff_to_target": 307.5,
             "target_down": -5.0
         },
         {
@@ -286,7 +286,7 @@
             "current_price": 562.3,
             "change_pct": 0.45,
             "reference_price": 400,
-            "diff_to_target": -162.3,
+            "diff_to_target": 162.3,
             "target_down": -5.0
         },
         {
@@ -295,7 +295,7 @@
             "current_price": 1413.5,
             "change_pct": 0.07,
             "reference_price": 1000,
-            "diff_to_target": -413.5,
+            "diff_to_target": 413.5,
             "target_down": -5.0
         },
         {
@@ -304,7 +304,7 @@
             "current_price": 1607.0,
             "change_pct": -0.43,
             "reference_price": 1000,
-            "diff_to_target": -607.0,
+            "diff_to_target": 607.0,
             "target_down": -5.0
         },
         {
@@ -313,7 +313,7 @@
             "current_price": 144.0,
             "change_pct": -0.28,
             "reference_price": 120,
-            "diff_to_target": -24.0,
+            "diff_to_target": 24.0,
             "target_down": -5.0
         },
         {
@@ -322,7 +322,7 @@
             "current_price": 2858.0,
             "change_pct": 0.92,
             "reference_price": 2000,
-            "diff_to_target": -858.0,
+            "diff_to_target": 858.0,
             "target_down": -5.0
         },
         {
@@ -331,7 +331,7 @@
             "current_price": 2425.0,
             "change_pct": 4.03,
             "reference_price": 1500,
-            "diff_to_target": -925.0,
+            "diff_to_target": 925.0,
             "target_down": -5.0
         },
         {
@@ -340,7 +340,7 @@
             "current_price": 717.0,
             "change_pct": -0.84,
             "reference_price": 500,
-            "diff_to_target": -217.0,
+            "diff_to_target": 217.0,
             "target_down": -5.0
         },
         {
@@ -349,7 +349,7 @@
             "current_price": 6645.0,
             "change_pct": 2.51,
             "reference_price": 5000,
-            "diff_to_target": -1645.0,
+            "diff_to_target": 1645.0,
             "target_down": -3.0
         }
     ]
