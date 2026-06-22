@@ -1,5 +1,5 @@
 {
-    "date": "2026-06-21 08:17:29",
+    "date": "2026-06-22 22:13:04",
     "stocks": [
         {
             "name": "NASDAQ100",
@@ -110,15 +110,6 @@
             "target_down": -10.0
         },
         {
-            "name": "ORACLE",
-            "symbol": "ORCL",
-            "current_price": 184.29,
-            "change_pct": 0.41,
-            "reference_price": 130.0,
-            "diff_to_target": 54.29,
-            "target_down": -7.0
-        },
-        {
             "name": "Qualcom",
             "symbol": "QCOM",
             "current_price": 226.11,
@@ -153,6 +144,15 @@
             "reference_price": 800.0,
             "diff_to_target": 1384.75,
             "target_down": -10.0
+        },
+        {
+            "name": "ORACLE",
+            "symbol": "ORCL",
+            "current_price": 184.29,
+            "change_pct": 0.41,
+            "reference_price": 130.0,
+            "diff_to_target": 54.29,
+            "target_down": -7.0
         },
         {
             "name": "SpaceX",
