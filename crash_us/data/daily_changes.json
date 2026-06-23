@@ -1,6 +1,33 @@
 {
-    "date": "2026-06-23 06:00:09",
+    "date": "2026-06-23 14:16:16",
     "stocks": [
+        {
+            "name": "S&P 500",
+            "symbol": "^GSPC",
+            "current_price": 7472.79,
+            "change_pct": -0.37,
+            "reference_price": 4500.0,
+            "diff_to_target": 2972.79,
+            "target_down": -5.0
+        },
+        {
+            "name": "NYSE FANG+ Index",
+            "symbol": "^NYFANG",
+            "current_price": 17158.54,
+            "change_pct": -2.64,
+            "reference_price": 9000.0,
+            "diff_to_target": 8158.54,
+            "target_down": -5.0
+        },
+        {
+            "name": "PHLX Semiconductor Sector",
+            "symbol": "^SOX",
+            "current_price": 14634.72,
+            "change_pct": 2.04,
+            "reference_price": 4000.0,
+            "diff_to_target": 10634.72,
+            "target_down": -6.0
+        },
         {
             "name": "NASDAQ100",
             "symbol": "QQQ",
