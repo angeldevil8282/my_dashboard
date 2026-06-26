@@ -1,6 +1,6 @@
 {
-    "timestamp": "2026/06/26 10:25:26",
-    "prediction": 0.037,
+    "timestamp": "2026/06/26 11:25:19",
+    "prediction": -0.345,
     "coverage": "104/104",
     "params": {
         "coeff": 0.9,
@@ -9,107 +9,107 @@
     "sector_stats": [
         {
             "name": "電気機器",
-            "contrib": -0.2175
-        },
-        {
-            "name": "銀行業",
-            "contrib": 0.0962
-        },
-        {
-            "name": "卸売業",
-            "contrib": 0.0696
-        },
-        {
-            "name": "輸送用機器",
-            "contrib": 0.0615
-        },
-        {
-            "name": "建設業",
-            "contrib": 0.0544
-        },
-        {
-            "name": "食料品",
-            "contrib": 0.0379
-        },
-        {
-            "name": "ゴム製品",
-            "contrib": 0.0276
-        },
-        {
-            "name": "ガラス・土石",
-            "contrib": -0.0268
+            "contrib": -0.3327
         },
         {
             "name": "化学",
-            "contrib": -0.025
+            "contrib": -0.0696
         },
         {
             "name": "機械",
-            "contrib": -0.0229
+            "contrib": -0.0541
         },
         {
-            "name": "不動産業",
-            "contrib": 0.0226
+            "name": "銀行業",
+            "contrib": 0.0513
         },
         {
-            "name": "電気・ガス",
-            "contrib": 0.0169
+            "name": "ガラス・土石",
+            "contrib": -0.051
         },
         {
-            "name": "情報・通信",
-            "contrib": -0.0161
+            "name": "卸売業",
+            "contrib": 0.0414
         },
         {
-            "name": "医薬品",
-            "contrib": 0.0161
+            "name": "食料品",
+            "contrib": 0.0405
         },
         {
-            "name": "海運業",
-            "contrib": -0.016
+            "name": "輸送用機器",
+            "contrib": 0.0374
         },
         {
-            "name": "石油・石炭",
-            "contrib": 0.0154
-        },
-        {
-            "name": "その他製品",
-            "contrib": 0.0114
-        },
-        {
-            "name": "証券・先物",
-            "contrib": -0.0105
-        },
-        {
-            "name": "精密機器",
-            "contrib": 0.0101
-        },
-        {
-            "name": "鉱業",
-            "contrib": 0.009
+            "name": "建設業",
+            "contrib": 0.0318
         },
         {
             "name": "保険業",
-            "contrib": -0.0089
-        },
-        {
-            "name": "サービス業",
-            "contrib": 0.0062
-        },
-        {
-            "name": "小売業",
-            "contrib": -0.0057
+            "contrib": -0.021
         },
         {
             "name": "非鉄金属",
-            "contrib": -0.0053
+            "contrib": -0.0208
         },
         {
-            "name": "繊維製品",
-            "contrib": -0.0045
+            "name": "不動産業",
+            "contrib": 0.0206
+        },
+        {
+            "name": "精密機器",
+            "contrib": -0.0205
+        },
+        {
+            "name": "海運業",
+            "contrib": -0.0186
+        },
+        {
+            "name": "ゴム製品",
+            "contrib": 0.0167
+        },
+        {
+            "name": "証券・先物",
+            "contrib": -0.0158
+        },
+        {
+            "name": "石油・石炭",
+            "contrib": 0.0118
+        },
+        {
+            "name": "電気・ガス",
+            "contrib": 0.0098
+        },
+        {
+            "name": "鉱業",
+            "contrib": 0.0097
+        },
+        {
+            "name": "医薬品",
+            "contrib": 0.0093
+        },
+        {
+            "name": "サービス業",
+            "contrib": 0.0082
+        },
+        {
+            "name": "小売業",
+            "contrib": -0.0069
+        },
+        {
+            "name": "その他製品",
+            "contrib": 0.0055
+        },
+        {
+            "name": "情報・通信",
+            "contrib": -0.0049
         },
         {
             "name": "鉄鋼",
-            "contrib": 0.0007
+            "contrib": -0.0041
+        },
+        {
+            "name": "繊維製品",
+            "contrib": -0.0015
         }
     ]
 }
