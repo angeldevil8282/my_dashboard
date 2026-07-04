@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-04 12:24:26",
+    "date": "2026-07-04 12:50:16",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -128,6 +128,24 @@
             "target_down": -6.0
         },
         {
+            "name": "Monolithic Power Systems",
+            "symbol": "MPWR",
+            "current_price": 1288.16,
+            "change_pct": -3.27,
+            "reference_price": 600.0,
+            "diff_to_target": 688.16,
+            "target_down": -6.0
+        },
+        {
+            "name": "Microchip Technology",
+            "symbol": "MCHP",
+            "current_price": 84.64,
+            "change_pct": -4.57,
+            "reference_price": 40.0,
+            "diff_to_target": 44.64,
+            "target_down": -6.0
+        },
+        {
             "name": "Intel",
             "symbol": "INTC",
             "current_price": 120.35,
@@ -182,30 +200,12 @@
             "target_down": -10.0
         },
         {
-            "name": "Monolithic Power Systems",
-            "symbol": "MPWR",
-            "current_price": 1288.16,
-            "change_pct": -3.27,
-            "reference_price": 600.0,
-            "diff_to_target": 688.16,
-            "target_down": -6.0
-        },
-        {
-            "name": "Microchip Technology",
-            "symbol": "MCHP",
-            "current_price": 84.64,
-            "change_pct": -4.57,
-            "reference_price": 40.0,
-            "diff_to_target": 44.64,
-            "target_down": -6.0
-        },
-        {
             "name": "ORACLE",
             "symbol": "ORCL",
             "current_price": 140.27,
             "change_pct": -1.56,
-            "reference_price": 130.0,
-            "diff_to_target": 10.27,
+            "reference_price": 115.0,
+            "diff_to_target": 25.27,
             "target_down": -7.0
         },
         {
@@ -236,15 +236,6 @@
             "target_down": -4.0
         },
         {
-            "name": "JPMorgan Chase",
-            "symbol": "JPM",
-            "current_price": 334.47,
-            "change_pct": 0.12,
-            "reference_price": 190.0,
-            "diff_to_target": 144.47,
-            "target_down": -4.0
-        },
-        {
             "name": "Visa",
             "symbol": "V",
             "current_price": 362.13,
@@ -263,6 +254,24 @@
             "target_down": -4.0
         },
         {
+            "name": "Travelers",
+            "symbol": "TRV",
+            "current_price": 342.31,
+            "change_pct": 2.3,
+            "reference_price": 220.0,
+            "diff_to_target": 122.31,
+            "target_down": -3.5
+        },
+        {
+            "name": "JPMorgan Chase",
+            "symbol": "JPM",
+            "current_price": 334.47,
+            "change_pct": 0.12,
+            "reference_price": 170.0,
+            "diff_to_target": 164.47,
+            "target_down": -4.0
+        },
+        {
             "name": "Caterpillar",
             "symbol": "CAT",
             "current_price": 963.53,
@@ -272,6 +281,87 @@
             "target_down": -4.0
         },
         {
+            "name": "Honeywell",
+            "symbol": "HON",
+            "current_price": 229.86,
+            "change_pct": 3.66,
+            "reference_price": 180.0,
+            "diff_to_target": 49.86,
+            "target_down": -3.5
+        },
+        {
+            "name": "Boeing",
+            "symbol": "BA",
+            "current_price": 226.49,
+            "change_pct": 3.62,
+            "reference_price": 160.0,
+            "diff_to_target": 66.49,
+            "target_down": -5.0
+        },
+        {
+            "name": "3M",
+            "symbol": "MMM",
+            "current_price": 160.44,
+            "change_pct": 0.3,
+            "reference_price": 100.0,
+            "diff_to_target": 60.44,
+            "target_down": -3.5
+        },
+        {
+            "name": "IBM",
+            "symbol": "IBM",
+            "current_price": 289.52,
+            "change_pct": 1.14,
+            "reference_price": 170.0,
+            "diff_to_target": 119.52,
+            "target_down": -4.0
+        },
+        {
+            "name": "Salesforce",
+            "symbol": "CRM",
+            "current_price": 166.11,
+            "change_pct": 1.76,
+            "reference_price": 120.0,
+            "diff_to_target": 46.11,
+            "target_down": -4.5
+        },
+        {
+            "name": "Cisco Systems",
+            "symbol": "CSCO",
+            "current_price": 112.69,
+            "change_pct": -3.69,
+            "reference_price": 50.0,
+            "diff_to_target": 62.69,
+            "target_down": -3.5
+        },
+        {
+            "name": "UnitedHealth",
+            "symbol": "UNH",
+            "current_price": 425.36,
+            "change_pct": -0.28,
+            "reference_price": 300.0,
+            "diff_to_target": 125.36,
+            "target_down": -3.5
+        },
+        {
+            "name": "Amgen",
+            "symbol": "AMGN",
+            "current_price": 374.15,
+            "change_pct": 3.55,
+            "reference_price": 280.0,
+            "diff_to_target": 94.15,
+            "target_down": -4.0
+        },
+        {
+            "name": "Johnson & Johnson",
+            "symbol": "JNJ",
+            "current_price": 263.04,
+            "change_pct": 3.57,
+            "reference_price": 160.0,
+            "diff_to_target": 103.04,
+            "target_down": -3.5
+        },
+        {
             "name": "Home Depot",
             "symbol": "HD",
             "current_price": 357.9,
@@ -279,6 +369,24 @@
             "reference_price": 280.0,
             "diff_to_target": 77.9,
             "target_down": -3.5
+        },
+        {
+            "name": "McDonald's",
+            "symbol": "MCD",
+            "current_price": 280.63,
+            "change_pct": 4.16,
+            "reference_price": 230.0,
+            "diff_to_target": 50.63,
+            "target_down": -3.5
+        },
+        {
+            "name": "Sherwin-Williams",
+            "symbol": "SHW",
+            "current_price": 352.48,
+            "change_pct": 1.86,
+            "reference_price": 250.0,
+            "diff_to_target": 102.48,
+            "target_down": -4.0
         }
     ]
 }
