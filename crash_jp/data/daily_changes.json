@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-04 11:10:49",
+    "date": "2026-07-04 11:13:16",
     "stocks": [
         {
             "name": "日経平均",
@@ -12,11 +12,11 @@
         },
         {
             "name": "TOPIX",
-            "symbol": "^TPX",
-            "current_price": 105.2,
-            "change_pct": 0.0,
+            "symbol": "1305.T",
+            "current_price": 4361.0,
+            "change_pct": 0.83,
             "reference_price": 2500,
-            "diff_to_target": 2394.8,
+            "diff_to_target": -1861.0,
             "target_down": -1.0
         },
         {
