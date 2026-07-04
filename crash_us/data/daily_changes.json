@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-04 10:06:17",
+    "date": "2026-07-04 11:00:24",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -177,8 +177,8 @@
             "symbol": "SNDK",
             "current_price": 1745.0,
             "change_pct": -14.13,
-            "reference_price": 800.0,
-            "diff_to_target": 945.0,
+            "reference_price": 600.0,
+            "diff_to_target": 1145.0,
             "target_down": -10.0
         },
         {
@@ -195,8 +195,8 @@
             "symbol": "MCHP",
             "current_price": 84.64,
             "change_pct": -4.57,
-            "reference_price": 85.0,
-            "diff_to_target": -0.36,
+            "reference_price": 40.0,
+            "diff_to_target": 44.64,
             "target_down": -6.0
         },
         {
