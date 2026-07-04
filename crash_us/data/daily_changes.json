@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-04 12:54:58",
+    "date": "2026-07-04 16:01:00",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -92,12 +92,12 @@
             "target_down": -4.5
         },
         {
-            "name": "TSMC",
-            "symbol": "TSM",
-            "current_price": 434.16,
-            "change_pct": -2.27,
-            "reference_price": 145.0,
-            "diff_to_target": 289.16,
+            "name": "Tesla",
+            "symbol": "TSLA",
+            "current_price": 393.45,
+            "change_pct": -7.49,
+            "reference_price": 175.0,
+            "diff_to_target": 218.45,
             "target_down": -6.0
         },
         {
@@ -119,30 +119,12 @@
             "target_down": -6.0
         },
         {
-            "name": "Micron",
-            "symbol": "MU",
-            "current_price": 975.56,
-            "change_pct": -5.49,
-            "reference_price": 250.0,
-            "diff_to_target": 725.56,
-            "target_down": -6.0
-        },
-        {
-            "name": "Monolithic Power Systems",
-            "symbol": "MPWR",
-            "current_price": 1288.16,
-            "change_pct": -3.27,
-            "reference_price": 600.0,
-            "diff_to_target": 688.16,
-            "target_down": -6.0
-        },
-        {
-            "name": "Microchip Technology",
-            "symbol": "MCHP",
-            "current_price": 84.64,
-            "change_pct": -4.57,
-            "reference_price": 40.0,
-            "diff_to_target": 44.64,
+            "name": "TSMC",
+            "symbol": "TSM",
+            "current_price": 434.16,
+            "change_pct": -2.27,
+            "reference_price": 145.0,
+            "diff_to_target": 289.16,
             "target_down": -6.0
         },
         {
@@ -161,6 +143,42 @@
             "change_pct": -4.26,
             "reference_price": 250.0,
             "diff_to_target": 267.82,
+            "target_down": -10.0
+        },
+        {
+            "name": "Arm",
+            "symbol": "ARM",
+            "current_price": 315.28,
+            "change_pct": -6.58,
+            "reference_price": 100.0,
+            "diff_to_target": 215.28,
+            "target_down": -10.0
+        },
+        {
+            "name": "Applied Materials",
+            "symbol": "AMAT",
+            "current_price": 603.04,
+            "change_pct": -7.35,
+            "reference_price": 200.0,
+            "diff_to_target": 403.04,
+            "target_down": -10.0
+        },
+        {
+            "name": "Micron",
+            "symbol": "MU",
+            "current_price": 975.56,
+            "change_pct": -5.49,
+            "reference_price": 250.0,
+            "diff_to_target": 725.56,
+            "target_down": -6.0
+        },
+        {
+            "name": "Lam Research",
+            "symbol": "LRCX",
+            "current_price": 351.41,
+            "change_pct": -10.19,
+            "reference_price": 100.0,
+            "diff_to_target": 251.41,
             "target_down": -10.0
         },
         {
@@ -198,6 +216,33 @@
             "reference_price": 600.0,
             "diff_to_target": 1145.0,
             "target_down": -10.0
+        },
+        {
+            "name": "Monolithic Power Systems",
+            "symbol": "MPWR",
+            "current_price": 1288.16,
+            "change_pct": -3.27,
+            "reference_price": 600.0,
+            "diff_to_target": 688.16,
+            "target_down": -6.0
+        },
+        {
+            "name": "Microchip Technology",
+            "symbol": "MCHP",
+            "current_price": 84.64,
+            "change_pct": -4.57,
+            "reference_price": 40.0,
+            "diff_to_target": 44.64,
+            "target_down": -6.0
+        },
+        {
+            "name": "Cerebras Systems",
+            "symbol": "CBRS",
+            "current_price": 204.86,
+            "change_pct": -7.42,
+            "reference_price": 150.0,
+            "diff_to_target": 54.86,
+            "target_down": -6.0
         },
         {
             "name": "ORACLE",
@@ -387,6 +432,24 @@
             "reference_price": 250.0,
             "diff_to_target": 102.48,
             "target_down": -4.0
+        },
+        {
+            "name": "Walmart",
+            "symbol": "WMT",
+            "current_price": 111.84,
+            "change_pct": 2.78,
+            "reference_price": 50.0,
+            "diff_to_target": 61.84,
+            "target_down": -3.5
+        },
+        {
+            "name": "Coca-Cola",
+            "symbol": "KO",
+            "current_price": 84.14,
+            "change_pct": 3.51,
+            "reference_price": 50.0,
+            "diff_to_target": 34.14,
+            "target_down": -3.5
         }
     ]
 }
