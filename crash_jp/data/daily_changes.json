@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-03 15:45:12",
+    "date": "2026-07-04 09:38:59",
     "stocks": [
         {
             "name": "日経平均",
@@ -220,10 +220,10 @@
         {
             "name": "トヨタ自動車",
             "symbol": "7203.T",
-            "current_price": 2830.5,
-            "change_pct": 1.34,
+            "current_price": 2828.0,
+            "change_pct": 1.25,
             "reference_price": 2000,
-            "diff_to_target": -830.5,
+            "diff_to_target": -828.0,
             "target_down": -5.0
         },
         {
