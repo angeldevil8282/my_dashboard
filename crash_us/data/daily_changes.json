@@ -1,6 +1,15 @@
 {
-    "date": "2026-07-04 09:36:19",
+    "date": "2026-07-04 10:06:17",
     "stocks": [
+        {
+            "name": "Dow Jones Industrial Average",
+            "symbol": "^DJI",
+            "current_price": 52900.07,
+            "change_pct": 1.14,
+            "reference_price": 39000.0,
+            "diff_to_target": 13900.07,
+            "target_down": -3.0
+        },
         {
             "name": "S&P 500",
             "symbol": "^GSPC",
@@ -9,6 +18,15 @@
             "reference_price": 4500.0,
             "diff_to_target": 2983.24,
             "target_down": -5.0
+        },
+        {
+            "name": "NASDAQ100",
+            "symbol": "QQQ",
+            "current_price": 712.6,
+            "change_pct": -1.73,
+            "reference_price": 440.0,
+            "diff_to_target": 272.6,
+            "target_down": -3.0
         },
         {
             "name": "NYSE FANG+ Index",
@@ -27,15 +45,6 @@
             "reference_price": 4000.0,
             "diff_to_target": 8626.22,
             "target_down": -6.0
-        },
-        {
-            "name": "NASDAQ100",
-            "symbol": "QQQ",
-            "current_price": 712.6,
-            "change_pct": -1.73,
-            "reference_price": 440.0,
-            "diff_to_target": 272.6,
-            "target_down": -3.0
         },
         {
             "name": "Microsoft",
@@ -173,6 +182,24 @@
             "target_down": -10.0
         },
         {
+            "name": "Monolithic Power Systems",
+            "symbol": "MPWR",
+            "current_price": 1288.16,
+            "change_pct": -3.27,
+            "reference_price": 600.0,
+            "diff_to_target": 688.16,
+            "target_down": -6.0
+        },
+        {
+            "name": "Microchip Technology",
+            "symbol": "MCHP",
+            "current_price": 84.64,
+            "change_pct": -4.57,
+            "reference_price": 85.0,
+            "diff_to_target": -0.36,
+            "target_down": -6.0
+        },
+        {
             "name": "ORACLE",
             "symbol": "ORCL",
             "current_price": 140.27,
@@ -198,6 +225,60 @@
             "reference_price": 60.0,
             "diff_to_target": 69.3,
             "target_down": -6.0
+        },
+        {
+            "name": "Goldman Sachs",
+            "symbol": "GS",
+            "current_price": 1021.0,
+            "change_pct": 0.14,
+            "reference_price": 450.0,
+            "diff_to_target": 571.0,
+            "target_down": -4.0
+        },
+        {
+            "name": "JPMorgan Chase",
+            "symbol": "JPM",
+            "current_price": 334.47,
+            "change_pct": 0.12,
+            "reference_price": 190.0,
+            "diff_to_target": 144.47,
+            "target_down": -4.0
+        },
+        {
+            "name": "Visa",
+            "symbol": "V",
+            "current_price": 362.13,
+            "change_pct": 3.15,
+            "reference_price": 270.0,
+            "diff_to_target": 92.13,
+            "target_down": -3.5
+        },
+        {
+            "name": "American Express",
+            "symbol": "AXP",
+            "current_price": 351.96,
+            "change_pct": 1.41,
+            "reference_price": 220.0,
+            "diff_to_target": 131.96,
+            "target_down": -4.0
+        },
+        {
+            "name": "Caterpillar",
+            "symbol": "CAT",
+            "current_price": 963.53,
+            "change_pct": -2.81,
+            "reference_price": 330.0,
+            "diff_to_target": 633.53,
+            "target_down": -4.0
+        },
+        {
+            "name": "Home Depot",
+            "symbol": "HD",
+            "current_price": 357.9,
+            "change_pct": 2.01,
+            "reference_price": 280.0,
+            "diff_to_target": 77.9,
+            "target_down": -3.5
         }
     ]
 }
