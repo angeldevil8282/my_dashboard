@@ -30,7 +30,6 @@
     {      "symbol": "8058.T",      "name": "三菱商事",      "target_down": -5.0,      "reference_price": 3000},
     {      "symbol": "5802.T",      "name": "住友電気工業",      "target_down": -5.0,      "reference_price": 1500},
     {      "symbol": "7735.T",      "name": "SCREENホールディングス",      "target_down": -7.0,      "reference_price": 8000},
-    {      "symbol": "7974.T",      "name": "任天堂",      "target_down": -5.0,      "reference_price": 5500},
     {      "symbol": "8593.T",      "name": "三菱ＨＣキャピタル",      "target_down": -5.0,      "reference_price": 1000},
     {      "symbol": "5401.T",      "name": "日本製鉄",      "target_down": -5.0,      "reference_price": 400},
     {      "symbol": "7267.T",      "name": "ホンダ",      "target_down": -5.0,      "reference_price": 1000},
@@ -39,6 +38,13 @@
     {      "symbol": "8473.T",      "name": "ＳＢＩホールディングス",      "target_down": -5.0,      "reference_price": 2000},
     {      "symbol": "5632.T",      "name": "三菱製鋼",      "target_down": -5.0,      "reference_price": 1500},
     {      "symbol": "4755.T",      "name": "楽天グループ",      "target_down": -5.0,      "reference_price": 500},
-    {      "symbol": "8316.T",      "name": "三井住友FG",      "target_down": -3.0,      "reference_price": 5000}
+    {      "symbol": "8306.T",      "name": "三菱ＵＦＪ",      "target_down": -3.0,      "reference_price": 2500},
+    {      "symbol": "8316.T",      "name": "三井住友FG",      "target_down": -3.0,      "reference_price": 5000},
+    {      "symbol": "8411.T",      "name": "みずほFG",      "target_down": -3.0,      "reference_price": 6000},
+    {      "symbol": "6501.T",      "name": "日立製作所",      "target_down": -3.0,      "reference_price": 2500},
+    {      "symbol": "6861.T",      "name": "キーエンス",      "target_down": -3.0,      "reference_price": 50000},
+    {      "symbol": "8766.T",      "name": "東京海上",      "target_down": -3.0,      "reference_price": 5000},
+    {      "symbol": "7011.T",      "name": "三菱重工業",      "target_down": -3.0,      "reference_price": 2500},
+    {      "symbol": "7974.T",      "name": "任天堂",      "target_down": -5.0,      "reference_price": 5500}
   ]
 }
