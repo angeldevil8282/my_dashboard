@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-18 06:00:19",
+    "date": "2026-07-19 11:40:41",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -98,6 +98,15 @@
             "change_pct": -2.61,
             "reference_price": 175.0,
             "diff_to_target": 205.84,
+            "target_down": -6.0
+        },
+        {
+            "name": "Netflix",
+            "symbol": "NFLX",
+            "current_price": 68.95,
+            "change_pct": -7.26,
+            "reference_price": 50.0,
+            "diff_to_target": 18.95,
             "target_down": -6.0
         },
         {
