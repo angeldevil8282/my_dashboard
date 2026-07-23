@@ -1,6 +1,6 @@
 {
-    "timestamp": "2026/07/23 15:27:20",
-    "prediction": 0.099,
+    "timestamp": "2026/07/23 15:30:38",
+    "prediction": 0.107,
     "coverage": "104/104",
     "params": {
         "coeff": 0.9,
@@ -9,35 +9,35 @@
     "sector_stats": [
         {
             "name": "銀行業",
-            "contrib": 0.158
+            "contrib": 0.1662
         },
         {
             "name": "電気機器",
-            "contrib": 0.1085
+            "contrib": 0.0943
         },
         {
             "name": "機械",
-            "contrib": 0.0674
+            "contrib": 0.0679
         },
         {
             "name": "情報・通信",
-            "contrib": -0.0594
+            "contrib": -0.0579
         },
         {
             "name": "医薬品",
-            "contrib": -0.0488
+            "contrib": -0.0486
         },
         {
             "name": "化学",
-            "contrib": 0.0432
+            "contrib": 0.0383
         },
         {
             "name": "食料品",
-            "contrib": -0.0341
+            "contrib": -0.032
         },
         {
             "name": "小売業",
-            "contrib": -0.0308
+            "contrib": -0.0295
         },
         {
             "name": "証券・先物",
@@ -45,55 +45,51 @@
         },
         {
             "name": "不動産業",
-            "contrib": -0.0247
+            "contrib": -0.0237
         },
         {
             "name": "鉱業",
-            "contrib": 0.0224
+            "contrib": 0.023
         },
         {
             "name": "建設業",
-            "contrib": -0.0221
+            "contrib": -0.0213
         },
         {
             "name": "卸売業",
-            "contrib": 0.0177
+            "contrib": 0.0199
         },
         {
             "name": "鉄鋼",
-            "contrib": 0.0162
-        },
-        {
-            "name": "電気・ガス",
-            "contrib": -0.0142
+            "contrib": 0.0165
         },
         {
             "name": "精密機器",
-            "contrib": -0.0136
+            "contrib": -0.0149
         },
         {
             "name": "ガラス・土石",
-            "contrib": -0.0112
+            "contrib": -0.013
+        },
+        {
+            "name": "電気・ガス",
+            "contrib": -0.0128
         },
         {
             "name": "サービス業",
-            "contrib": -0.0104
+            "contrib": -0.0091
         },
         {
             "name": "輸送用機器",
             "contrib": -0.0074
         },
         {
-            "name": "保険業",
-            "contrib": -0.0071
-        },
-        {
             "name": "海運業",
-            "contrib": -0.0065
+            "contrib": -0.006
         },
         {
-            "name": "繊維製品",
-            "contrib": -0.0058
+            "name": "非鉄金属",
+            "contrib": -0.0057
         },
         {
             "name": "石油・石炭",
@@ -101,15 +97,19 @@
         },
         {
             "name": "ゴム製品",
-            "contrib": 0.0051
+            "contrib": 0.0054
+        },
+        {
+            "name": "繊維製品",
+            "contrib": -0.0051
         },
         {
             "name": "その他製品",
-            "contrib": -0.0043
+            "contrib": -0.0033
         },
         {
-            "name": "非鉄金属",
-            "contrib": -0.0039
+            "name": "保険業",
+            "contrib": 0.0015
         }
     ]
 }
