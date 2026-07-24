@@ -1,5 +1,5 @@
 {
-    "date": "2026-07-25 00:00:14",
+    "date": "2026-07-25 02:00:18",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -112,10 +112,10 @@
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "current_price": 208.02,
-            "change_pct": -0.35,
+            "current_price": 208.01,
+            "change_pct": -0.36,
             "reference_price": 120.0,
-            "diff_to_target": 88.02,
+            "diff_to_target": 88.01,
             "target_down": -6.0
         },
         {
@@ -265,10 +265,10 @@
         {
             "name": "SpaceX",
             "symbol": "SPCX",
-            "current_price": 113.22,
-            "change_pct": -4.25,
+            "current_price": 113.2,
+            "change_pct": -4.26,
             "reference_price": 100.0,
-            "diff_to_target": 13.22,
+            "diff_to_target": 13.2,
             "target_down": -8.0
         },
         {
