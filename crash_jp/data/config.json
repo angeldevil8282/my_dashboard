@@ -1,7 +1,7 @@
 {
   "tickers": [
     {      "symbol": "^N225",      "name": "日経平均",      "target_down": -1.0,      "reference_price": 38000},
-    {      "symbol": "1305.T",      "name": "TOPIX",      "target_down": -1.0,      "reference_price": 2500},
+    {      "symbol": "1305.T",     "name": "TOPIX",      "target_down": -1.0,      "reference_price": 2500 },
     {      "symbol": "6857.T",      "name": "アドバンテスト",      "target_down": -9.0,      "reference_price": 15000},
     {      "symbol": "8035.T",      "name": "東京エレクトロン",      "target_down": -9.0,      "reference_price": 30000},
     {      "symbol": "9983.T",      "name": "ファーストリテイリング",      "target_down": -10.0,      "reference_price": 40000},
@@ -45,6 +45,16 @@
     {      "symbol": "6861.T",      "name": "キーエンス",      "target_down": -3.0,      "reference_price": 50000},
     {      "symbol": "8766.T",      "name": "東京海上",      "target_down": -3.0,      "reference_price": 5000},
     {      "symbol": "7011.T",      "name": "三菱重工業",      "target_down": -3.0,      "reference_price": 2500},
-    {      "symbol": "7974.T",      "name": "任天堂",      "target_down": -5.0,      "reference_price": 5500}
+    {      "symbol": "7974.T",      "name": "任天堂",      "target_down": -5.0,      "reference_price": 5500},
+    {      "symbol": "285A.T",      "name": "キオクシアホールディングス",      "target_down": -10.0,      "reference_price": 50000},
+    {      "symbol": "8035.T",      "name": "東京エレクトロン",      "target_down": -9.0,      "reference_price": 30000},
+    {      "symbol": "6857.T",      "name": "アドバンテスト",      "target_down": -9.0,      "reference_price": 15000},
+    {      "symbol": "6723.T",      "name": "ルネサスエレクトロニクス",      "target_down": -7.0,      "reference_price": 2500},
+    {      "symbol": "6146.T",      "name": "ディスコ",      "target_down": -10.0,      "reference_price": 50000},
+    {      "symbol": "6920.T",      "name": "レーザーテック",      "target_down": -10.0,      "reference_price": 30000},
+    {      "symbol": "4063.T",      "name": "信越化学工業",      "target_down": -5.0,      "reference_price": 4000},
+    {      "symbol": "5016.T",      "name": "ＪＸ金属",      "target_down": -5.0,      "reference_price": 2000},
+    {      "symbol": "7735.T",      "name": "SCREENホールディングス",      "target_down": -7.0,      "reference_price": 8000},
+    {      "symbol": "7741.T",      "name": "ＨＯＹＡ",      "target_down": -5.0,      "reference_price": 2500}
   ]
 }
