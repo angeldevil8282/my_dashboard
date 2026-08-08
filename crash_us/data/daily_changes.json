@@ -1,5 +1,5 @@
 {
-    "date": "2026-08-08 06:00:20",
+    "date": "2026-08-08 11:38:53",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -134,6 +134,15 @@
             "change_pct": 0.44,
             "reference_price": 145.0,
             "diff_to_target": 275.04,
+            "target_down": -6.0
+        },
+        {
+            "name": "SK Hynix",
+            "symbol": "SKHY",
+            "current_price": 137.91,
+            "change_pct": -3.92,
+            "reference_price": 120.0,
+            "diff_to_target": 17.91,
             "target_down": -6.0
         },
         {
