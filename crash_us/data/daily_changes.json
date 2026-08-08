@@ -1,5 +1,5 @@
 {
-    "date": "2026-08-08 11:38:53",
+    "date": "2026-08-08 11:59:03",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -409,10 +409,10 @@
         {
             "name": "Amgen",
             "symbol": "AMGN",
-            "current_price": 410.94,
+            "current_price": 410.95,
             "change_pct": 1.51,
             "reference_price": 280.0,
-            "diff_to_target": 130.94,
+            "diff_to_target": 130.95,
             "target_down": -4.0
         },
         {
