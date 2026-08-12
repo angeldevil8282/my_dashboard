@@ -1,22 +1,22 @@
 {
-    "date": "2026-08-13 05:00:19",
+    "date": "2026-08-13 06:00:18",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
             "symbol": "^DJI",
-            "current_price": 53770.16,
+            "current_price": 53770.27,
             "change_pct": -0.04,
             "reference_price": 39000.0,
-            "diff_to_target": 14770.16,
+            "diff_to_target": 14770.27,
             "target_down": -3.0
         },
         {
             "name": "S&P 500",
             "symbol": "^GSPC",
-            "current_price": 7748.54,
+            "current_price": 7748.5,
             "change_pct": 0.26,
             "reference_price": 4500.0,
-            "diff_to_target": 3248.54,
+            "diff_to_target": 3248.5,
             "target_down": -5.0
         },
         {
@@ -31,10 +31,10 @@
         {
             "name": "NYSE FANG+ Index",
             "symbol": "^NYFANG",
-            "current_price": 18493.66,
-            "change_pct": -0.46,
+            "current_price": 18474.7,
+            "change_pct": -0.56,
             "reference_price": 9000.0,
-            "diff_to_target": 9493.66,
+            "diff_to_target": 9474.7,
             "target_down": -5.0
         },
         {
@@ -67,10 +67,10 @@
         {
             "name": "Apple",
             "symbol": "AAPL",
-            "current_price": 302.22,
-            "change_pct": -0.88,
+            "current_price": 302.25,
+            "change_pct": -0.87,
             "reference_price": 210.0,
-            "diff_to_target": 92.22,
+            "diff_to_target": 92.25,
             "target_down": -4.5
         },
         {
@@ -94,28 +94,28 @@
         {
             "name": "Tesla",
             "symbol": "TSLA",
-            "current_price": 327.45,
-            "change_pct": -1.61,
+            "current_price": 327.51,
+            "change_pct": -1.59,
             "reference_price": 175.0,
-            "diff_to_target": 152.45,
+            "diff_to_target": 152.51,
             "target_down": -6.0
         },
         {
             "name": "Netflix",
             "symbol": "NFLX",
-            "current_price": 74.2,
-            "change_pct": -0.79,
+            "current_price": 74.21,
+            "change_pct": -0.78,
             "reference_price": 40.0,
-            "diff_to_target": 34.2,
+            "diff_to_target": 34.21,
             "target_down": -6.0
         },
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "current_price": 224.1,
+            "current_price": 224.09,
             "change_pct": 3.03,
             "reference_price": 120.0,
-            "diff_to_target": 104.1,
+            "diff_to_target": 104.09,
             "target_down": -6.0
         },
         {
@@ -130,19 +130,19 @@
         {
             "name": "TSMC",
             "symbol": "TSM",
-            "current_price": 429.13,
+            "current_price": 429.15,
             "change_pct": 1.68,
             "reference_price": 145.0,
-            "diff_to_target": 284.13,
+            "diff_to_target": 284.15,
             "target_down": -6.0
         },
         {
             "name": "SK Hynix",
             "symbol": "SKHY",
-            "current_price": 154.4,
-            "change_pct": 9.0,
+            "current_price": 154.41,
+            "change_pct": 9.01,
             "reference_price": 120.0,
-            "diff_to_target": 34.4,
+            "diff_to_target": 34.41,
             "target_down": -6.0
         },
         {
@@ -157,19 +157,19 @@
         {
             "name": "AMD",
             "symbol": "AMD",
-            "current_price": 482.79,
-            "change_pct": 1.79,
+            "current_price": 482.93,
+            "change_pct": 1.82,
             "reference_price": 250.0,
-            "diff_to_target": 232.79,
+            "diff_to_target": 232.93,
             "target_down": -10.0
         },
         {
             "name": "Arm",
             "symbol": "ARM",
-            "current_price": 271.7,
-            "change_pct": 1.03,
+            "current_price": 271.87,
+            "change_pct": 1.09,
             "reference_price": 100.0,
-            "diff_to_target": 171.7,
+            "diff_to_target": 171.87,
             "target_down": -10.0
         },
         {
@@ -184,19 +184,19 @@
         {
             "name": "Micron",
             "symbol": "MU",
-            "current_price": 910.83,
-            "change_pct": 4.87,
+            "current_price": 911.29,
+            "change_pct": 4.92,
             "reference_price": 250.0,
-            "diff_to_target": 660.83,
+            "diff_to_target": 661.29,
             "target_down": -6.0
         },
         {
             "name": "Lam Research",
             "symbol": "LRCX",
-            "current_price": 326.02,
-            "change_pct": 4.69,
+            "current_price": 326.11,
+            "change_pct": 4.72,
             "reference_price": 100.0,
-            "diff_to_target": 226.02,
+            "diff_to_target": 226.11,
             "target_down": -10.0
         },
         {
@@ -247,10 +247,10 @@
         {
             "name": "Microchip Technology",
             "symbol": "MCHP",
-            "current_price": 79.45,
-            "change_pct": -1.94,
+            "current_price": 79.44,
+            "change_pct": -1.95,
             "reference_price": 40.0,
-            "diff_to_target": 39.45,
+            "diff_to_target": 39.44,
             "target_down": -6.0
         },
         {
@@ -265,10 +265,10 @@
         {
             "name": "ORACLE",
             "symbol": "ORCL",
-            "current_price": 153.23,
-            "change_pct": 5.33,
+            "current_price": 153.28,
+            "change_pct": 5.36,
             "reference_price": 115.0,
-            "diff_to_target": 38.23,
+            "diff_to_target": 38.28,
             "target_down": -7.0
         },
         {
@@ -292,100 +292,100 @@
         {
             "name": "Goldman Sachs",
             "symbol": "GS",
-            "current_price": 1035.66,
-            "change_pct": 0.12,
+            "current_price": 1037.21,
+            "change_pct": 0.27,
             "reference_price": 450.0,
-            "diff_to_target": 585.66,
+            "diff_to_target": 587.21,
             "target_down": -4.0
         },
         {
             "name": "Visa",
             "symbol": "V",
-            "current_price": 359.47,
-            "change_pct": -0.92,
+            "current_price": 359.42,
+            "change_pct": -0.94,
             "reference_price": 270.0,
-            "diff_to_target": 89.47,
+            "diff_to_target": 89.42,
             "target_down": -3.5
         },
         {
             "name": "American Express",
             "symbol": "AXP",
-            "current_price": 344.07,
+            "current_price": 344.08,
             "change_pct": 0.96,
             "reference_price": 220.0,
-            "diff_to_target": 124.07,
+            "diff_to_target": 124.08,
             "target_down": -4.0
         },
         {
             "name": "Travelers",
             "symbol": "TRV",
-            "current_price": 370.23,
-            "change_pct": -1.43,
+            "current_price": 370.16,
+            "change_pct": -1.45,
             "reference_price": 220.0,
-            "diff_to_target": 150.23,
+            "diff_to_target": 150.16,
             "target_down": -3.5
         },
         {
             "name": "JPMorgan Chase",
             "symbol": "JPM",
-            "current_price": 365.23,
-            "change_pct": 0.88,
+            "current_price": 365.18,
+            "change_pct": 0.87,
             "reference_price": 170.0,
-            "diff_to_target": 195.23,
+            "diff_to_target": 195.18,
             "target_down": -4.0
         },
         {
             "name": "Caterpillar",
             "symbol": "CAT",
-            "current_price": 855.65,
-            "change_pct": 1.46,
+            "current_price": 855.6,
+            "change_pct": 1.45,
             "reference_price": 330.0,
-            "diff_to_target": 525.65,
+            "diff_to_target": 525.6,
             "target_down": -4.0
         },
         {
             "name": "Honeywell",
             "symbol": "HON",
-            "current_price": 235.29,
-            "change_pct": 2.25,
+            "current_price": 235.34,
+            "change_pct": 2.27,
             "reference_price": 180.0,
-            "diff_to_target": 55.29,
+            "diff_to_target": 55.34,
             "target_down": -3.5
         },
         {
             "name": "Boeing",
             "symbol": "BA",
-            "current_price": 231.25,
-            "change_pct": -0.85,
+            "current_price": 231.2,
+            "change_pct": -0.87,
             "reference_price": 160.0,
-            "diff_to_target": 71.25,
+            "diff_to_target": 71.2,
             "target_down": -5.0
         },
         {
             "name": "3M",
             "symbol": "MMM",
-            "current_price": 183.81,
-            "change_pct": 0.37,
+            "current_price": 183.78,
+            "change_pct": 0.35,
             "reference_price": 100.0,
-            "diff_to_target": 83.81,
+            "diff_to_target": 83.78,
             "target_down": -3.5
         },
         {
             "name": "IBM",
             "symbol": "IBM",
-            "current_price": 236.0,
+            "current_price": 235.98,
             "change_pct": -1.02,
             "reference_price": 170.0,
-            "diff_to_target": 66.0,
+            "diff_to_target": 65.98,
             "target_down": -4.0
         },
         {
             "name": "Salesforce",
             "symbol": "CRM",
-            "current_price": 193.28,
-            "change_pct": -2.12,
+            "current_price": 193.32,
+            "change_pct": -2.1,
             "reference_price": 120.0,
-            "diff_to_target": 73.28,
+            "diff_to_target": 73.32,
             "target_down": -4.5
         },
         {
@@ -400,10 +400,10 @@
         {
             "name": "UnitedHealth",
             "symbol": "UNH",
-            "current_price": 405.63,
-            "change_pct": 0.86,
+            "current_price": 405.59,
+            "change_pct": 0.85,
             "reference_price": 300.0,
-            "diff_to_target": 105.63,
+            "diff_to_target": 105.59,
             "target_down": -3.5
         },
         {
@@ -418,10 +418,10 @@
         {
             "name": "Johnson & Johnson",
             "symbol": "JNJ",
-            "current_price": 260.89,
-            "change_pct": 0.42,
+            "current_price": 260.86,
+            "change_pct": 0.41,
             "reference_price": 160.0,
-            "diff_to_target": 100.89,
+            "diff_to_target": 100.86,
             "target_down": -3.5
         },
         {
@@ -436,19 +436,19 @@
         {
             "name": "McDonald's",
             "symbol": "MCD",
-            "current_price": 275.66,
-            "change_pct": 0.55,
+            "current_price": 275.7,
+            "change_pct": 0.57,
             "reference_price": 230.0,
-            "diff_to_target": 45.66,
+            "diff_to_target": 45.7,
             "target_down": -3.5
         },
         {
             "name": "Sherwin-Williams",
             "symbol": "SHW",
-            "current_price": 360.18,
+            "current_price": 360.2,
             "change_pct": -1.16,
             "reference_price": 250.0,
-            "diff_to_target": 110.18,
+            "diff_to_target": 110.2,
             "target_down": -4.0
         },
         {
@@ -463,10 +463,10 @@
         {
             "name": "Coca-Cola",
             "symbol": "KO",
-            "current_price": 86.73,
-            "change_pct": 0.29,
+            "current_price": 86.71,
+            "change_pct": 0.27,
             "reference_price": 50.0,
-            "diff_to_target": 36.73,
+            "diff_to_target": 36.71,
             "target_down": -3.5
         }
     ]
