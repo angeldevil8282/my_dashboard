@@ -1,6 +1,6 @@
 {
-    "timestamp": "2026/08/26 15:50:36",
-    "prediction": 0.304,
+    "timestamp": "2026/08/27 09:30:41",
+    "prediction": 0.251,
     "coverage": "104/104",
     "params": {
         "coeff": 0.9,
@@ -8,108 +8,108 @@
     },
     "sector_stats": [
         {
-            "name": "銀行業",
-            "contrib": 0.1562
-        },
-        {
-            "name": "保険業",
-            "contrib": 0.0703
-        },
-        {
-            "name": "証券・先物",
-            "contrib": 0.0556
-        },
-        {
-            "name": "海運業",
-            "contrib": -0.0465
-        },
-        {
-            "name": "建設業",
-            "contrib": 0.035
-        },
-        {
-            "name": "医薬品",
-            "contrib": 0.0321
-        },
-        {
             "name": "電気機器",
-            "contrib": 0.0243
-        },
-        {
-            "name": "輸送用機器",
-            "contrib": 0.0226
-        },
-        {
-            "name": "情報・通信",
-            "contrib": 0.0203
+            "contrib": 0.1248
         },
         {
             "name": "化学",
-            "contrib": 0.0197
-        },
-        {
-            "name": "小売業",
-            "contrib": -0.0179
-        },
-        {
-            "name": "電気・ガス",
-            "contrib": 0.0178
+            "contrib": 0.069
         },
         {
             "name": "機械",
-            "contrib": 0.0158
-        },
-        {
-            "name": "卸売業",
-            "contrib": -0.0125
-        },
-        {
-            "name": "鉱業",
-            "contrib": -0.0121
-        },
-        {
-            "name": "ゴム製品",
-            "contrib": 0.0109
-        },
-        {
-            "name": "精密機器",
-            "contrib": 0.0082
-        },
-        {
-            "name": "石油・石炭",
-            "contrib": -0.0076
+            "contrib": 0.0425
         },
         {
             "name": "ガラス・土石",
-            "contrib": -0.0071
+            "contrib": 0.0389
         },
         {
-            "name": "鉄鋼",
-            "contrib": 0.0043
+            "name": "輸送用機器",
+            "contrib": 0.0231
+        },
+        {
+            "name": "医薬品",
+            "contrib": -0.0208
+        },
+        {
+            "name": "建設業",
+            "contrib": 0.0163
         },
         {
             "name": "食料品",
-            "contrib": -0.0032
+            "contrib": 0.0152
         },
         {
-            "name": "不動産業",
-            "contrib": 0.0028
+            "name": "精密機器",
+            "contrib": 0.0127
         },
         {
-            "name": "その他製品",
-            "contrib": 0.0028
+            "name": "鉱業",
+            "contrib": 0.0113
         },
         {
             "name": "非鉄金属",
-            "contrib": 0.0015
+            "contrib": 0.0112
+        },
+        {
+            "name": "電気・ガス",
+            "contrib": -0.0103
+        },
+        {
+            "name": "海運業",
+            "contrib": -0.009
+        },
+        {
+            "name": "銀行業",
+            "contrib": -0.0078
+        },
+        {
+            "name": "その他製品",
+            "contrib": 0.0074
+        },
+        {
+            "name": "情報・通信",
+            "contrib": -0.0057
+        },
+        {
+            "name": "保険業",
+            "contrib": 0.0055
+        },
+        {
+            "name": "石油・石炭",
+            "contrib": 0.0048
+        },
+        {
+            "name": "証券・先物",
+            "contrib": -0.0043
+        },
+        {
+            "name": "鉄鋼",
+            "contrib": 0.0035
         },
         {
             "name": "繊維製品",
-            "contrib": -0.0007
+            "contrib": 0.0035
+        },
+        {
+            "name": "ゴム製品",
+            "contrib": 0.0018
+        },
+        {
+            "name": "卸売業",
+            "contrib": 0.0006
         },
         {
             "name": "サービス業",
-            "contrib": 0.0006
+            "contrib": -0.0003
+        },
+        {
+            "name": "不動産業",
+            "contrib": 0.0002
+        },
+        {
+            "name": "小売業",
+            "contrib": -0.0001
         }
     ]
 }
