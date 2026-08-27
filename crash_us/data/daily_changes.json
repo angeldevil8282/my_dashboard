@@ -1,22 +1,22 @@
 {
-    "date": "2026-08-28 05:00:42",
+    "date": "2026-08-28 06:00:20",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
             "symbol": "^DJI",
-            "current_price": 53568.55,
+            "current_price": 53569.44,
             "change_pct": 0.2,
             "reference_price": 39000.0,
-            "diff_to_target": 14568.55,
+            "diff_to_target": 14569.44,
             "target_down": -3.0
         },
         {
             "name": "S&P 500",
             "symbol": "^GSPC",
-            "current_price": 7730.78,
+            "current_price": 7730.99,
             "change_pct": 0.72,
             "reference_price": 4500.0,
-            "diff_to_target": 3230.78,
+            "diff_to_target": 3230.99,
             "target_down": -5.0
         },
         {
@@ -31,10 +31,10 @@
         {
             "name": "NYSE FANG+ Index",
             "symbol": "^NYFANG",
-            "current_price": 18657.15,
-            "change_pct": 1.41,
+            "current_price": 18686.78,
+            "change_pct": 1.57,
             "reference_price": 9000.0,
-            "diff_to_target": 9657.15,
+            "diff_to_target": 9686.78,
             "target_down": -5.0
         },
         {
@@ -130,10 +130,10 @@
         {
             "name": "TSMC",
             "symbol": "TSM",
-            "current_price": 427.33,
-            "change_pct": 2.31,
+            "current_price": 427.3,
+            "change_pct": 2.3,
             "reference_price": 145.0,
-            "diff_to_target": 282.33,
+            "diff_to_target": 282.3,
             "target_down": -6.0
         },
         {
@@ -292,55 +292,55 @@
         {
             "name": "Goldman Sachs",
             "symbol": "GS",
-            "current_price": 1040.76,
-            "change_pct": 0.03,
+            "current_price": 1040.87,
+            "change_pct": 0.04,
             "reference_price": 450.0,
-            "diff_to_target": 590.76,
+            "diff_to_target": 590.87,
             "target_down": -4.0
         },
         {
             "name": "Visa",
             "symbol": "V",
-            "current_price": 379.62,
-            "change_pct": -1.11,
+            "current_price": 379.66,
+            "change_pct": -1.1,
             "reference_price": 270.0,
-            "diff_to_target": 109.62,
+            "diff_to_target": 109.66,
             "target_down": -3.5
         },
         {
             "name": "American Express",
             "symbol": "AXP",
-            "current_price": 334.11,
-            "change_pct": -0.61,
+            "current_price": 334.16,
+            "change_pct": -0.59,
             "reference_price": 220.0,
-            "diff_to_target": 114.11,
+            "diff_to_target": 114.16,
             "target_down": -4.0
         },
         {
             "name": "Travelers",
             "symbol": "TRV",
-            "current_price": 369.3,
-            "change_pct": -0.5,
+            "current_price": 369.33,
+            "change_pct": -0.49,
             "reference_price": 220.0,
-            "diff_to_target": 149.3,
+            "diff_to_target": 149.33,
             "target_down": -3.5
         },
         {
             "name": "JPMorgan Chase",
             "symbol": "JPM",
-            "current_price": 353.93,
-            "change_pct": -0.72,
+            "current_price": 354.22,
+            "change_pct": -0.64,
             "reference_price": 170.0,
-            "diff_to_target": 183.93,
+            "diff_to_target": 184.22,
             "target_down": -4.0
         },
         {
             "name": "Caterpillar",
             "symbol": "CAT",
-            "current_price": 816.81,
-            "change_pct": -0.62,
+            "current_price": 817.0,
+            "change_pct": -0.6,
             "reference_price": 330.0,
-            "diff_to_target": 486.81,
+            "diff_to_target": 487.0,
             "target_down": -4.0
         },
         {
@@ -355,37 +355,37 @@
         {
             "name": "Boeing",
             "symbol": "BA",
-            "current_price": 209.87,
-            "change_pct": -1.05,
+            "current_price": 209.89,
+            "change_pct": -1.04,
             "reference_price": 160.0,
-            "diff_to_target": 49.87,
+            "diff_to_target": 49.89,
             "target_down": -5.0
         },
         {
             "name": "3M",
             "symbol": "MMM",
-            "current_price": 178.79,
-            "change_pct": -0.67,
+            "current_price": 178.83,
+            "change_pct": -0.65,
             "reference_price": 100.0,
-            "diff_to_target": 78.79,
+            "diff_to_target": 78.83,
             "target_down": -3.5
         },
         {
             "name": "IBM",
             "symbol": "IBM",
-            "current_price": 238.74,
-            "change_pct": 3.86,
+            "current_price": 238.79,
+            "change_pct": 3.88,
             "reference_price": 170.0,
-            "diff_to_target": 68.74,
+            "diff_to_target": 68.79,
             "target_down": -4.0
         },
         {
             "name": "Salesforce",
             "symbol": "CRM",
-            "current_price": 252.1,
-            "change_pct": 22.6,
+            "current_price": 252.05,
+            "change_pct": 22.58,
             "reference_price": 120.0,
-            "diff_to_target": 132.1,
+            "diff_to_target": 132.05,
             "target_down": -4.5
         },
         {
@@ -400,10 +400,10 @@
         {
             "name": "UnitedHealth",
             "symbol": "UNH",
-            "current_price": 394.97,
-            "change_pct": -1.51,
+            "current_price": 395.05,
+            "change_pct": -1.49,
             "reference_price": 300.0,
-            "diff_to_target": 94.97,
+            "diff_to_target": 95.05,
             "target_down": -3.5
         },
         {
@@ -418,37 +418,37 @@
         {
             "name": "Johnson & Johnson",
             "symbol": "JNJ",
-            "current_price": 265.76,
+            "current_price": 265.77,
             "change_pct": -1.57,
             "reference_price": 160.0,
-            "diff_to_target": 105.76,
+            "diff_to_target": 105.77,
             "target_down": -3.5
         },
         {
             "name": "Home Depot",
             "symbol": "HD",
-            "current_price": 328.58,
-            "change_pct": -1.87,
+            "current_price": 328.61,
+            "change_pct": -1.86,
             "reference_price": 280.0,
-            "diff_to_target": 48.58,
+            "diff_to_target": 48.61,
             "target_down": -3.5
         },
         {
             "name": "McDonald's",
             "symbol": "MCD",
-            "current_price": 260.07,
+            "current_price": 260.06,
             "change_pct": -2.57,
             "reference_price": 230.0,
-            "diff_to_target": 30.07,
+            "diff_to_target": 30.06,
             "target_down": -3.5
         },
         {
             "name": "Sherwin-Williams",
             "symbol": "SHW",
-            "current_price": 345.18,
-            "change_pct": -1.0,
+            "current_price": 345.21,
+            "change_pct": -0.99,
             "reference_price": 250.0,
-            "diff_to_target": 95.18,
+            "diff_to_target": 95.21,
             "target_down": -4.0
         },
         {
