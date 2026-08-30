@@ -1,5 +1,5 @@
 {
-    "date": "2026-08-30 14:29:08",
+    "date": "2026-08-30 14:37:26",
     "stocks": [
         {
             "name": "日経平均",
@@ -468,15 +468,6 @@
             "reference_price": 30000,
             "diff_to_target": -4640.0,
             "target_down": -10.0
-        },
-        {
-            "name": "信越化学工業",
-            "symbol": "4063.T",
-            "current_price": 6001.0,
-            "change_pct": 0.13,
-            "reference_price": 4000,
-            "diff_to_target": -2001.0,
-            "target_down": -5.0
         },
         {
             "name": "ＪＸ金属",
