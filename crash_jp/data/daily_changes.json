@@ -1,5 +1,5 @@
 {
-    "date": "2026-08-28 15:50:14",
+    "date": "2026-08-30 14:29:08",
     "stocks": [
         {
             "name": "日経平均",
@@ -488,13 +488,13 @@
             "target_down": -5.0
         },
         {
-            "name": "SCREENホールディングス",
-            "symbol": "7735.T",
-            "current_price": 13715.0,
-            "change_pct": 1.33,
-            "reference_price": 8000,
-            "diff_to_target": -5715.0,
-            "target_down": -7.0
+            "name": "信越化学工業",
+            "symbol": "4063.T",
+            "current_price": 6001.0,
+            "change_pct": 0.13,
+            "reference_price": 4000,
+            "diff_to_target": -2001.0,
+            "target_down": -5.0
         },
         {
             "name": "ＨＯＹＡ",
@@ -503,6 +503,15 @@
             "change_pct": -0.25,
             "reference_price": 2500,
             "diff_to_target": -21905.0,
+            "target_down": -5.0
+        },
+        {
+            "name": "ソニー",
+            "symbol": "6758.T",
+            "current_price": 3928.0,
+            "change_pct": 1.5,
+            "reference_price": 1500,
+            "diff_to_target": -2428.0,
             "target_down": -5.0
         }
     ]
