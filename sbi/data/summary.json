@@ -1,6 +1,6 @@
 {
-    "timestamp": "2026/09/08 09:30:19",
-    "prediction": -0.754,
+    "timestamp": "2026/09/08 10:27:19",
+    "prediction": -0.774,
     "coverage": "104/104",
     "params": {
         "coeff": 0.9,
@@ -8,95 +8,99 @@
     },
     "sector_stats": [
         {
+            "name": "輸送用機器",
+            "contrib": -0.1852
+        },
+        {
             "name": "電気機器",
             "contrib": -0.161
         },
         {
-            "name": "輸送用機器",
-            "contrib": -0.1403
-        },
-        {
-            "name": "銀行業",
-            "contrib": -0.1342
-        },
-        {
             "name": "精密機器",
-            "contrib": -0.0701
-        },
-        {
-            "name": "卸売業",
-            "contrib": -0.049
-        },
-        {
-            "name": "ガラス・土石",
-            "contrib": -0.0444
-        },
-        {
-            "name": "保険業",
-            "contrib": -0.0436
+            "contrib": -0.1349
         },
         {
             "name": "機械",
-            "contrib": -0.0397
-        },
-        {
-            "name": "ゴム製品",
-            "contrib": -0.0254
-        },
-        {
-            "name": "鉄鋼",
-            "contrib": -0.0217
-        },
-        {
-            "name": "化学",
-            "contrib": -0.0131
+            "contrib": -0.0604
         },
         {
             "name": "医薬品",
-            "contrib": -0.0115
+            "contrib": -0.0423
         },
         {
-            "name": "サービス業",
-            "contrib": -0.0103
+            "name": "鉄鋼",
+            "contrib": -0.0378
         },
         {
-            "name": "電気・ガス",
-            "contrib": -0.01
-        },
-        {
-            "name": "建設業",
-            "contrib": -0.0089
-        },
-        {
-            "name": "その他製品",
-            "contrib": -0.0083
-        },
-        {
-            "name": "小売業",
-            "contrib": 0.0076
-        },
-        {
-            "name": "情報・通信",
-            "contrib": 0.0074
+            "name": "ゴム製品",
+            "contrib": -0.0367
         },
         {
             "name": "食料品",
-            "contrib": -0.0064
+            "contrib": -0.0333
         },
         {
-            "name": "石油・石炭",
-            "contrib": 0.0045
+            "name": "ガラス・土石",
+            "contrib": -0.0321
         },
         {
-            "name": "海運業",
-            "contrib": 0.0043
+            "name": "卸売業",
+            "contrib": -0.0301
         },
         {
-            "name": "不動産業",
-            "contrib": -0.0042
+            "name": "サービス業",
+            "contrib": -0.0301
+        },
+        {
+            "name": "その他製品",
+            "contrib": -0.0202
+        },
+        {
+            "name": "保険業",
+            "contrib": -0.0182
         },
         {
             "name": "非鉄金属",
+            "contrib": 0.0163
+        },
+        {
+            "name": "銀行業",
+            "contrib": 0.0153
+        },
+        {
+            "name": "証券・先物",
+            "contrib": 0.0142
+        },
+        {
+            "name": "電気・ガス",
+            "contrib": -0.0137
+        },
+        {
+            "name": "化学",
+            "contrib": -0.0116
+        },
+        {
+            "name": "海運業",
+            "contrib": -0.0107
+        },
+        {
+            "name": "情報・通信",
+            "contrib": 0.0099
+        },
+        {
+            "name": "建設業",
+            "contrib": -0.0054
+        },
+        {
+            "name": "石油・石炭",
+            "contrib": 0.0048
+        },
+        {
+            "name": "小売業",
+            "contrib": 0.0044
+        },
+        {
+            "name": "繊維製品",
             "contrib": -0.0038
         },
         {
@@ -104,12 +108,8 @@
             "contrib": -0.0012
         },
         {
-            "name": "証券・先物",
-            "contrib": 0.001
-        },
-        {
-            "name": "繊維製品",
-            "contrib": 0.0
+            "name": "不動産業",
+            "contrib": -0.0003
         }
     ]
 }
