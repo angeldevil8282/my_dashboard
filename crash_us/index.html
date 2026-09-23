@@ -110,8 +110,26 @@
                     const mark = s.change_pct < 0 ? '▼' : '▲';
                     
                     // シンボルまたは名前から通貨を判定
-                    const isJPY = s.symbol.startsWith('^') || s.symbol.endsWith('.T') || s.name.includes('日経');
-                    const currencySign = isJPY ? '¥' : '$';
+                    // const isJPY = s.symbol.startsWith('^') || s.symbol.endsWith('.T') || s.name.includes('日経');
+                    // const currencySign = isJPY ? '¥' : '$';
+                    
+                    // 変更後：シンボルごとに適切な単位や通貨記号を設定する
+                    let currencySign = '$';
+                    let unit = '';
+
+                    if (s.symbol === '^TNX') {
+                        currencySign = '';
+                        unit = '%';
+                    } else if (s.symbol === '^VIX') {
+                        currencySign = '';
+                        unit = '';
+                    } else if (s.symbol.endsWith('.T') || s.name.includes('日経')) {
+                        currencySign = '¥';
+                        unit = '';
+                    } else {
+                        currencySign = '$';
+                        unit = '';
+                    }
                     
                     const advice = getSpotAdvice(s.symbol, s.change_pct);
                     
