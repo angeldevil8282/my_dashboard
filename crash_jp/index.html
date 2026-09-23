@@ -64,12 +64,41 @@
             </div>
         </div>
 
+        <!-- ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測カード（Viewの一番下） -->
+        <div class="mt-6 font-sans">
+            <div class="card p-4 rounded-lg flex justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-bold text-white flex items-center">
+                        <span class="mr-2">📊</span> ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測
+                    </h3>
+                    <p class="text-[10px] text-gray-500 mt-0.5">主要構成上位銘柄（カバー率約80%）の加重平均予測</p>
+                </div>
+                <div id="top80-summary-value" class="text-lg font-bold font-mono text-gray-300">
+                    計算中...
+                </div>
+            </div>
+        </div>
+
         <footer class="mt-12 text-center text-xs text-gray-600 border-t border-gray-800 pt-4 font-sans">
             &copy; 2026 Asset Logic / Powered by yfinance
         </footer>
     </div>
 
     <script>
+        // eMAXIS 日経半導体株インデックスの主要構成比率（上位約8割分）
+        const semiconWeights = {
+            "8035.T": 0.15,  // 東京エレクトロン
+            "285A.T": 0.14,  // キオクシアホールディングス
+            "6857.T": 0.13,  // アドバンテスト
+            "6146.T": 0.11,  // ディスコ
+            "6723.T": 0.07,  // ルネサスエレクトロニクス
+            "6920.T": 0.05,  // レーザーテック
+            "4063.T": 0.05,  // 信越化学工業
+            "5016.T": 0.04,  // ＪＸ金属
+            "7741.T": 0.04,  // ＨＯＹＡ
+            "6758.T": 0.03   // ソニーグループ
+        };
+
         // スポット購入ロジック
         function getSpotAdvice(changePct) {
             const pct = Math.abs(changePct);
@@ -83,18 +112,25 @@
             return null;
         }
 
-async function fetchMarketData() {
+        async function fetchMarketData() {
             try {
                 const response = await fetch('./data/daily_changes.json?' + new Date().getTime());
                 const data = await response.json();
                 
-                document.getElementById('last-update').innerText = `最終更新: ${data.date}`;
+                // データが配列かオブジェクト（data.stocks）かに柔軟に対応
+                const stocks = Array.isArray(data) ? data : (data.stocks || []);
+                
+                // 最終更新日時の表示（オブジェクト内に date があればそれを利用、なければ現在時刻など）
+                const updateText = data.date ? `最終更新: ${data.date}` : `最終更新: ${new Date().toLocaleString()}`;
+                document.getElementById('last-update').innerText = updateText;
                 
                 const container = document.getElementById('stock-list');
                 container.innerHTML = '';
 
-                // ループは1重にきれいにまとめる
-                data.stocks.forEach(s => {
+                let totalImpact = 0;
+                let totalWeight = 0;
+
+                stocks.forEach(s => {
                     // 1. 判定：現在値が目標価格（reference_price）以下になったか
                     const isReached = s.current_price <= s.reference_price; 
                     const colorClass = s.change_pct < 0 ? 'status-down' : 'status-up';
@@ -103,13 +139,20 @@ async function fetchMarketData() {
                     // 日経平均のスポット判定
                     const advice = (s.symbol === '^N225' || s.name.includes('日経')) ? getSpotAdvice(s.change_pct) : null;
                     
+                    // 2. 上位8割予測の計算（半導体関連のウェイト合算）
+                    if (semiconWeights[s.symbol] !== undefined) {
+                        const w = semiconWeights[s.symbol];
+                        const pct = s.change_pct || 0;
+                        totalImpact += (pct * w);
+                        totalWeight += w;
+                    }
+
                     const card = document.createElement('div');
                     card.className = `card p-4 rounded-lg ${isReached ? 'target-reached' : ''} flex flex-col justify-between`;
                     
-                    // 2. 「あと何円」はマイナス記号がつかないよう絶対値にする
+                    // 「あと何円」は絶対値にする
                     const absDiff = Math.abs(s.current_price - s.reference_price);
 
-                    // 3. 上半分の銘柄情報と、下半分のステータスを正しく1つのinnerHTMLにまとめる
                     card.innerHTML = `
                         <div>
                             <div class="flex justify-between items-start mb-2 font-sans">
@@ -147,6 +190,22 @@ async function fetchMarketData() {
                     
                     container.appendChild(card);
                 });
+
+                // 上位8割トータル予測の描画反映
+                const summaryEl = document.getElementById('top80-summary-value');
+                if (summaryEl && totalWeight > 0) {
+                    // ウェイト合計で正規化してトータル騰落率を算出
+                    const normalizedImpact = (totalImpact / totalWeight);
+                    const valStr = normalizedImpact.toFixed(2);
+                    const isMinus = normalizedImpact < 0;
+                    const sign = normalizedImpact > 0 ? '+' : '';
+                    
+                    summaryEl.className = `text-lg font-bold font-mono ${isMinus ? 'status-down' : 'status-up'}`;
+                    summaryEl.textContent = `${sign}${valStr}% （カバー率: ${(totalWeight * 100).toFixed(0)}%）`;
+                } else if (summaryEl) {
+                    summaryEl.textContent = "対象銘柄データなし";
+                }
+
             } catch (e) {
                 console.error("データの読み込みに失敗しました", e);
                 document.getElementById('last-update').innerText = "データ読み込みエラー";
