@@ -10,10 +10,8 @@
         .card { background-color: #161b22; border: 1px solid #30363d; }
         .status-down { color: #ff7b72; }
         .status-up { color: #3fb950; }
-        /* 米国株に合わせた地味な赤枠・赤背景に修正 */
         .target-reached { background-color: rgba(110,118,129,0.08); border-color: #6e7681; }
         .spot-hint { background-color: rgba(56, 139, 253, 0.15); border: 1px dashed #388bfd; }
-        /* 戻るリンクのスタイル追加 */
         .back-link:hover { color: #58a6ff; text-decoration: underline; }
     </style>
 </head>
@@ -64,18 +62,47 @@
             </div>
         </div>
 
-        <!-- ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測カード（Viewの一番下） -->
-        <div class="mt-6 font-sans">
-            <div class="card p-4 rounded-lg flex justify-between items-center">
+        <!-- ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測 ＆ トップ10銘柄一覧 -->
+        <div class="mt-12 font-sans">
+            <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                <span class="mr-2">📊</span> ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測
+            </h2>
+            
+            <!-- トータル予測サマリーカード -->
+            <div class="card p-4 rounded-lg flex justify-between items-center mb-4">
                 <div>
-                    <h3 class="text-sm font-bold text-white flex items-center">
-                        <span class="mr-2">📊</span> ｅＭＡＸＩＳ 日経半導体株 上位8割トータル予測
-                    </h3>
-                    <p class="text-[10px] text-gray-500 mt-0.5">主要構成上位銘柄（カバー率約80%）の加重平均予測</p>
+                    <h3 class="text-sm font-bold text-white">加重平均トータル予測</h3>
+                    <p class="text-[10px] text-gray-500 mt-0.5">主要構成上位10銘柄（カバー率約82%）ベース</p>
                 </div>
                 <div id="top80-summary-value" class="text-lg font-bold font-mono text-gray-300">
                     計算中...
                 </div>
+            </div>
+
+            <!-- トップ10銘柄と比率のテーブル -->
+            <div class="card p-4 rounded-lg overflow-x-auto">
+                <p class="text-xs text-gray-400 mb-3 font-bold">📌 対象トップ10銘柄の構成比率</p>
+                <table class="w-full text-xs text-left">
+                    <thead class="text-gray-500 border-b border-gray-800">
+                        <tr>
+                            <th class="pb-2">銘柄名</th>
+                            <th class="pb-2 font-mono">コード</th>
+                            <th class="pb-2 text-right">構成比率</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300 font-mono">
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">キオクシアホールディングス</td><td class="py-1.5 text-gray-500">285A.T</td><td class="py-1.5 text-right">27.5%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">東京エレクトロン</td><td class="py-1.5 text-gray-500">8035.T</td><td class="py-1.5 text-right">14.0%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">アドバンテスト</td><td class="py-1.5 text-gray-500">6857.T</td><td class="py-1.5 text-right">12.3%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">ルネサスエレクトロニクス</td><td class="py-1.5 text-gray-500">6723.T</td><td class="py-1.5 text-right">6.5%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">ディスコ</td><td class="py-1.5 text-gray-500">6146.T</td><td class="py-1.5 text-right">6.4%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">レーザーテック</td><td class="py-1.5 text-gray-500">6920.T</td><td class="py-1.5 text-right">3.6%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">ＪＸ金属</td><td class="py-1.5 text-gray-500">5016.T</td><td class="py-1.5 text-right">3.6%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">信越化学工業</td><td class="py-1.5 text-gray-500">4063.T</td><td class="py-1.5 text-right">3.2%</td></tr>
+                        <tr class="border-b border-gray-800/50"><td class="py-1.5 font-sans">ＨＯＹＡ</td><td class="py-1.5 text-gray-500">7741.T</td><td class="py-1.5 text-right">2.8%</td></tr>
+                        <tr><td class="py-1.5 font-sans">ソニー</td><td class="py-1.5 text-gray-500">6758.T</td><td class="py-1.5 text-right">2.5%</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -87,16 +114,16 @@
     <script>
         // ｅＭＡＸＩＳ 日経半導体株インデックスの最新構成比率（上位約8割）
         const semiconWeights = {
-            "285A.T": 0.26,  // キオクシアホールディングス
-            "8035.T": 0.14,  // 東京エレクトロン
-            "6857.T": 0.12,  // アドバンテスト
-            "6723.T": 0.06,  // ルネサスエレクトロニクス
-            "6146.T": 0.06,  // ディスコ
-            "6920.T": 0.03,  // レーザーテック
-            "5016.T": 0.03,  // ＪＸ金属
-            "4063.T": 0.03,  // 信越化学工業
-            "7741.T": 0.028, // ＨＯＹＡ
-            "6758.T": 0.025  // ソニー
+            "285A.T": 0.275,  // キオクシアホールディングス
+            "8035.T": 0.140,  // 東京エレクトロン
+            "6857.T": 0.123,  // アドバンテスト
+            "6723.T": 0.065,  // ルネサスエレクトロニクス
+            "6146.T": 0.064,  // ディスコ
+            "6920.T": 0.036,  // レーザーテック
+            "5016.T": 0.036,  // ＪＸ金属
+            "4063.T": 0.032,  // 信越化学工業
+            "7741.T": 0.028,  // ＨＯＹＡ
+            "6758.T": 0.025   // ソニー
         };
 
         // スポット購入ロジック
@@ -127,18 +154,15 @@
 
                 let totalImpact = 0;
                 let totalWeight = 0;
-                const processedSymbols = new Set(); // 重複計算を防ぐためのセット
+                const processedSymbols = new Set();
 
                 stocks.forEach(s => {
-                    // 1. 判定：現在値が目標価格（reference_price）以下になったか
                     const isReached = s.current_price <= s.reference_price; 
                     const colorClass = s.change_pct < 0 ? 'status-down' : 'status-up';
                     const mark = s.change_pct < 0 ? '▼' : '▲';
                     
-                    // 日経平均のスポット判定
                     const advice = (s.symbol === '^N225' || s.name.includes('日経')) ? getSpotAdvice(s.change_pct) : null;
                     
-                    // 2. 上位8割予測の計算（重複を除外して正確に加重平均）
                     if (semiconWeights[s.symbol] !== undefined && !processedSymbols.has(s.symbol)) {
                         processedSymbols.add(s.symbol);
                         const w = semiconWeights[s.symbol];
@@ -190,11 +214,10 @@
                     container.appendChild(card);
                 });
 
-                // 上位8割トータル予測の描画反映（小数点第2位まで表示）
                 const summaryEl = document.getElementById('top80-summary-value');
                 if (summaryEl && totalWeight > 0) {
                     const normalizedImpact = (totalImpact / totalWeight);
-                    const valStr = normalizedImpact.toFixed(2); // 小数点第2位まで
+                    const valStr = normalizedImpact.toFixed(2);
                     const isMinus = normalizedImpact < 0;
                     const sign = normalizedImpact > 0 ? '+' : '';
                     
