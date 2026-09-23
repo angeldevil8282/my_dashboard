@@ -1,5 +1,5 @@
 {
-    "date": "2026-09-23 20:13:45",
+    "date": "2026-09-23 21:07:50",
     "stocks": [
         {
             "name": "日経平均",
@@ -22,20 +22,29 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 157.8,
-            "change_pct": 0.34,
+            "current_price": 157.9,
+            "change_pct": 0.38,
             "reference_price": 150,
-            "diff_to_target": -7.8,
+            "diff_to_target": -7.9,
             "target_down": -2.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 4350.1,
-            "change_pct": -0.6,
+            "current_price": 4345.8,
+            "change_pct": -0.7,
             "reference_price": 4000,
-            "diff_to_target": -350.1,
+            "diff_to_target": -345.8,
             "target_down": -3.0
+        },
+        {
+            "name": "WTI原油先物",
+            "symbol": "CL=F",
+            "current_price": 90.7,
+            "change_pct": 0.18,
+            "reference_price": 70.0,
+            "diff_to_target": -20.7,
+            "target_down": -15.0
         },
         {
             "name": "アドバンテスト",
