@@ -85,18 +85,18 @@
     </div>
 
     <script>
-        // eMAXIS 日経半導体株インデックスの主要構成比率（上位約8割分）
+        // ｅＭＡＸＩＳ 日経半導体株インデックスの最新構成比率（上位約8割）
         const semiconWeights = {
-            "8035.T": 0.15,  // 東京エレクトロン
-            "285A.T": 0.14,  // キオクシアホールディングス
-            "6857.T": 0.13,  // アドバンテスト
-            "6146.T": 0.11,  // ディスコ
-            "6723.T": 0.07,  // ルネサスエレクトロニクス
-            "6920.T": 0.05,  // レーザーテック
-            "4063.T": 0.05,  // 信越化学工業
-            "5016.T": 0.04,  // ＪＸ金属
-            "7741.T": 0.04,  // ＨＯＹＡ
-            "6758.T": 0.03   // ソニーグループ
+            "285A.T": 0.26,  // キオクシアホールディングス
+            "8035.T": 0.14,  // 東京エレクトロン
+            "6857.T": 0.12,  // アドバンテスト
+            "6723.T": 0.06,  // ルネサスエレクトロニクス
+            "6146.T": 0.06,  // ディスコ
+            "6920.T": 0.03,  // レーザーテック
+            "5016.T": 0.03,  // ＪＸ金属
+            "4063.T": 0.03,  // 信越化学工業
+            "7741.T": 0.028, // ＨＯＹＡ
+            "6758.T": 0.025  // ソニー
         };
 
         // スポット購入ロジック
@@ -117,10 +117,8 @@
                 const response = await fetch('./data/daily_changes.json?' + new Date().getTime());
                 const data = await response.json();
                 
-                // データが配列かオブジェクト（data.stocks）かに柔軟に対応
                 const stocks = Array.isArray(data) ? data : (data.stocks || []);
                 
-                // 最終更新日時の表示（オブジェクト内に date があればそれを利用、なければ現在時刻など）
                 const updateText = data.date ? `最終更新: ${data.date}` : `最終更新: ${new Date().toLocaleString()}`;
                 document.getElementById('last-update').innerText = updateText;
                 
@@ -129,6 +127,7 @@
 
                 let totalImpact = 0;
                 let totalWeight = 0;
+                const processedSymbols = new Set(); // 重複計算を防ぐためのセット
 
                 stocks.forEach(s => {
                     // 1. 判定：現在値が目標価格（reference_price）以下になったか
@@ -139,8 +138,9 @@
                     // 日経平均のスポット判定
                     const advice = (s.symbol === '^N225' || s.name.includes('日経')) ? getSpotAdvice(s.change_pct) : null;
                     
-                    // 2. 上位8割予測の計算（半導体関連のウェイト合算）
-                    if (semiconWeights[s.symbol] !== undefined) {
+                    // 2. 上位8割予測の計算（重複を除外して正確に加重平均）
+                    if (semiconWeights[s.symbol] !== undefined && !processedSymbols.has(s.symbol)) {
+                        processedSymbols.add(s.symbol);
                         const w = semiconWeights[s.symbol];
                         const pct = s.change_pct || 0;
                         totalImpact += (pct * w);
@@ -150,7 +150,6 @@
                     const card = document.createElement('div');
                     card.className = `card p-4 rounded-lg ${isReached ? 'target-reached' : ''} flex flex-col justify-between`;
                     
-                    // 「あと何円」は絶対値にする
                     const absDiff = Math.abs(s.current_price - s.reference_price);
 
                     card.innerHTML = `
@@ -191,17 +190,16 @@
                     container.appendChild(card);
                 });
 
-                // 上位8割トータル予測の描画反映
+                // 上位8割トータル予測の描画反映（小数点第2位まで表示）
                 const summaryEl = document.getElementById('top80-summary-value');
                 if (summaryEl && totalWeight > 0) {
-                    // ウェイト合計で正規化してトータル騰落率を算出
                     const normalizedImpact = (totalImpact / totalWeight);
-                    const valStr = normalizedImpact.toFixed(2);
+                    const valStr = normalizedImpact.toFixed(2); // 小数点第2位まで
                     const isMinus = normalizedImpact < 0;
                     const sign = normalizedImpact > 0 ? '+' : '';
                     
                     summaryEl.className = `text-lg font-bold font-mono ${isMinus ? 'status-down' : 'status-up'}`;
-                    summaryEl.textContent = `${sign}${valStr}% （カバー率: ${(totalWeight * 100).toFixed(0)}%）`;
+                    summaryEl.textContent = `${sign}${valStr}% （カバー率: ${(totalWeight * 100).toFixed(1)}%）`;
                 } else if (summaryEl) {
                     summaryEl.textContent = "対象銘柄データなし";
                 }
