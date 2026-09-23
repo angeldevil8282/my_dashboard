@@ -167,7 +167,7 @@
                         processedSymbols.add(s.symbol);
                         const w = semiconWeights[s.symbol];
                         const pct = s.change_pct || 0;
-                        totalImpact += (pct * w);
+                        totalImpact += (pct * w); // エクセルと同じ計算（比率 × 騰落率の足し上げ）
                         totalWeight += w;
                     }
 
@@ -214,12 +214,12 @@
                     container.appendChild(card);
                 });
 
+                // 上位8割トータル予測の描画反映（エクセルと同じ総和をそのまま表示）
                 const summaryEl = document.getElementById('top80-summary-value');
                 if (summaryEl && totalWeight > 0) {
-                    const normalizedImpact = (totalImpact / totalWeight);
-                    const valStr = normalizedImpact.toFixed(2);
-                    const isMinus = normalizedImpact < 0;
-                    const sign = normalizedImpact > 0 ? '+' : '';
+                    const valStr = totalImpact.toFixed(2);
+                    const isMinus = totalImpact < 0;
+                    const sign = totalImpact > 0 ? '+' : '';
                     
                     summaryEl.className = `text-lg font-bold font-mono ${isMinus ? 'status-down' : 'status-up'}`;
                     summaryEl.textContent = `${sign}${valStr}% （カバー率: ${(totalWeight * 100).toFixed(1)}%）`;
