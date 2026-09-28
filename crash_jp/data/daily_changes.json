@@ -1,5 +1,5 @@
 {
-    "date": "2026-09-28 20:49:34",
+    "date": "2026-09-28 22:07:18",
     "stocks": [
         {
             "name": "日経平均",
@@ -22,37 +22,37 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 156.9,
-            "change_pct": -0.16,
+            "current_price": 157.2,
+            "change_pct": 0.02,
             "reference_price": 150,
-            "diff_to_target": -6.9,
+            "diff_to_target": -7.2,
             "target_down": -2.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 4181.5,
-            "change_pct": -3.23,
+            "current_price": 4185.5,
+            "change_pct": -3.14,
             "reference_price": 4000,
-            "diff_to_target": -181.5,
+            "diff_to_target": -185.5,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 95.6,
-            "change_pct": 3.48,
+            "current_price": 94.0,
+            "change_pct": 1.74,
             "reference_price": 70.0,
-            "diff_to_target": -25.6,
+            "diff_to_target": -24.0,
             "target_down": -10.0
         },
         {
             "name": "ビットコイン(JPN)",
             "symbol": "BTC-JPY",
-            "current_price": 13030752.0,
-            "change_pct": -2.0,
+            "current_price": 13111042.0,
+            "change_pct": -1.39,
             "reference_price": 10000000,
-            "diff_to_target": -3030752.0,
+            "diff_to_target": -3111042.0,
             "target_down": -5.0
         },
         {
@@ -62,7 +62,7 @@
             "change_pct": -0.79,
             "reference_price": 15000,
             "diff_to_target": -18730.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "東京エレクトロン",
@@ -71,7 +71,7 @@
             "change_pct": -0.35,
             "reference_price": 30000,
             "diff_to_target": -26320.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ファーストリテイリング",
@@ -80,7 +80,7 @@
             "change_pct": -1.12,
             "reference_price": 40000,
             "diff_to_target": -27850.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ソフトバンクG",
@@ -89,7 +89,7 @@
             "change_pct": 1.53,
             "reference_price": 4500,
             "diff_to_target": -1744.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "キオクシアホールディングス",
@@ -98,7 +98,7 @@
             "change_pct": -4.37,
             "reference_price": 50000,
             "diff_to_target": -3340.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ＴＤＫ",
@@ -116,7 +116,7 @@
             "change_pct": -4.43,
             "reference_price": 10000,
             "diff_to_target": -12310.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ファナック",
@@ -179,7 +179,7 @@
             "change_pct": 0.29,
             "reference_price": 15000,
             "diff_to_target": -5920.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "中外製薬",
@@ -197,7 +197,7 @@
             "change_pct": -2.22,
             "reference_price": 30000,
             "diff_to_target": -10000.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "太陽誘電",
@@ -242,7 +242,7 @@
             "change_pct": 0.33,
             "reference_price": 50000,
             "diff_to_target": -4400.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ソニー",
@@ -305,7 +305,7 @@
             "change_pct": 1.6,
             "reference_price": 8000,
             "diff_to_target": -5960.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "三菱ＨＣキャピタル",
@@ -458,7 +458,7 @@
             "change_pct": -4.37,
             "reference_price": 50000,
             "diff_to_target": -3340.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "東京エレクトロン",
@@ -467,7 +467,7 @@
             "change_pct": -0.35,
             "reference_price": 30000,
             "diff_to_target": -26320.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "アドバンテスト",
@@ -476,7 +476,7 @@
             "change_pct": -0.79,
             "reference_price": 15000,
             "diff_to_target": -18730.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ルネサスエレクトロニクス",
@@ -494,7 +494,7 @@
             "change_pct": 0.33,
             "reference_price": 50000,
             "diff_to_target": -4400.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "レーザーテック",
@@ -503,7 +503,7 @@
             "change_pct": -2.22,
             "reference_price": 30000,
             "diff_to_target": -10000.0,
-            "target_down": -3.0
+            "target_down": -5.0
         },
         {
             "name": "ＪＸ金属",
