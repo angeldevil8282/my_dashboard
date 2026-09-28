@@ -1,5 +1,5 @@
 {
-    "date": "2026-09-28 15:50:14",
+    "date": "2026-09-28 20:14:59",
     "stocks": [
         {
             "name": "日経平均",
@@ -22,37 +22,37 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 157.4,
-            "change_pct": 0.13,
+            "current_price": 157.1,
+            "change_pct": -0.07,
             "reference_price": 150,
-            "diff_to_target": -7.4,
+            "diff_to_target": -7.1,
             "target_down": -2.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 4209.2,
-            "change_pct": -2.59,
+            "current_price": 4182.7,
+            "change_pct": -3.21,
             "reference_price": 4000,
-            "diff_to_target": -209.2,
+            "diff_to_target": -182.7,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 94.0,
-            "change_pct": 1.73,
+            "current_price": 96.4,
+            "change_pct": 4.34,
             "reference_price": 70.0,
-            "diff_to_target": -24.0,
+            "diff_to_target": -26.4,
             "target_down": -15.0
         },
         {
             "name": "ビットコイン(JPN)",
             "symbol": "BTC-JPY",
-            "current_price": 13090246.0,
-            "change_pct": -1.55,
+            "current_price": 13030775.0,
+            "change_pct": -2.0,
             "reference_price": 10000000,
-            "diff_to_target": -3090246.0,
+            "diff_to_target": -3030775.0,
             "target_down": -10.0
         },
         {
