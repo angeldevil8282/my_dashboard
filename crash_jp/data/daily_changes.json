@@ -1,5 +1,5 @@
 {
-    "date": "2026-09-29 15:50:14",
+    "date": "2026-09-29 19:33:49",
     "stocks": [
         {
             "name": "日経平均",
@@ -22,37 +22,37 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 157.4,
-            "change_pct": 0.02,
+            "current_price": 157.5,
+            "change_pct": 0.07,
             "reference_price": 150,
-            "diff_to_target": -7.4,
+            "diff_to_target": -7.5,
             "target_down": -2.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 4174.3,
-            "change_pct": 0.14,
+            "current_price": 4179.4,
+            "change_pct": 0.26,
             "reference_price": 4000,
-            "diff_to_target": -174.3,
+            "diff_to_target": -179.4,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 93.9,
-            "change_pct": 1.39,
+            "current_price": 92.3,
+            "change_pct": -0.36,
             "reference_price": 70.0,
-            "diff_to_target": -23.9,
+            "diff_to_target": -22.3,
             "target_down": -10.0
         },
         {
             "name": "ビットコイン(JPN)",
             "symbol": "BTC-JPY",
-            "current_price": 13203471.0,
-            "change_pct": 0.5,
+            "current_price": 13242189.0,
+            "change_pct": 0.79,
             "reference_price": 10000000,
-            "diff_to_target": -3203471.0,
+            "diff_to_target": -3242189.0,
             "target_down": -5.0
         },
         {
@@ -69,8 +69,8 @@
             "symbol": "8035.T",
             "current_price": 11505.0,
             "change_pct": 2.86,
-            "reference_price": 30000,
-            "diff_to_target": 18495.0,
+            "reference_price": 6000,
+            "diff_to_target": -5505.0,
             "target_down": -5.0
         },
         {
@@ -96,8 +96,8 @@
             "symbol": "285A.T",
             "current_price": 17880.0,
             "change_pct": 0.56,
-            "reference_price": 50000,
-            "diff_to_target": 32120.0,
+            "reference_price": 15000,
+            "diff_to_target": -2880.0,
             "target_down": -5.0
         },
         {
@@ -114,8 +114,8 @@
             "symbol": "4062.T",
             "current_price": 11020.0,
             "change_pct": -1.17,
-            "reference_price": 10000,
-            "diff_to_target": -1020.0,
+            "reference_price": 5000,
+            "diff_to_target": -6020.0,
             "target_down": -5.0
         },
         {
@@ -393,8 +393,8 @@
             "symbol": "8316.T",
             "current_price": 3357.0,
             "change_pct": -2.7,
-            "reference_price": 5000,
-            "diff_to_target": 1643.0,
+            "reference_price": 2500,
+            "diff_to_target": -857.0,
             "target_down": -2.0
         },
         {
@@ -429,8 +429,8 @@
             "symbol": "8766.T",
             "current_price": 523.2,
             "change_pct": -1.32,
-            "reference_price": 5000,
-            "diff_to_target": 4476.8,
+            "reference_price": 300,
+            "diff_to_target": -223.2,
             "target_down": -2.0
         },
         {
@@ -456,8 +456,8 @@
             "symbol": "285A.T",
             "current_price": 17880.0,
             "change_pct": 0.56,
-            "reference_price": 50000,
-            "diff_to_target": 32120.0,
+            "reference_price": 15000,
+            "diff_to_target": -2880.0,
             "target_down": -5.0
         },
         {
@@ -465,8 +465,8 @@
             "symbol": "8035.T",
             "current_price": 11505.0,
             "change_pct": 2.86,
-            "reference_price": 30000,
-            "diff_to_target": 18495.0,
+            "reference_price": 6000,
+            "diff_to_target": -5505.0,
             "target_down": -5.0
         },
         {
