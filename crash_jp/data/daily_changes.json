@@ -1,13 +1,13 @@
 {
-    "date": "2026-10-07 15:25:15",
+    "date": "2026-10-07 15:30:15",
     "stocks": [
         {
             "name": "日経平均",
             "symbol": "^N225",
-            "current_price": 70216.8,
-            "change_pct": -0.66,
+            "current_price": 70194.6,
+            "change_pct": -0.69,
             "reference_price": 38000,
-            "diff_to_target": -32216.8,
+            "diff_to_target": -32194.6,
             "target_down": -1.0
         },
         {
@@ -22,26 +22,26 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 158.4,
+            "current_price": 158.3,
             "change_pct": 0.17,
             "reference_price": 150,
-            "diff_to_target": -8.4,
+            "diff_to_target": -8.3,
             "target_down": -2.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 4160.3,
+            "current_price": 4160.2,
             "change_pct": -0.64,
             "reference_price": 4000,
-            "diff_to_target": -160.3,
+            "diff_to_target": -160.2,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
             "current_price": 90.3,
-            "change_pct": 1.0,
+            "change_pct": 0.92,
             "reference_price": 70.0,
             "diff_to_target": -20.3,
             "target_down": -10.0
@@ -49,46 +49,46 @@
         {
             "name": "ビットコイン(JPN)",
             "symbol": "BTC-JPY",
-            "current_price": 13327336.0,
-            "change_pct": -1.59,
+            "current_price": 13335688.0,
+            "change_pct": -1.53,
             "reference_price": 10000000,
-            "diff_to_target": -3327336.0,
+            "diff_to_target": -3335688.0,
             "target_down": -5.0
         },
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 41340.0,
-            "change_pct": -1.22,
+            "current_price": 41300.0,
+            "change_pct": -1.31,
             "reference_price": 15000,
-            "diff_to_target": -26340.0,
+            "diff_to_target": -26300.0,
             "target_down": -5.0
         },
         {
             "name": "東京エレクトロン",
             "symbol": "8035.T",
-            "current_price": 12595.0,
-            "change_pct": -1.64,
+            "current_price": 12590.0,
+            "change_pct": -1.68,
             "reference_price": 6000,
-            "diff_to_target": -6595.0,
+            "diff_to_target": -6590.0,
             "target_down": -5.0
         },
         {
             "name": "ファーストリテイリング",
             "symbol": "9983.T",
-            "current_price": 74990.0,
-            "change_pct": -0.79,
+            "current_price": 74930.0,
+            "change_pct": -0.87,
             "reference_price": 40000,
-            "diff_to_target": -34990.0,
+            "diff_to_target": -34930.0,
             "target_down": -5.0
         },
         {
             "name": "ソフトバンクG",
             "symbol": "9984.T",
-            "current_price": 6339.0,
-            "change_pct": 0.7,
+            "current_price": 6335.0,
+            "change_pct": 0.64,
             "reference_price": 4500,
-            "diff_to_target": -1839.0,
+            "diff_to_target": -1835.0,
             "target_down": -5.0
         },
         {
@@ -121,19 +121,19 @@
         {
             "name": "ファナック",
             "symbol": "6954.T",
-            "current_price": 6204.0,
-            "change_pct": -0.26,
+            "current_price": 6208.0,
+            "change_pct": -0.19,
             "reference_price": 4500,
-            "diff_to_target": -1704.0,
+            "diff_to_target": -1708.0,
             "target_down": -3.0
         },
         {
             "name": "信越化学工業",
             "symbol": "4063.T",
-            "current_price": 6266.0,
-            "change_pct": -0.87,
+            "current_price": 6265.0,
+            "change_pct": -0.89,
             "reference_price": 4000,
-            "diff_to_target": -2266.0,
+            "diff_to_target": -2265.0,
             "target_down": -3.0
         },
         {
@@ -148,10 +148,10 @@
         {
             "name": "フジクラ",
             "symbol": "5803.T",
-            "current_price": 5712.0,
-            "change_pct": -2.44,
+            "current_price": 5709.0,
+            "change_pct": -2.49,
             "reference_price": 3000,
-            "diff_to_target": -2712.0,
+            "diff_to_target": -2709.0,
             "target_down": -3.0
         },
         {
@@ -166,10 +166,10 @@
         {
             "name": "村田製作所",
             "symbol": "6981.T",
-            "current_price": 8668.0,
-            "change_pct": -1.82,
+            "current_price": 8665.0,
+            "change_pct": -1.86,
             "reference_price": 6000,
-            "diff_to_target": -2668.0,
+            "diff_to_target": -2665.0,
             "target_down": -3.0
         },
         {
@@ -184,10 +184,10 @@
         {
             "name": "中外製薬",
             "symbol": "4519.T",
-            "current_price": 6109.0,
-            "change_pct": -0.18,
+            "current_price": 6114.0,
+            "change_pct": -0.1,
             "reference_price": 4000,
-            "diff_to_target": -2109.0,
+            "diff_to_target": -2114.0,
             "target_down": -3.0
         },
         {
@@ -202,10 +202,10 @@
         {
             "name": "太陽誘電",
             "symbol": "6976.T",
-            "current_price": 11570.0,
-            "change_pct": 3.91,
+            "current_price": 11500.0,
+            "change_pct": 3.28,
             "reference_price": 10000,
-            "diff_to_target": -1570.0,
+            "diff_to_target": -1500.0,
             "target_down": -3.0
         },
         {
@@ -220,145 +220,145 @@
         {
             "name": "テルモ",
             "symbol": "4543.T",
-            "current_price": 2328.5,
-            "change_pct": -0.21,
+            "current_price": 2329.5,
+            "change_pct": -0.17,
             "reference_price": 1000,
-            "diff_to_target": -1328.5,
+            "diff_to_target": -1329.5,
             "target_down": -3.0
         },
         {
             "name": "コナミ",
             "symbol": "9766.T",
-            "current_price": 22165.0,
-            "change_pct": 0.11,
+            "current_price": 22190.0,
+            "change_pct": 0.23,
             "reference_price": 10000,
-            "diff_to_target": -12165.0,
+            "diff_to_target": -12190.0,
             "target_down": -3.0
         },
         {
             "name": "ディスコ",
             "symbol": "6146.T",
-            "current_price": 61320.0,
-            "change_pct": -6.38,
+            "current_price": 61350.0,
+            "change_pct": -6.34,
             "reference_price": 50000,
-            "diff_to_target": -11320.0,
+            "diff_to_target": -11350.0,
             "target_down": -5.0
         },
         {
             "name": "ソニー",
             "symbol": "6758.T",
-            "current_price": 3729.0,
-            "change_pct": -1.04,
+            "current_price": 3731.0,
+            "change_pct": -0.98,
             "reference_price": 1500,
-            "diff_to_target": -2229.0,
+            "diff_to_target": -2231.0,
             "target_down": -3.0
         },
         {
             "name": "日東電工",
             "symbol": "6988.T",
-            "current_price": 3582.0,
-            "change_pct": -0.8,
+            "current_price": 3585.0,
+            "change_pct": -0.72,
             "reference_price": 1500,
-            "diff_to_target": -2082.0,
+            "diff_to_target": -2085.0,
             "target_down": -3.0
         },
         {
             "name": "トヨタ自動車",
             "symbol": "7203.T",
-            "current_price": 2914.0,
-            "change_pct": -0.56,
+            "current_price": 2913.5,
+            "change_pct": -0.58,
             "reference_price": 2000,
-            "diff_to_target": -914.0,
+            "diff_to_target": -913.5,
             "target_down": -3.0
         },
         {
             "name": "ＨＯＹＡ",
             "symbol": "7741.T",
-            "current_price": 25145.0,
-            "change_pct": -0.61,
+            "current_price": 25155.0,
+            "change_pct": -0.57,
             "reference_price": 2500,
-            "diff_to_target": -22645.0,
+            "diff_to_target": -22655.0,
             "target_down": -3.0
         },
         {
             "name": "三菱商事",
             "symbol": "8058.T",
-            "current_price": 4688.0,
-            "change_pct": -0.53,
+            "current_price": 4694.0,
+            "change_pct": -0.4,
             "reference_price": 3000,
-            "diff_to_target": -1688.0,
+            "diff_to_target": -1694.0,
             "target_down": -3.0
         },
         {
             "name": "住友電気工業",
             "symbol": "5802.T",
-            "current_price": 2497.5,
-            "change_pct": -1.5,
+            "current_price": 2500.0,
+            "change_pct": -1.4,
             "reference_price": 1500,
-            "diff_to_target": -997.5,
+            "diff_to_target": -1000.0,
             "target_down": -3.0
         },
         {
             "name": "SCREENホールディングス",
             "symbol": "7735.T",
-            "current_price": 16000.0,
-            "change_pct": -1.42,
+            "current_price": 15990.0,
+            "change_pct": -1.48,
             "reference_price": 8000,
-            "diff_to_target": -8000.0,
+            "diff_to_target": -7990.0,
             "target_down": -5.0
         },
         {
             "name": "三菱ＨＣキャピタル",
             "symbol": "8593.T",
-            "current_price": 1306.0,
-            "change_pct": -0.72,
+            "current_price": 1305.5,
+            "change_pct": -0.76,
             "reference_price": 1000,
-            "diff_to_target": -306.0,
+            "diff_to_target": -305.5,
             "target_down": -2.0
         },
         {
             "name": "日本製鉄",
             "symbol": "5401.T",
-            "current_price": 641.6,
-            "change_pct": -1.37,
+            "current_price": 641.2,
+            "change_pct": -1.43,
             "reference_price": 400,
-            "diff_to_target": -241.6,
+            "diff_to_target": -241.2,
             "target_down": -2.0
         },
         {
             "name": "ホンダ",
             "symbol": "7267.T",
-            "current_price": 1680.5,
-            "change_pct": -0.41,
+            "current_price": 1679.5,
+            "change_pct": -0.47,
             "reference_price": 1000,
-            "diff_to_target": -680.5,
+            "diff_to_target": -679.5,
             "target_down": -2.0
         },
         {
             "name": "ＪＦＥホールディングス",
             "symbol": "5411.T",
-            "current_price": 1707.0,
-            "change_pct": -0.9,
+            "current_price": 1707.5,
+            "change_pct": -0.87,
             "reference_price": 1000,
-            "diff_to_target": -707.0,
+            "diff_to_target": -707.5,
             "target_down": -2.0
         },
         {
             "name": "ＮＴＴ",
             "symbol": "9432.T",
-            "current_price": 173.0,
-            "change_pct": 1.7,
+            "current_price": 172.5,
+            "change_pct": 1.41,
             "reference_price": 120,
-            "diff_to_target": -53.0,
+            "diff_to_target": -52.5,
             "target_down": -2.0
         },
         {
             "name": "ＳＢＩホールディングス",
             "symbol": "8473.T",
-            "current_price": 3063.0,
-            "change_pct": -2.23,
+            "current_price": 3060.0,
+            "change_pct": -2.33,
             "reference_price": 2000,
-            "diff_to_target": -1063.0,
+            "diff_to_target": -1060.0,
             "target_down": -2.0
         },
         {
@@ -373,46 +373,46 @@
         {
             "name": "楽天グループ",
             "symbol": "4755.T",
-            "current_price": 638.3,
-            "change_pct": -4.35,
+            "current_price": 637.4,
+            "change_pct": -4.48,
             "reference_price": 500,
-            "diff_to_target": -138.3,
+            "diff_to_target": -137.4,
             "target_down": -2.0
         },
         {
             "name": "三菱ＵＦＪ",
             "symbol": "8306.T",
-            "current_price": 3638.0,
-            "change_pct": -0.9,
+            "current_price": 3637.0,
+            "change_pct": -0.93,
             "reference_price": 2500,
-            "diff_to_target": -1138.0,
+            "diff_to_target": -1137.0,
             "target_down": -2.0
         },
         {
             "name": "三井住友FG",
             "symbol": "8316.T",
-            "current_price": 3390.0,
-            "change_pct": -1.14,
+            "current_price": 3389.0,
+            "change_pct": -1.17,
             "reference_price": 2500,
-            "diff_to_target": -890.0,
+            "diff_to_target": -889.0,
             "target_down": -2.0
         },
         {
             "name": "みずほFG",
             "symbol": "8411.T",
-            "current_price": 8673.0,
-            "change_pct": -2.08,
+            "current_price": 8674.0,
+            "change_pct": -2.07,
             "reference_price": 6000,
-            "diff_to_target": -2673.0,
+            "diff_to_target": -2674.0,
             "target_down": -2.0
         },
         {
             "name": "日立製作所",
             "symbol": "6501.T",
-            "current_price": 5669.0,
-            "change_pct": 0.16,
+            "current_price": 5670.0,
+            "change_pct": 0.18,
             "reference_price": 2500,
-            "diff_to_target": -3169.0,
+            "diff_to_target": -3170.0,
             "target_down": -2.0
         },
         {
@@ -427,28 +427,28 @@
         {
             "name": "東京海上",
             "symbol": "8766.T",
-            "current_price": 519.4,
-            "change_pct": -0.56,
+            "current_price": 520.4,
+            "change_pct": -0.36,
             "reference_price": 300,
-            "diff_to_target": -219.4,
+            "diff_to_target": -220.4,
             "target_down": -2.0
         },
         {
             "name": "三菱重工業",
             "symbol": "7011.T",
-            "current_price": 3818.0,
-            "change_pct": 0.82,
+            "current_price": 3817.0,
+            "change_pct": 0.79,
             "reference_price": 2500,
-            "diff_to_target": -1318.0,
+            "diff_to_target": -1317.0,
             "target_down": -2.0
         },
         {
             "name": "任天堂",
             "symbol": "7974.T",
-            "current_price": 7778.0,
-            "change_pct": -0.47,
+            "current_price": 7779.0,
+            "change_pct": -0.46,
             "reference_price": 5500,
-            "diff_to_target": -2278.0,
+            "diff_to_target": -2279.0,
             "target_down": -2.0
         },
         {
@@ -472,28 +472,28 @@
         {
             "name": "アドバンテスト",
             "symbol": "6857.T",
-            "current_price": 41340.0,
-            "change_pct": -1.22,
+            "current_price": 41300.0,
+            "change_pct": -1.31,
             "reference_price": 15000,
-            "diff_to_target": -26340.0,
+            "diff_to_target": -26300.0,
             "target_down": -5.0
         },
         {
             "name": "ルネサスエレクトロニクス",
             "symbol": "6723.T",
-            "current_price": 3908.0,
-            "change_pct": -2.18,
+            "current_price": 3905.0,
+            "change_pct": -2.25,
             "reference_price": 2500,
-            "diff_to_target": -1408.0,
+            "diff_to_target": -1405.0,
             "target_down": -3.0
         },
         {
             "name": "ディスコ",
             "symbol": "6146.T",
-            "current_price": 61320.0,
-            "change_pct": -6.38,
+            "current_price": 61350.0,
+            "change_pct": -6.34,
             "reference_price": 50000,
-            "diff_to_target": -11320.0,
+            "diff_to_target": -11350.0,
             "target_down": -5.0
         },
         {
@@ -508,37 +508,37 @@
         {
             "name": "ＪＸ金属",
             "symbol": "5016.T",
-            "current_price": 3808.0,
-            "change_pct": -0.47,
+            "current_price": 3805.0,
+            "change_pct": -0.55,
             "reference_price": 2000,
-            "diff_to_target": -1808.0,
+            "diff_to_target": -1805.0,
             "target_down": -3.0
         },
         {
             "name": "信越化学工業",
             "symbol": "4063.T",
-            "current_price": 6266.0,
-            "change_pct": -0.87,
+            "current_price": 6265.0,
+            "change_pct": -0.89,
             "reference_price": 4000,
-            "diff_to_target": -2266.0,
+            "diff_to_target": -2265.0,
             "target_down": -3.0
         },
         {
             "name": "ＨＯＹＡ",
             "symbol": "7741.T",
-            "current_price": 25145.0,
-            "change_pct": -0.61,
+            "current_price": 25155.0,
+            "change_pct": -0.57,
             "reference_price": 2500,
-            "diff_to_target": -22645.0,
+            "diff_to_target": -22655.0,
             "target_down": -3.0
         },
         {
             "name": "ソニー",
             "symbol": "6758.T",
-            "current_price": 3729.0,
-            "change_pct": -1.04,
+            "current_price": 3731.0,
+            "change_pct": -0.98,
             "reference_price": 1500,
-            "diff_to_target": -2229.0,
+            "diff_to_target": -2231.0,
             "target_down": -3.0
         }
     ]
