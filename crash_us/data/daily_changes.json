@@ -1,5 +1,5 @@
 {
-    "date": "2026-10-31 06:00:19",
+    "date": "2026-11-02 22:45:21",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -49,46 +49,46 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 157.52,
-            "change_pct": -0.08,
+            "current_price": 157.79,
+            "change_pct": 0.17,
             "reference_price": 150.0,
-            "diff_to_target": 7.52,
+            "diff_to_target": 7.79,
             "target_down": -2.0
         },
         {
             "name": "米10年国債利回り",
             "symbol": "^TNX",
-            "current_price": 4.93,
-            "change_pct": -1.2,
+            "current_price": 4.92,
+            "change_pct": -0.24,
             "reference_price": 3.0,
-            "diff_to_target": 1.93,
+            "diff_to_target": 1.92,
             "target_down": -10.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 3883.3,
-            "change_pct": -3.67,
+            "current_price": 3921.1,
+            "change_pct": 0.57,
             "reference_price": 4000.0,
-            "diff_to_target": -116.7,
+            "diff_to_target": -78.9,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 102.87,
-            "change_pct": 0.85,
+            "current_price": 99.67,
+            "change_pct": -4.27,
             "reference_price": 70.0,
-            "diff_to_target": 32.87,
+            "diff_to_target": 29.67,
             "target_down": -15.0
         },
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 76764.14,
-            "change_pct": -1.32,
+            "current_price": 78061.49,
+            "change_pct": -0.22,
             "reference_price": 60000.0,
-            "diff_to_target": 16764.14,
+            "diff_to_target": 18061.49,
             "target_down": -20.0
         },
         {
