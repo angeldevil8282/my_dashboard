@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-03 13:25:15",
+    "date": "2026-11-03 14:25:14",
     "stocks": [
         {
             "name": "日経平均",
@@ -23,7 +23,7 @@
             "name": "ドル円",
             "symbol": "USDJPY=X",
             "current_price": 157.9,
-            "change_pct": 0.01,
+            "change_pct": 0.02,
             "reference_price": 150,
             "diff_to_target": -7.9,
             "target_down": -2.0
@@ -31,28 +31,28 @@
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 3937.1,
-            "change_pct": -0.82,
+            "current_price": 3937.3,
+            "change_pct": -0.81,
             "reference_price": 4000,
-            "diff_to_target": 62.9,
+            "diff_to_target": 62.7,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 96.8,
-            "change_pct": 0.3,
+            "current_price": 97.1,
+            "change_pct": 0.62,
             "reference_price": 70.0,
-            "diff_to_target": -26.8,
+            "diff_to_target": -27.1,
             "target_down": -10.0
         },
         {
             "name": "ビットコイン(JPN)",
             "symbol": "BTC-JPY",
-            "current_price": 12117700.0,
-            "change_pct": 0.06,
+            "current_price": 12109379.0,
+            "change_pct": -0.01,
             "reference_price": 10000000,
-            "diff_to_target": -2117700.0,
+            "diff_to_target": -2109379.0,
             "target_down": -5.0
         },
         {
@@ -290,15 +290,6 @@
             "target_down": -3.0
         },
         {
-            "name": "住友電気工業",
-            "symbol": "5802.T",
-            "current_price": 1663.0,
-            "change_pct": -6.05,
-            "reference_price": 1500,
-            "diff_to_target": -163.0,
-            "target_down": -3.0
-        },
-        {
             "name": "SCREENホールディングス",
             "symbol": "7735.T",
             "current_price": 9218.0,
@@ -353,48 +344,12 @@
             "target_down": -2.0
         },
         {
-            "name": "ＳＢＩホールディングス",
-            "symbol": "8473.T",
-            "current_price": 2818.5,
-            "change_pct": -1.67,
-            "reference_price": 2000,
-            "diff_to_target": -818.5,
-            "target_down": -2.0
-        },
-        {
-            "name": "三菱製鋼",
-            "symbol": "5632.T",
-            "current_price": 2139.0,
-            "change_pct": -1.43,
-            "reference_price": 1500,
-            "diff_to_target": -639.0,
-            "target_down": -2.0
-        },
-        {
-            "name": "楽天グループ",
-            "symbol": "4755.T",
-            "current_price": 606.7,
-            "change_pct": -3.47,
-            "reference_price": 500,
-            "diff_to_target": -106.7,
-            "target_down": -2.0
-        },
-        {
             "name": "三菱ＵＦＪ",
             "symbol": "8306.T",
             "current_price": 3383.0,
             "change_pct": -1.86,
             "reference_price": 2500,
             "diff_to_target": -883.0,
-            "target_down": -2.0
-        },
-        {
-            "name": "三井住友FG",
-            "symbol": "8316.T",
-            "current_price": 3155.0,
-            "change_pct": -2.32,
-            "reference_price": 2500,
-            "diff_to_target": -655.0,
             "target_down": -2.0
         },
         {
