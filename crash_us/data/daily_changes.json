@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-19 05:00:15",
+    "date": "2026-11-19 06:00:16",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -85,10 +85,10 @@
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 62666.0,
-            "change_pct": -3.41,
+            "current_price": 62535.85,
+            "change_pct": -3.61,
             "reference_price": 60000.0,
-            "diff_to_target": 2666.0,
+            "diff_to_target": 2535.85,
             "target_down": -20.0
         },
         {
