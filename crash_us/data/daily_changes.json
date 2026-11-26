@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-27 05:00:21",
+    "date": "2026-11-27 06:00:21",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -49,10 +49,10 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 159.25,
-            "change_pct": 0.08,
+            "current_price": 159.28,
+            "change_pct": 0.1,
             "reference_price": 150.0,
-            "diff_to_target": 9.25,
+            "diff_to_target": 9.28,
             "target_down": -2.0
         },
         {
@@ -85,10 +85,10 @@
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 60622.99,
-            "change_pct": 0.4,
+            "current_price": 60693.86,
+            "change_pct": 0.52,
             "reference_price": 60000.0,
-            "diff_to_target": 622.99,
+            "diff_to_target": 693.86,
             "target_down": -20.0
         },
         {
