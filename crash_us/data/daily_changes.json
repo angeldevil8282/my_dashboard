@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-27 04:00:22",
+    "date": "2026-11-27 05:00:21",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -49,10 +49,10 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 159.27,
-            "change_pct": 0.09,
+            "current_price": 159.25,
+            "change_pct": 0.08,
             "reference_price": 150.0,
-            "diff_to_target": 9.27,
+            "diff_to_target": 9.25,
             "target_down": -2.0
         },
         {
@@ -67,10 +67,10 @@
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 3596.1,
-            "change_pct": 0.88,
+            "current_price": 3593.4,
+            "change_pct": 0.81,
             "reference_price": 4000.0,
-            "diff_to_target": -403.9,
+            "diff_to_target": -406.6,
             "target_down": -3.0
         },
         {
@@ -85,10 +85,10 @@
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 60401.69,
-            "change_pct": 0.04,
+            "current_price": 60622.99,
+            "change_pct": 0.4,
             "reference_price": 60000.0,
-            "diff_to_target": 401.69,
+            "diff_to_target": 622.99,
             "target_down": -20.0
         },
         {
