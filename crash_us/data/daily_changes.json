@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-28 04:00:21",
+    "date": "2026-11-28 05:00:21",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -49,10 +49,10 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 159.54,
-            "change_pct": 0.2,
+            "current_price": 159.56,
+            "change_pct": 0.21,
             "reference_price": 150.0,
-            "diff_to_target": 9.54,
+            "diff_to_target": 9.56,
             "target_down": -2.0
         },
         {
@@ -76,19 +76,19 @@
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 83.03,
-            "change_pct": -0.78,
+            "current_price": 83.08,
+            "change_pct": -0.72,
             "reference_price": 70.0,
-            "diff_to_target": 13.03,
+            "diff_to_target": 13.08,
             "target_down": -15.0
         },
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 59846.64,
-            "change_pct": -1.07,
+            "current_price": 59834.41,
+            "change_pct": -1.09,
             "reference_price": 60000.0,
-            "diff_to_target": -153.36,
+            "diff_to_target": -165.59,
             "target_down": -20.0
         },
         {
