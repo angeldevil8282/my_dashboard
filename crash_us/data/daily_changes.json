@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-27 06:00:21",
+    "date": "2026-11-27 22:45:22",
     "stocks": [
         {
             "name": "Dow Jones Industrial Average",
@@ -32,7 +32,7 @@
             "name": "NYSE FANG+ Index",
             "symbol": "^NYFANG",
             "current_price": 16057.95,
-            "change_pct": -0.76,
+            "change_pct": -0.0,
             "reference_price": 9000.0,
             "diff_to_target": 7057.95,
             "target_down": -5.0
@@ -49,46 +49,46 @@
         {
             "name": "ドル円",
             "symbol": "USDJPY=X",
-            "current_price": 159.28,
-            "change_pct": 0.1,
+            "current_price": 159.52,
+            "change_pct": 0.19,
             "reference_price": 150.0,
-            "diff_to_target": 9.28,
+            "diff_to_target": 9.52,
             "target_down": -2.0
         },
         {
             "name": "米10年国債利回り",
             "symbol": "^TNX",
-            "current_price": 4.85,
-            "change_pct": -1.14,
+            "current_price": 4.9,
+            "change_pct": 0.0,
             "reference_price": 3.0,
-            "diff_to_target": 1.85,
+            "diff_to_target": 1.9,
             "target_down": -10.0
         },
         {
             "name": "金先物(NY金)",
             "symbol": "GC=F",
-            "current_price": 3593.4,
-            "change_pct": 0.81,
+            "current_price": 3671.6,
+            "change_pct": 3.0,
             "reference_price": 4000.0,
-            "diff_to_target": -406.6,
+            "diff_to_target": -328.4,
             "target_down": -3.0
         },
         {
             "name": "WTI原油先物",
             "symbol": "CL=F",
-            "current_price": 84.91,
-            "change_pct": 1.47,
+            "current_price": 84.52,
+            "change_pct": 1.0,
             "reference_price": 70.0,
-            "diff_to_target": 14.91,
+            "diff_to_target": 14.52,
             "target_down": -15.0
         },
         {
             "name": "ビットコイン (USD)",
             "symbol": "BTC-USD",
-            "current_price": 60693.86,
-            "change_pct": 0.52,
+            "current_price": 61365.63,
+            "change_pct": 1.44,
             "reference_price": 60000.0,
-            "diff_to_target": 693.86,
+            "diff_to_target": 1365.63,
             "target_down": -20.0
         },
         {
